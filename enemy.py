@@ -1,4 +1,5 @@
 import pygame
+from money import Money
 
 class Enemy(pygame.sprite.Sprite):
 
@@ -16,7 +17,7 @@ class Enemy(pygame.sprite.Sprite):
         n_pos = (x, y)
         self.pos = n_pos
     
-    def update(self):
+    def update(self, money):
         
         direction = (self.path[self.target_pos_index][0] - self.pos[0], self.path[self.target_pos_index][1] - self.pos[1])
         x, y = direction
@@ -33,6 +34,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.target_pos_index += 1
         if self.health <= 0:
             self.kill()
+            money.add_money(25)
 
     def draw(self, screen):
 

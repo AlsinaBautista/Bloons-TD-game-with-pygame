@@ -2,9 +2,10 @@ import pygame
 import constantes as c
 from bullet import Bullet
 
-class Tower:
+class Tower(pygame.sprite.Sprite):
 
     def __init__(self, pos, scope, damage, att_speed, target, price, image):
+        super().__init__()
         self.pos = pos
         self.scope = scope
         self.damage = damage
@@ -15,6 +16,7 @@ class Tower:
         self.enemies = False
         self.attack_timer = 0
         self.bullet_active = None
+        self.rect = self.img.get_rect(center=pos)
     
     def set_tower(self, x, y):
         self.pos = (x, y)
@@ -41,12 +43,12 @@ class Tower:
         for enemy in enemies:
             if enemy.alive() and self.enemies_in_range(enemy.pos) and current_time - self.attack_timer >= cooldown:
                 bullet = Bullet(pos=self.pos, target=enemy, speed=10, damage=self.damage, image_path="imgs/bullet.png")
-                self.attack_timer = current_time 
+                self.attack_timer = current_time
+                self.bullet_active = bullet 
                 return bullet
-            
-            # ARREGLAR!!!
         return None
 
+    
 
     
 

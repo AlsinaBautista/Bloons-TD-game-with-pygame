@@ -12,7 +12,7 @@ class Bullet(pygame.sprite.Sprite):
         self.image = pygame.image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect(center=self.pos)
         
-    def update(self):
+    def update(self, money):
         x, y = self.pos
         xt, yt = self.target.pos
         direction = (xt - x, yt - y)
@@ -26,6 +26,7 @@ class Bullet(pygame.sprite.Sprite):
         if ((new_x - xt) ** 2 + (new_y - yt) ** 2) ** 0.5 <= 10:
             self.target.health -= self.damage
             self.kill()
+            
 
 
 
