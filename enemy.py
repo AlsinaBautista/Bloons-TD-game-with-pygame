@@ -1,10 +1,14 @@
-class Enemy:
+import pygame
+
+class Enemy(pygame.sprite.Sprite):
 
     def __init__(self, pos, speed, health, image, path):
+        super().__init__() #Hereda el init de la clase padre Sprite que viene con pygame
         self.pos = pos
         self.speed = speed
         self.health = health
         self.image = image
+        self.rect = self.image.get_rect(center=pos)
         self.path = path
         self.target_pos_index = 1
 
@@ -12,7 +16,7 @@ class Enemy:
         n_pos = (x, y)
         self.pos = n_pos
     
-    def move(self):
+    def update(self):
         
         direction = (self.path[self.target_pos_index][0] - self.pos[0], self.path[self.target_pos_index][1] - self.pos[1])
         x, y = direction
@@ -22,10 +26,13 @@ class Enemy:
         new_x = self.pos[0] + mov[0]
         new_y = self.pos[1] + mov[1]
         self.set_pos(new_x, new_y)
+        self.rect.center = (int(new_x), int(new_y))
         xt, yt = self.path[self.target_pos_index]
         if abs(new_x - xt) < 0.1 and abs(new_y - yt) < 0.1:
             if self.target_pos_index < len(self.path) - 1:
                 self.target_pos_index += 1
+        if self.health <= 0:
+            self.kill()
 
     def draw(self, screen):
 
