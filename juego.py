@@ -7,6 +7,7 @@ from bullet import Bullet
 import sys
 from money import Money
 from life import Life
+from shop import Shop 
 
 # Al principio del archivo
 def excepthook(type, value, traceback):
@@ -33,6 +34,7 @@ tower_img = pygame.image.load("imgs/tower.png").convert_alpha()
 
 # Crear una torre de prueba en el centro de la pantalla
 test_tower = Tower(pos=(470, c.height//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=tower_img)
+
 bullets = pygame.sprite.Group()
 bullet = test_tower.shoot(enemies)
 if bullet:
@@ -42,6 +44,11 @@ money_img = pygame.image.load("imgs/money.png")
 money = Money(750, money_img)
 life_img = pygame.image.load("imgs/life.png")
 life = Life(20, life_img)
+
+# Tienda y drag
+shop_item = Shop(tower_img, 810, 10, 300, money)
+dragging_tower = None
+towers = pygame.sprite.Group()
 
 spawn_timer = pygame.time.get_ticks()
 enemy_spawn_interval = 300  # milisegundos
@@ -53,6 +60,19 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pos = event.pos
+            if dragging_tower is None:
+                if shop_item.is_clicked(pos):
+                    if money.cant_total >= shop_item.price:
+                        dragging_tower = Tower(pos=(470, c.height//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=tower_img)
+                    else:
+                        print("No tenes suficiente dinero")
+            else:
+                dragging_tower.set_tower(*pos)
+                money.spend_money(shop_item.price)
+                towers.add(dragging_tower)
+                dragging_tower = None
 
     map.draw_background(screen)
     map.draw_celds(screen, c.white, c.celd)
@@ -68,6 +88,7 @@ while run:
     enemies.update(money,life)
     enemies.draw(screen)
 
+    # Torre de prueba
     test_tower.draw_scope(screen) 
     screen.blit(test_tower.img, (test_tower.pos[0] - test_tower.img.get_width()//2,
                                 test_tower.pos[1] - test_tower.img.get_height()//2))
@@ -78,12 +99,35 @@ while run:
     new_bullet = test_tower.shoot(enemies)
     if new_bullet:
         bullets.add(new_bullet)
-    
+    # Torres colocadas desde la tienda
+    for tower in towers:
+        bullet = tower.shoot(enemies)
+        if bullet:
+            bullets.add(bullet)
+
     bullets.update()
     bullets.draw(screen)
 
     money.draw(screen)
     life.draw(screen)
+
+    # Dibujo de la tienda
+    inventory_width = int(c.width * 0.2)
+    inventory_height = c.height
+    inventory_rect = pygame.Rect(c.width - inventory_width, 0, inventory_width, inventory_height)
+    pygame.draw.rect(screen, (191,158,83), inventory_rect)
+
+    shop_item.draw(screen)
+
+    # Dibujo de las torres colocadas
+    for tower in towers:
+        screen.blit(tower.img, (tower.pos[0] - tower.img.get_width()//2, tower.pos[1] - tower.img.get_height()//2))
+        tower.draw_scope(screen)
+
+    if dragging_tower is not None:
+        mouse_pos = pygame.mouse.get_pos()
+        dragging_tower.set_tower(*mouse_pos)
+        screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2))
 
     if life.cant_total <= 0:
         font = pygame.font.SysFont('showcardgothic', 48)

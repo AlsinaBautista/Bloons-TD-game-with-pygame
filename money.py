@@ -13,6 +13,9 @@ class Money:
 
     def spend_money(self, cant):
         self.cant_total -= cant
+
+    def get_money(self):
+        return self.cant_total
     
     def draw(self, screen):
         screen.blit(self.img, self.rect)
