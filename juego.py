@@ -29,7 +29,7 @@ new_enemy = Enemy(c.enemy_pos, c.enemy_speed, c.enemy_health, c.enemy_img, c.ene
 enemies.add(new_enemy)
 
 # Imagen de torre dummy (puede ser reemplazada luego)
-tower_img = pygame.image.load("imgs/towerupr.png").convert_alpha()
+tower_img = pygame.image.load("imgs/tower.png").convert_alpha()
 
 # Crear una torre de prueba en el centro de la pantalla
 test_tower = Tower(pos=(470, c.height//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=tower_img)

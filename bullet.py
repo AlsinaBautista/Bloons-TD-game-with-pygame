@@ -1,5 +1,6 @@
 import pygame
 from enemy import Enemy
+import math
 
 class Bullet(pygame.sprite.Sprite):
 
@@ -9,10 +10,12 @@ class Bullet(pygame.sprite.Sprite):
         self.target = target
         self.speed = speed
         self.damage = damage
-        self.image = pygame.image.load(image_path).convert_alpha()
+        self.original_image = pygame.image.load(image_path).convert_alpha()
+        self.image = self.original_image
         self.rect = self.image.get_rect(center=self.pos)
         
     def update(self):
+        self.rotate(self.target.pos)
         x, y = self.pos
         xt, yt = self.target.pos
         direction = (xt - x, yt - y)
@@ -27,6 +30,14 @@ class Bullet(pygame.sprite.Sprite):
             self.target.health -= self.damage
             self.kill()
             
+    def rotate(self, enemy_pos):
+
+        x = enemy_pos[0] - self.pos[0]
+        y = enemy_pos[1] - self.pos[1]
+        angle_rad = math.atan2(-y, x)
+        self.angle = math.degrees(angle_rad)
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        self.rect = self.image.get_rect(center=self.pos)
 
 
 

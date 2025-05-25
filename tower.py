@@ -1,6 +1,7 @@
 import pygame
 import constantes as c
 from bullet import Bullet
+import math
 
 class Tower(pygame.sprite.Sprite):
 
@@ -12,11 +13,13 @@ class Tower(pygame.sprite.Sprite):
         self.att_speed = att_speed
         self.target = target
         self.price = price
-        self.img = image
+        self.original_img = image
+        self.img = self.original_img
         self.enemies = False
         self.attack_timer = 0
         self.bullet_active = None
         self.rect = self.img.get_rect(center=pos)
+        self.angle = 0
     
     def set_tower(self, x, y):
         self.pos = (x, y)
@@ -27,10 +30,9 @@ class Tower(pygame.sprite.Sprite):
     def enemies_in_range(self, pos_enemy):
         xe, ye = pos_enemy
         xt, yt = self.pos
-        if (xt - self.scope) <= xe <= (xt + self.scope):
-            if (yt - self.scope) <= ye <= (yt + self.scope):
-                self.enemies = True
-                return True
+        dist = ((xe - xt) ** 2 + (ye - yt) ** 2) ** 0.5
+        if dist <= self.scope:
+            return True
         return False
 
     def shoot(self, enemies):
@@ -42,11 +44,22 @@ class Tower(pygame.sprite.Sprite):
         
         for enemy in enemies:
             if enemy.alive() and self.enemies_in_range(enemy.pos) and current_time - self.attack_timer >= cooldown:
+                self.rotate(enemy.pos)
                 bullet = Bullet(pos=self.pos, target=enemy, speed=10, damage=self.damage, image_path="imgs/bullet.png")
                 self.attack_timer = current_time
                 self.bullet_active = bullet 
                 return bullet
         return None
+    
+    def rotate(self, enemy_pos):
+
+        x = enemy_pos[0] - self.pos[0]
+        y = enemy_pos[1] - self.pos[1]
+        angle_rad = math.atan2(-y, x)
+        self.angle = math.degrees(angle_rad)
+        self.img = pygame.transform.rotate(self.original_img, self.angle)
+        self.rect = self.img.get_rect(center=self.pos)
+
 
     
 
