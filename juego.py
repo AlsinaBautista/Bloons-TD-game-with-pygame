@@ -6,6 +6,7 @@ from tower import Tower
 from bullet import Bullet
 import sys
 from money import Money
+from life import Life
 
 # Al principio del archivo
 def excepthook(type, value, traceback):
@@ -31,7 +32,7 @@ enemies.add(new_enemy)
 tower_img = pygame.image.load("imgs/towerupr.png").convert_alpha()
 
 # Crear una torre de prueba en el centro de la pantalla
-test_tower = Tower(pos=(470, c.height//2), scope=100, damage=50, att_speed=500, target=None, price=50, image=tower_img)
+test_tower = Tower(pos=(470, c.height//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=tower_img)
 bullets = pygame.sprite.Group()
 bullet = test_tower.shoot(enemies)
 if bullet:
@@ -39,6 +40,8 @@ if bullet:
 
 money_img = pygame.image.load("imgs/money.png")
 money = Money(750, money_img)
+life_img = pygame.image.load("imgs/life.png")
+life = Life(20, life_img)
 
 spawn_timer = pygame.time.get_ticks()
 enemy_spawn_interval = 300  # milisegundos
@@ -62,7 +65,7 @@ while run:
         enemy_count += 1
         spawn_timer = current_time 
     
-    enemies.update(money)
+    enemies.update(money,life)
     enemies.draw(screen)
 
     test_tower.draw_scope(screen) 
@@ -80,6 +83,16 @@ while run:
     bullets.draw(screen)
 
     money.draw(screen)
+    life.draw(screen)
+
+    if life.cant_total <= 0:
+        font = pygame.font.SysFont('showcardgothic', 48)
+        text = font.render("GAME OVER", True, (255, 255, 255))
+        text_rect = text.get_rect(center=(c.width // 2, c.height // 2))
+        screen.blit(text, text_rect)
+        pygame.display.update()
+        pygame.time.delay(2000)
+        run = False
 
     pygame.display.update()
 

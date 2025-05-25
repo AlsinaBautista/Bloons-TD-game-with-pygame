@@ -17,7 +17,7 @@ class Enemy(pygame.sprite.Sprite):
         n_pos = (x, y)
         self.pos = n_pos
     
-    def update(self, money):
+    def update(self, money, life):
         
         direction = (self.path[self.target_pos_index][0] - self.pos[0], self.path[self.target_pos_index][1] - self.pos[1])
         x, y = direction
@@ -35,6 +35,10 @@ class Enemy(pygame.sprite.Sprite):
         if self.health <= 0:
             self.kill()
             money.add_money(25)
+        if self.pos[0] == 501 and self.pos[1] <5:
+            self.kill()
+            life.lose_life(self.health)
+            
 
     def draw(self, screen):
 
