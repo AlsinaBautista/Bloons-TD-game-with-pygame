@@ -9,6 +9,7 @@ from money import Money
 from life import Life
 from shop import Shop 
 from temporal_msg import TempMsg
+from tower_updated import *
 
 # Al principio del archivo
 def excepthook(type, value, traceback):
@@ -73,7 +74,7 @@ while run:
                 # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
                 if shop_item.is_clicked(pos):
                     if money.cant_total >= shop_item.price:
-                        dragging_tower = Tower(pos=(470, c.height//2), scope=100, damage=1, att_speed=500, target=None, price=50, image=tower_img)
+                        dragging_tower = Cannon(pos=(470, c.height//2))
                         dragging_tower.draw_scope(screen)
                     else:
                         msg = TempMsg(1000, "No tienes\nsuficiente dinero", "imgs/msg.png")
