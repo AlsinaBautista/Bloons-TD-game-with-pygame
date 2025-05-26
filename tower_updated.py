@@ -2,9 +2,8 @@ import pygame
 import constantes as c
 from bullet import Bullet
 import math
-
+#Primero creo la clase padre de las defensas, en este caso, Tower
 class Tower(pygame.sprite.Sprite):
-
     def __init__(self, pos, scope, damage, att_speed, target, price, image):
         super().__init__()
         self.pos = pos
@@ -14,16 +13,16 @@ class Tower(pygame.sprite.Sprite):
         self.target = target
         self.price = price
         self.original_img = image
-        self.img = self.original_img
+        self.img = self.original_img    #hasta aca son los atributos propios de la torre
         self.enemies = False
         self.attack_timer = 0
         self.bullet_active = None
         self.rect = self.img.get_rect(center=pos)
-        self.angle = 0
+        self.angle = 0  #los ultimos son parametros usados en colisiones/animaciones
     
     def set_tower(self, x, y):
-        self.pos = (x, y)
-    
+        self.pos = (x, y)   #cambia la posicion a la que se le pasa
+
     def draw_scope(self, screen):
         pygame.draw.circle(screen, c.white, self.pos ,self.scope, 1)
 
@@ -60,7 +59,7 @@ class Tower(pygame.sprite.Sprite):
         self.img = pygame.transform.rotate(self.original_img, self.angle)
         self.rect = self.img.get_rect(center=self.pos)
 
-class Cannon(Tower):
+class Cannon(Tower):    #defensa basica, la usamos como base      
     def __init__(self, pos):
         scope = 200
         damage = 1
@@ -70,7 +69,7 @@ class Cannon(Tower):
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         super().__init__(pos, scope, damage, att_speed, target, price, image) #aca puedo llamar a la clase padre con el scope y damage definido
 
-class Sniper(Tower):
+class Sniper(Tower):    #mas rango, dano, menos cadencia
     def __init__(self, pos):
         scope = 400
         damage = 5
@@ -80,12 +79,22 @@ class Sniper(Tower):
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         super().__init__(pos, scope, damage, att_speed, target, price, image) #aca puedo llamar a la clase padre con el scope y damage definido
 
-class Strong(Tower):
+class Strong(Tower):    #mas dano, menos rango, menos cadencia
     def __init__(self, pos):
         scope = 100
         damage = 10
         price = 1000
         att_speed = 200
+        target = None
+        image = pygame.image.load("imgs/tower.png").convert_alpha()
+        super().__init__(pos, scope, damage, att_speed, target, price, image)
+
+class Fast(Tower):  #mas cadencia
+    def __init__(self, pos):
+        scope = 200
+        damage = 1
+        price = 450
+        att_speed = 1000
         target = None
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         super().__init__(pos, scope, damage, att_speed, target, price, image)
