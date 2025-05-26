@@ -45,10 +45,10 @@ money = Money(750, money_img)
 life_img = pygame.image.load("imgs/life.png")
 life = Life(20, life_img)
 
-# Tienda y drag
+# Tienda y drag (torre en mouse)
 shop_item = Shop(tower_img, 810, 10, 300, money)
-dragging_tower = None
-towers = pygame.sprite.Group()
+dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
+towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
 
 spawn_timer = pygame.time.get_ticks()
 enemy_spawn_interval = 300  # milisegundos
@@ -61,17 +61,19 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = event.pos
+            pos = event.pos # Guarda posicion del clic (x, y)
             if dragging_tower is None:
+                # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
                 if shop_item.is_clicked(pos):
                     if money.cant_total >= shop_item.price:
                         dragging_tower = Tower(pos=(470, c.height//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=tower_img)
                     else:
                         print("No tenes suficiente dinero")
             else:
-                dragging_tower.set_tower(*pos)
+                # Si ya estas arrastrando una torre, al hacer clic se coloca en el mapa
+                dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
                 money.spend_money(shop_item.price)
-                towers.add(dragging_tower)
+                towers.add(dragging_tower) # Agrega la torre al grupo de torres
                 dragging_tower = None
 
     map.draw_background(screen)
@@ -112,22 +114,22 @@ while run:
     life.draw(screen)
 
     # Dibujo de la tienda
-    inventory_width = int(c.width * 0.2)
+    inventory_width = int(c.width * 0.2) # La tienda ocupa el 20% del ancho total
     inventory_height = c.height
     inventory_rect = pygame.Rect(c.width - inventory_width, 0, inventory_width, inventory_height)
-    pygame.draw.rect(screen, (191,158,83), inventory_rect)
-
-    shop_item.draw(screen)
+    pygame.draw.rect(screen, (191,158,83), inventory_rect) # Dibuja el fondo de la tienda
+    shop_item.draw(screen) # Dibuja la torre disponible en la tienda 
 
     # Dibujo de las torres colocadas
     for tower in towers:
         screen.blit(tower.img, (tower.pos[0] - tower.img.get_width()//2, tower.pos[1] - tower.img.get_height()//2))
         tower.draw_scope(screen)
-
+    
+    # Dar el efecto de que el mouse lleva al item del cañon
     if dragging_tower is not None:
-        mouse_pos = pygame.mouse.get_pos()
-        dragging_tower.set_tower(*mouse_pos)
-        screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2))
+        mouse_pos = pygame.mouse.get_pos() # Posicion actual del mouse
+        dragging_tower.set_tower(*mouse_pos) # Actualiza la posicion de la torre arrastrada
+        screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
 
     if life.cant_total <= 0:
         font = pygame.font.SysFont('showcardgothic', 48)

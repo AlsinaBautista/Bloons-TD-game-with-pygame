@@ -1,19 +1,17 @@
 import pygame
 from money import *
 
-class Shop(pygame.sprite.Sprite):
+class Shop:
     def __init__(self, img_tower, x, y, price, money):
         self.img_tower = img_tower
-        self.rect = self.img_tower.get_rect(topleft=(x, y)) # Detect clicks
+        # Crear triangulo en la imagen para detectar clics
+        self.rect = self.img_tower.get_rect(topleft=(x, y)) # (x, y) donde se va mostrar el cañon en la tienda
         self. price = price
-        self.money = money
+        self.money = money # para acceder al dinero del jugador
     
     def draw(self, screen):
         screen.blit(self.img_tower, self.rect)
 
-    def get_money(self):
-        return self.money.get_money()
-
-
     def is_clicked(self, pos):
-        return self.rect.collidepoint(pos)
+        # Si el jugador hizo clic sobre el cañon de la tienda, devuelve true
+        return self.rect.collidepoint(pos) # pos es la posicion del mouse cuando se hace el clic
