@@ -8,6 +8,7 @@ import sys
 from money import Money
 from life import Life
 from shop import Shop 
+from temporal_msg import TempMsg
 
 # Al principio del archivo
 def excepthook(type, value, traceback):
@@ -18,6 +19,9 @@ def excepthook(type, value, traceback):
 sys.excepthook = excepthook
 
 pygame.init()
+
+clock = pygame.time.Clock()
+all_sprites = pygame.sprite.Group()
 
 screen = pygame.display.set_mode((c.width, c.height))
 icon = pygame.image.load("imgs/icono_globos.jpeg")
@@ -55,8 +59,10 @@ enemy_spawn_interval = 300  # milisegundos
 enemy_count = 0
 max_enemies = 30
 
+active_msg = []
 run = True
 while run:
+    delta_time = clock.tick(60) / 1000
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -67,37 +73,44 @@ while run:
                 # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
                 if shop_item.is_clicked(pos):
                     if money.cant_total >= shop_item.price:
-                        dragging_tower = Tower(pos=(470, c.height//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=tower_img)
+                        dragging_tower = Tower(pos=(470, c.height//2), scope=100, damage=1, att_speed=500, target=None, price=50, image=tower_img)
+                        dragging_tower.draw_scope(screen)
                     else:
-                        print("No tenes suficiente dinero")
+                        msg = TempMsg(1000, "No tienes\nsuficiente dinero", "imgs/msg.png")
+                        active_msg.append(msg)
+                    
             else:
                 # Si ya estas arrastrando una torre, al hacer clic se coloca en el mapa
                 pos = (pos[0] // c.celd * c.celd + c.celd // 2, pos[1] // c.celd * c.celd + c.celd // 2) # Redondea la posicion al centro de la celda
-                if not c.grid[pos[1] // c.celd][pos[0] // c.celd]: # Verifica si la celda esta vacia
+                if not c.grid[pos[1] // c.celd][pos[0] // c.celd] and pos[0] < c.width - inventory_width: # Verifica si la celda esta vacia
                 # Si la celda esta vacia, coloca la torre
                     dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
                     money.spend_money(shop_item.price)
                     towers.add(dragging_tower) # Agrega la torre al grupo de torres
+                    all_sprites.add(dragging_tower)
                     dragging_tower = None
                 else:
-                    print("No se puede colocar la torre aqui, la celda esta ocupada")
+                    msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
+                    active_msg.append(msg)
 
     map.draw_background(screen)
-    map.draw_celds(screen, c.white, c.celd)
+    #map.draw_celds(screen, c.white, c.celd)
 
     current_time = pygame.time.get_ticks()
 
     if enemy_count < max_enemies and current_time - spawn_timer >= enemy_spawn_interval:
         new_enemy = Enemy(c.enemy_pos, c.enemy_speed, c.enemy_health, c.enemy_img, c.enemy_path)
         enemies.add(new_enemy)
+        all_sprites.add(new_enemy)
         enemy_count += 1
         spawn_timer = current_time 
     
-    enemies.update(money,life)
-    enemies.draw(screen)
+    for enemy in enemies:
+        enemy.update(money,life)
+        enemy.draw(screen)
 
     # Torre de prueba
-    test_tower.draw_scope(screen) 
+    """test_tower.draw_scope(screen) 
     screen.blit(test_tower.img, (test_tower.pos[0] - test_tower.img.get_width()//2,
                                 test_tower.pos[1] - test_tower.img.get_height()//2))
     
@@ -106,14 +119,15 @@ while run:
 
     new_bullet = test_tower.shoot(enemies)
     if new_bullet:
-        bullets.add(new_bullet)
+        bullets.add(new_bullet)"""
     # Torres colocadas desde la tienda
     for tower in towers:
         bullet = tower.shoot(enemies)
         if bullet:
             bullets.add(bullet)
+            all_sprites.add(bullet)
 
-    bullets.update()
+    bullets.update(delta_time)
     bullets.draw(screen)
 
     money.draw(screen)
@@ -129,7 +143,7 @@ while run:
     # Dibujo de las torres colocadas
     for tower in towers:
         screen.blit(tower.img, (tower.pos[0] - tower.img.get_width()//2, tower.pos[1] - tower.img.get_height()//2))
-        tower.draw_scope(screen)
+        #tower.draw_scope(screen)
     
     # Dar el efecto de que el mouse lleva al item del cañon
     if dragging_tower is not None:
@@ -145,6 +159,15 @@ while run:
         pygame.display.update()
         pygame.time.delay(2000)
         run = False
+    
+    for m in active_msg[:]:
+        if m.visible:
+            m.show_msg(screen)
+        else:
+            active_msg.remove(m)
+        
+    #clock.tick(60)
+
 
     pygame.display.update()
 

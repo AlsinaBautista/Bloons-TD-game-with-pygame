@@ -45,7 +45,7 @@ class Tower(pygame.sprite.Sprite):
         for enemy in enemies:
             if enemy.alive() and self.enemies_in_range(enemy.pos) and current_time - self.attack_timer >= cooldown:
                 self.rotate(enemy.pos)
-                bullet = Bullet(pos=self.pos, target=enemy, speed=10, damage=self.damage, image_path="imgs/bullet.png")
+                bullet = Bullet(pos=self.pos, target=enemy, speed=500, damage=self.damage, image_path="imgs/bullet.png")
                 self.attack_timer = current_time
                 self.bullet_active = bullet 
                 return bullet
@@ -57,7 +57,7 @@ class Tower(pygame.sprite.Sprite):
         y = enemy_pos[1] - self.pos[1]
         angle_rad = math.atan2(-y, x)
         self.angle = math.degrees(angle_rad)
-        self.img = pygame.transform.rotate(self.original_img, self.angle)
+        self.img = pygame.transform.rotate(self.original_img, self.angle + 90)
         self.rect = self.img.get_rect(center=self.pos)
 
 

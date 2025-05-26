@@ -14,14 +14,14 @@ class Bullet(pygame.sprite.Sprite):
         self.image = self.original_image
         self.rect = self.image.get_rect(center=self.pos)
         
-    def update(self):
+    def update(self, delta_time):
         self.rotate(self.target.pos)
         x, y = self.pos
         xt, yt = self.target.pos
         direction = (xt - x, yt - y)
         magnitude = (direction[0]**2 + direction[1]**2)**0.5
         n_direction = (direction[0] / magnitude, direction[1] / magnitude)
-        mov = (n_direction[0] * self.speed, n_direction[1] * self.speed)
+        mov = (n_direction[0] * self.speed * delta_time, n_direction[1] * self.speed * delta_time)
         new_x = self.pos[0] + mov[0]
         new_y = self.pos[1] + mov[1]
         self.pos = (new_x, new_y)

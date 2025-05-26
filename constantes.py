@@ -45,6 +45,6 @@ for i in range(len(enemy_path) - 1):
 
 enemy_health = 1
 enemy_img = pygame.image.load("imgs/bloon.png")
-enemy_speed = 0.2
+enemy_speed = 100
 enemy_pos = (0, 265)
 
