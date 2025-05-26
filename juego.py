@@ -61,7 +61,8 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = event.pos # Guarda posicion del clic (x, y)
+            pos = event.pos
+            
             if dragging_tower is None:
                 # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
                 if shop_item.is_clicked(pos):
@@ -71,10 +72,15 @@ while run:
                         print("No tenes suficiente dinero")
             else:
                 # Si ya estas arrastrando una torre, al hacer clic se coloca en el mapa
-                dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
-                money.spend_money(shop_item.price)
-                towers.add(dragging_tower) # Agrega la torre al grupo de torres
-                dragging_tower = None
+                pos = (pos[0] // c.celd * c.celd + c.celd // 2, pos[1] // c.celd * c.celd + c.celd // 2) # Redondea la posicion al centro de la celda
+                if not c.grid[pos[1] // c.celd][pos[0] // c.celd]: # Verifica si la celda esta vacia
+                # Si la celda esta vacia, coloca la torre
+                    dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
+                    money.spend_money(shop_item.price)
+                    towers.add(dragging_tower) # Agrega la torre al grupo de torres
+                    dragging_tower = None
+                else:
+                    print("No se puede colocar la torre aqui, la celda esta ocupada")
 
     map.draw_background(screen)
     map.draw_celds(screen, c.white, c.celd)
