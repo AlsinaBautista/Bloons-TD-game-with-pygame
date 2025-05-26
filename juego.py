@@ -73,10 +73,14 @@ while run:
             else:
                 # Si ya estas arrastrando una torre, al hacer clic se coloca en el mapa
                 pos = (pos[0] // c.celd * c.celd + c.celd // 2, pos[1] // c.celd * c.celd + c.celd // 2) # Redondea la posicion al centro de la celda
-                dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
-                money.spend_money(shop_item.price)
-                towers.add(dragging_tower) # Agrega la torre al grupo de torres
-                dragging_tower = None
+                if not c.grid[pos[1] // c.celd][pos[0] // c.celd]: # Verifica si la celda esta vacia
+                # Si la celda esta vacia, coloca la torre
+                    dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
+                    money.spend_money(shop_item.price)
+                    towers.add(dragging_tower) # Agrega la torre al grupo de torres
+                    dragging_tower = None
+                else:
+                    print("No se puede colocar la torre aqui, la celda esta ocupada")
 
     map.draw_background(screen)
     map.draw_celds(screen, c.white, c.celd)
