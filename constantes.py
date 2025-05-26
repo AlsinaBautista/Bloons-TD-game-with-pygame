@@ -4,7 +4,7 @@ marron = (207, 168, 19)
 white = (255, 255, 255)
 width = 1000
 height = 532
-celd = 54
+celd = 59
 
 
 enemy_path = path = [
