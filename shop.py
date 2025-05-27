@@ -3,6 +3,7 @@ from constantes import *
 from money import *
 from temporal_msg import TempMsg
 from tower_updated import *
+import map as m
 
 class Shop:
     def __init__(self, img_tower, x, y, price, money):
@@ -32,7 +33,7 @@ class Shop:
         else:
             if pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
                 pos_grid = (pos[0] // c.CELD * c.CELD + c.CELD // 2, pos[1] // c.CELD * c.CELD + c.CELD // 2)
-                if not c.GRID[pos[1] // c.CELD][pos[0] // c.CELD] and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
+                if not m.grid[pos[1] // c.CELD][pos[0] // c.CELD] and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
                     dragging_tower.set_tower(*pos_grid)
                     self.money.spend_money(self.price)
                     towers.add(dragging_tower)

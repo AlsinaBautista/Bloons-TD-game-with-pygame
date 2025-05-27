@@ -26,23 +26,6 @@ ENEMY_PATH = path = [
     (501,  88),
     (501,  0)
 ]
-GRID_ROWS = HEIGHT // CELD
-GRID_COLS = WIDTH // CELD
-GRID = [[0 for _ in range(GRID_COLS)] for _ in range(GRID_ROWS)]
-
-for i in range(len(ENEMY_PATH) - 1):
-    x1, y1 = ENEMY_PATH[i]
-    x2, y2 = ENEMY_PATH[i + 1]
-    col1, row1 = x1 // CELD, y1 // CELD
-    col2, row2 = x2 // CELD, y2 // CELD
-
-    if row1 == row2:
-        for col in range(min(col1, col2), max(col1, col2) + 1):
-            GRID[row1][col] = 1
-    elif col1 == col2:
-        for row in range(min(row1, row2), max(row1, row2) + 1):
-            GRID[row][col1] = 1
-
 
 ENEMY_HEALTH = 1
 ENEMY_IMG = pygame.image.load("imgs/bloon.png")

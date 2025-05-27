@@ -42,19 +42,19 @@ class Enemy(pygame.sprite.Sprite):
             self.image = pygame.image.load('imgs/bloon.png')
         
         #que se hagan azules
-        if self.health <= 200:
+        if 100 < self.health <= 200:
             self.image = pygame.image.load('imgs/blue_balloon.png')
         
         #que se hagan verdes
-        if self.health <= 300:
+        if 200 < self.health <= 300:
             self.image = pygame.image.load('imgs/green_balloon.png')
 
         #que se hagan coloridos
-        if self.health <= 400:
+        if 300 < self.health <= 400:
             self.image = pygame.image.load('imgs/colored_balloon.png')
         
         #que se hagan rosas
-        if self.health <= 500:
+        if 400 < self.health <= 500:
             self.image = pygame.image.load('imgs/pink_balloon.png')
 
         if self.health <= 0:
