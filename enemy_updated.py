@@ -60,9 +60,9 @@ class Enemy(pygame.sprite.Sprite):
         if self.health <= 0:
             self.kill()
             money.add_money(25)
-        if self.pos[0] == 501 and self.pos[1] <5:
+        if (self.pos[0] - self.path[-1][0] < 2) and (self.pos[1] - self.path[-1][1] < 2):
             self.kill()
-            life.lose_life(self.health)
+            life.lose_life(int(self.health/100)) # Asumiendo que la vida se pierde proporcionalmente a la salud del enemigo
             
 
     def draw(self, screen):
