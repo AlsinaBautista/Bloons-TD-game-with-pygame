@@ -61,7 +61,7 @@ class Tower(pygame.sprite.Sprite):
 
 class Cannon(Tower):    #defensa basica, la usamos como base      
     def __init__(self, pos):
-        scope = 200
+        scope = 100
         damage = 1
         price = 300
         att_speed = 500
