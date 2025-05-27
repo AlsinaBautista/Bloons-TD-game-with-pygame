@@ -49,7 +49,7 @@ class Enemy(pygame.sprite.Sprite):
         rect = self.image.get_rect(center=(int(self.pos[0]), int(self.pos[1])))
         screen.blit(self.image, rect)
 
-class Basic_Ballon(Enemy): 
+class Red_Ballon(Enemy): 
     def __init__(self):
         speed = 100
         health = 1
@@ -102,7 +102,7 @@ class Blue_Ballon(Enemy):
                 (501,  88),
                 (501,  0)
                             ]
-        image = pygame.image.load("imgs/bloon.png")
+        image = pygame.image.load("imgs/blue_balloon.png")
         super().__init__(pos, speed, health, image, path)
 
 class Green_Ballon(Enemy):
@@ -130,7 +130,7 @@ class Green_Ballon(Enemy):
                 (501,  88),
                 (501,  0)
                             ]
-        image = pygame.image.load("imgs/bloon.png")
+        image = pygame.image.load("imgs/green_balloon.png")
         super().__init__(pos, speed, health, image, path)
 
 class Yellow_Ballon(Enemy):
