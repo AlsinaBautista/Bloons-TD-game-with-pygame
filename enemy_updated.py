@@ -37,6 +37,26 @@ class Enemy(pygame.sprite.Sprite):
         if abs(new_x - xt) < 2 and abs(new_y - yt) < 2:
             if self.target_pos_index < len(self.path) - 1:
                 self.target_pos_index += 1
+        #que se hagan rojos
+        if self.health <= 100:
+            self.image = pygame.image.load('imgs/bloon.png')
+        
+        #que se hagan azules
+        if self.health <= 200:
+            self.image = pygame.image.load('imgs/blue_balloon.png')
+        
+        #que se hagan verdes
+        if self.health <= 300:
+            self.image = pygame.image.load('imgs/green_balloon.png')
+
+        #que se hagan coloridos
+        if self.health <= 400:
+            self.image = pygame.image.load('imgs/colored_balloon.png')
+        
+        #que se hagan rosas
+        if self.health <= 500:
+            self.image = pygame.image.load('imgs/pink_balloon.png')
+
         if self.health <= 0:
             self.kill()
             money.add_money(25)
@@ -108,14 +128,11 @@ class Blue_Ballon(Enemy):
         image = pygame.image.load("imgs/blue_balloon.png")
         super().__init__(pos, speed, health, image, path, blinded)
 
-    def change_color(self):
-        if self.health <= 100:
-            self.image = pygame.image.load('imgs/bloon.png')
 
 class Green_Ballon(Enemy):
     def __init__(self):
         speed = 150
-        health = 400
+        health = 300
         pos = (0, 265)
         blinded = False
         path = [
@@ -144,7 +161,7 @@ class Green_Ballon(Enemy):
 class Colored_Ballon(Enemy):
     def __init__(self):
         speed = 175
-        health = 600
+        health = 400
         pos = (0, 265)
         blinded = False
         path = [
@@ -173,7 +190,7 @@ class Colored_Ballon(Enemy):
 class Pink_Ballon(Enemy):
     def __init__(self):
         speed = 200
-        health = 800
+        health = 500
         pos = (0, 265)
         blinded = False
         path = [

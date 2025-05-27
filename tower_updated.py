@@ -2,6 +2,7 @@ import pygame
 import constantes as c
 from bullet import Bullet
 import math
+from enemy_updated import *
 #Primero creo la clase padre de las defensas, en este caso, Tower
 class Tower(pygame.sprite.Sprite):
     def __init__(self, pos, scope, damage, att_speed, target, price, image, angle):
@@ -46,7 +47,7 @@ class Tower(pygame.sprite.Sprite):
                 self.rotate(enemy.pos)
                 bullet = Bullet(pos=self.pos, target=enemy, speed=1000, damage=self.damage, image_path="imgs/bullet.png")
                 self.attack_timer = current_time
-                self.bullet_active = bullet 
+                self.bullet_active = bullet
                 return bullet
         return None
     

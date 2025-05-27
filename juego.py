@@ -159,6 +159,7 @@ while run:
             m.show_msg(screen)
         else:
             active_msg.remove(m)
+
         
     #clock.tick(60)
 
