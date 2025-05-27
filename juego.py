@@ -71,7 +71,7 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
-            
+            #A PARTIR DE ACA HAY QUE PASAR ESTE CODIGO GENERALIZADO A UNA FUNCION EN UN ARCHIVO APARTE PORQUE VAMOS A TENER QUE USARLO VARIAS VECES (UNA VEZ POR CADA SHOP ITEM)
             if dragging_tower is None:
                 # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
                 if shop_canon.is_clicked(pos):
@@ -95,7 +95,8 @@ while run:
                 else:
                     msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
                     active_msg.append(msg)
-
+                #HASTA ACA!!!
+            #ESTO PASARIA A SER UNA LLAMADA A LA FUNCION QUE HAY QUE DEFINIR!
             if dragging_tower is None:
                 # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
                 if shop_sniper.is_clicked(pos):
