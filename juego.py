@@ -11,13 +11,13 @@ from shop import Shop
 from temporal_msg import TempMsg
 from tower_updated import *
 
-"""# Al principio del archivo
+# Al principio del archivo
 def excepthook(type, value, traceback):
     print("ERROR NO CAPTURADO:", type, value)
     pygame.quit()
     sys.exit()
 
-sys.excepthook = excepthook"""
+sys.excepthook = excepthook
 
 pygame.init()
 
