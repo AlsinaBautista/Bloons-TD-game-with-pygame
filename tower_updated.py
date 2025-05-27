@@ -59,10 +59,10 @@ class Tower(pygame.sprite.Sprite):
         self.img = pygame.transform.rotate(self.original_img, self.angle + 90)
         self.rect = self.img.get_rect(center=self.pos)
 
-class Cannon(Tower):    #defensa basica, la usamos como base      
+class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos):
         scope = 100
-        damage = 1
+        damage = 100
         price = 300
         att_speed = 500
         target = None
@@ -73,7 +73,7 @@ class Cannon(Tower):    #defensa basica, la usamos como base
 class Sniper(Tower):    #mas rango, dano, menos cadencia
     def __init__(self, pos):
         scope = 1000
-        damage = 5
+        damage = 500
         price = 500
         att_speed = 1000
         target = None
@@ -81,20 +81,11 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
         angle = 30
         super().__init__(pos, scope, damage, att_speed, target, price, image, angle) #aca puedo llamar a la clase padre con el scope y damage definido
 
-class Strong(Tower):    #mas dano, menos rango, menos cadencia
-    def __init__(self, pos):
-        scope = 100
-        damage = 10
-        price = 1000
-        att_speed = 200
-        target = None
-        image = pygame.image.load("imgs/tower.png").convert_alpha()
-        super().__init__(pos, scope, damage, att_speed, target, price, image)
 
 class Fast(Tower):  #mas cadencia
     def __init__(self, pos):
         scope = 200
-        damage = 1
+        damage = 100
         price = 450
         att_speed = 1000
         target = None

@@ -1,7 +1,6 @@
 import pygame
 import constantes as c
 from map import Map
-from enemy import Enemy
 from tower import Tower
 from bullet import Bullet
 import sys
@@ -10,6 +9,7 @@ from life import Life
 from shop import Shop 
 from temporal_msg import TempMsg
 from tower_updated import *
+from enemy_updated import *
 
 # Al principio del archivo
 def excepthook(type, value, traceback):
@@ -31,7 +31,7 @@ pygame.display.set_caption("Bloons TD")
 
 map = Map("imgs/fondo.png")
 enemies = pygame.sprite.Group()
-new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENEMY_PATH)
+new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENEMY_PATH, False)
 enemies.add(new_enemy)
 
 # Imagen de torre dummy (puede ser reemplazada luego)
@@ -64,7 +64,9 @@ towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas e
 spawn_timer = pygame.time.get_ticks()
 enemy_spawn_interval = 300  # milisegundos
 enemy_count = 0
-max_enemies = 30
+enemy_blue = 0
+max_red = 30
+max_blue = 30
 
 active_msg = []
 run = True
@@ -83,11 +85,18 @@ while run:
 
     current_time = pygame.time.get_ticks()
 
-    if enemy_count < max_enemies and current_time - spawn_timer >= enemy_spawn_interval:
-        new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENEMY_PATH)
+    if enemy_count < max_red and current_time - spawn_timer >= enemy_spawn_interval:
+        new_enemy = Red_Ballon()
         enemies.add(new_enemy)
         all_sprites.add(new_enemy)
         enemy_count += 1
+        spawn_timer = current_time 
+
+    if enemy_blue < max_blue and current_time - spawn_timer >= enemy_spawn_interval:
+        new_enemy = Blue_Ballon()
+        enemies.add(new_enemy)
+        all_sprites.add(new_enemy)
+        enemy_blue += 1
         spawn_timer = current_time 
     
     for enemy in enemies:

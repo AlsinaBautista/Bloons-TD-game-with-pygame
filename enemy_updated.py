@@ -3,7 +3,7 @@ from money import Money
 
 class Enemy(pygame.sprite.Sprite):
 
-    def __init__(self, pos, speed, health, image, path):
+    def __init__(self, pos, speed, health, image, path, blinded):
         super().__init__() #Hereda el init de la clase padre Sprite que viene con pygame
         self.pos = pos
         self.speed = speed
@@ -12,6 +12,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=pos)
         self.path = path
         self.target_pos_index = 1
+        self.blinded = blinded
         self.last_update_time = pygame.time.get_ticks()
 
 
@@ -52,7 +53,7 @@ class Enemy(pygame.sprite.Sprite):
 class Red_Ballon(Enemy): 
     def __init__(self):
         speed = 100
-        health = 1
+        health = 100
         pos = (0, 265)
         path = [
                 (0, 265),   # Inicio fuera de pantalla (izquierda)
@@ -74,14 +75,16 @@ class Red_Ballon(Enemy):
                 (501,  88),
                 (501,  0)
                             ]
+        blinded = False
         image = pygame.image.load("imgs/bloon.png")
-        super().__init__(pos, speed, health, image, path)
+        super().__init__(pos, speed, health, image, path, blinded)
 
 class Blue_Ballon(Enemy):
     def __init__(self):
         speed = 125
-        health = 2
+        health = 200
         pos = (0, 265)
+        blinded = False
         path = [
                 (0, 265),   # Inicio fuera de pantalla (izquierda)
                 (29, 265),     
@@ -103,13 +106,18 @@ class Blue_Ballon(Enemy):
                 (501,  0)
                             ]
         image = pygame.image.load("imgs/blue_balloon.png")
-        super().__init__(pos, speed, health, image, path)
+        super().__init__(pos, speed, health, image, path, blinded)
+
+    def change_color(self):
+        if self.health <= 100:
+            self.image = pygame.image.load('imgs/bloon.png')
 
 class Green_Ballon(Enemy):
     def __init__(self):
         speed = 150
-        health = 4
+        health = 400
         pos = (0, 265)
+        blinded = False
         path = [
                 (0, 265),   # Inicio fuera de pantalla (izquierda)
                 (29, 265),     
@@ -131,13 +139,14 @@ class Green_Ballon(Enemy):
                 (501,  0)
                             ]
         image = pygame.image.load("imgs/green_balloon.png")
-        super().__init__(pos, speed, health, image, path)
+        super().__init__(pos, speed, health, image, path, blinded)
 
-class Yellow_Ballon(Enemy):
+class Colored_Ballon(Enemy):
     def __init__(self):
         speed = 175
-        health = 6
+        health = 600
         pos = (0, 265)
+        blinded = False
         path = [
                 (0, 265),   # Inicio fuera de pantalla (izquierda)
                 (29, 265),     
@@ -158,14 +167,15 @@ class Yellow_Ballon(Enemy):
                 (501,  88),
                 (501,  0)
                             ]
-        image = pygame.image.load("imgs/bloon.png")
-        super().__init__(pos, speed, health, image, path)
+        image = pygame.image.load("imgs/colored_balloon.png")
+        super().__init__(pos, speed, health, image, path, blinded)
 
 class Pink_Ballon(Enemy):
     def __init__(self):
         speed = 200
-        health = 8
+        health = 800
         pos = (0, 265)
+        blinded = False
         path = [
                 (0, 265),   # Inicio fuera de pantalla (izquierda)
                 (29, 265),     
@@ -186,5 +196,34 @@ class Pink_Ballon(Enemy):
                 (501,  88),
                 (501,  0)
                             ]
-        image = pygame.image.load("imgs/bloon.png")
-        super().__init__(pos, speed, health, image, path)
+        image = pygame.image.load("imgs/pink_balloon.png")
+        super().__init__(pos, speed, health, image, path, blinded)
+
+class Blinded_Ballon(Enemy):
+    def __init__(self):
+        speed = 200
+        health = 8
+        pos = (0, 265)
+        blinded = True
+        path = [
+                (0, 265),   # Inicio fuera de pantalla (izquierda)
+                (29, 265),     
+                (265, 265),
+                (265, 147),
+                (383, 147),
+                (383, 383),
+                (265, 383),
+                (265, 501),
+                (619, 501),
+                (619, 442),
+                (678, 442),
+                (678, 383),
+                (737, 383),
+                (737, 206),
+                (560, 206),
+                (560,  88),
+                (501,  88),
+                (501,  0)
+                            ]
+        image = pygame.image.load("imgs/pink_balloon.png")
+        super().__init__(pos, speed, health, image, path, blinded)
