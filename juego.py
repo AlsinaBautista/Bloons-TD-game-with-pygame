@@ -24,21 +24,21 @@ pygame.init()
 clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
 
-screen = pygame.display.set_mode((c.width, c.height))
+screen = pygame.display.set_mode((c.WIDTH, c.HEIGHT))
 icon = pygame.image.load("imgs/icono_globos.jpeg")
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Bloons TD")
 
 map = Map("imgs/fondo.png")
 enemies = pygame.sprite.Group()
-new_enemy = Enemy(c.enemy_pos, c.enemy_speed, c.enemy_health, c.enemy_img, c.enemy_path)
+new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENEMY_PATH)
 enemies.add(new_enemy)
 
 # Imagen de torre dummy (puede ser reemplazada luego)
 tower_img = pygame.image.load("imgs/tower.png").convert_alpha()
 
 # Crear una torre de prueba en el centro de la pantalla
-test_tower = Tower(pos=(470, c.height//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=tower_img)
+test_tower = Tower(pos=(470, c.HEIGHT//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=tower_img)
 
 bullets = pygame.sprite.Group()
 bullet = test_tower.shoot(enemies)
@@ -74,7 +74,7 @@ while run:
                 # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
                 if shop_item.is_clicked(pos):
                     if money.cant_total >= shop_item.price:
-                        dragging_tower = Cannon(pos=(470, c.height//2))
+                        dragging_tower = Cannon(pos=(470, c.HEIGHT//2))
                         dragging_tower.draw_scope(screen)
                     else:
                         msg = TempMsg(1000, "No tienes\nsuficiente dinero", "imgs/msg.png")
@@ -82,8 +82,8 @@ while run:
                     
             else:
                 # Si ya estas arrastrando una torre, al hacer clic se coloca en el mapa
-                pos = (pos[0] // c.celd * c.celd + c.celd // 2, pos[1] // c.celd * c.celd + c.celd // 2) # Redondea la posicion al centro de la celda
-                if not c.grid[pos[1] // c.celd][pos[0] // c.celd] and pos[0] < c.width - inventory_width: # Verifica si la celda esta vacia
+                pos = (pos[0] // c.CELD * c.CELD + c.CELD // 2, pos[1] // c.CELD * c.CELD + c.CELD // 2) # Redondea la posicion al centro de la celda
+                if not c.GRID[pos[1] // c.CELD][pos[0] // c.CELD] and pos[0] < c.WIDTH - inventory_width: # Verifica si la celda esta vacia
                 # Si la celda esta vacia, coloca la torre
                     dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
                     money.spend_money(shop_item.price)
@@ -95,12 +95,12 @@ while run:
                     active_msg.append(msg)
 
     map.draw_background(screen)
-    #map.draw_celds(screen, c.white, c.celd)
+    #map.draw_celds(screen, c.white, c.CELD)
 
     current_time = pygame.time.get_ticks()
 
     if enemy_count < max_enemies and current_time - spawn_timer >= enemy_spawn_interval:
-        new_enemy = Enemy(c.enemy_pos, c.enemy_speed, c.enemy_health, c.enemy_img, c.enemy_path)
+        new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENEMY_PATH)
         enemies.add(new_enemy)
         all_sprites.add(new_enemy)
         enemy_count += 1
@@ -135,9 +135,9 @@ while run:
     life.draw(screen)
 
     # Dibujo de la tienda
-    inventory_width = int(c.width * 0.2) # La tienda ocupa el 20% del ancho total
-    inventory_height = c.height
-    inventory_rect = pygame.Rect(c.width - inventory_width, 0, inventory_width, inventory_height)
+    inventory_width = int(c.WIDTH * 0.2) # La tienda ocupa el 20% del ancho total
+    inventory_height = c.HEIGHT
+    inventory_rect = pygame.Rect(c.WIDTH - inventory_width, 0, inventory_width, inventory_height)
     pygame.draw.rect(screen, (191,158,83), inventory_rect) # Dibuja el fondo de la tienda
     shop_item.draw(screen) # Dibuja la torre disponible en la tienda 
 
@@ -153,9 +153,9 @@ while run:
         screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
 
     if life.cant_total <= 0:
-        font = pygame.font.SysFont('showcardgothic', 48)
-        text = font.render("GAME OVER", True, (255, 255, 255))
-        text_rect = text.get_rect(center=(c.width // 2, c.height // 2))
+        font = pygame.font.Font('fonts/OETZTYP_.TTF', 48)
+        text = font.render("GAME OVER", True, c.RED)
+        text_rect = text.get_rect(center=(c.WIDTH // 2, c.HEIGHT // 2))
         screen.blit(text, text_rect)
         pygame.display.update()
         pygame.time.delay(2000)

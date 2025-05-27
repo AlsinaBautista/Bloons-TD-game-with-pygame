@@ -24,7 +24,7 @@ class Tower(pygame.sprite.Sprite):
         self.pos = (x, y)   #cambia la posicion a la que se le pasa
 
     def draw_scope(self, screen):
-        pygame.draw.circle(screen, c.white, self.pos ,self.scope, 1)
+        pygame.draw.circle(screen, c.WHITE, self.pos ,self.scope, 1)
 
     def enemies_in_range(self, pos_enemy):
         xe, ye = pos_enemy
@@ -56,7 +56,7 @@ class Tower(pygame.sprite.Sprite):
         y = enemy_pos[1] - self.pos[1]
         angle_rad = math.atan2(-y, x)
         self.angle = math.degrees(angle_rad)
-        self.img = pygame.transform.rotate(self.original_img, self.angle)
+        self.img = pygame.transform.rotate(self.original_img, self.angle + 90)
         self.rect = self.img.get_rect(center=self.pos)
 
 class Cannon(Tower):    #defensa basica, la usamos como base      

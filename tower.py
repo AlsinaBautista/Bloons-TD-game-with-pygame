@@ -25,7 +25,7 @@ class Tower(pygame.sprite.Sprite):
         self.pos = (x, y)
     
     def draw_scope(self, screen):
-        pygame.draw.circle(screen, c.white, self.pos ,self.scope, 1)
+        pygame.draw.circle(screen, c.WHITE, self.pos ,self.scope, 1)
 
     def enemies_in_range(self, pos_enemy):
         xe, ye = pos_enemy

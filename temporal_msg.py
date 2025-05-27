@@ -1,4 +1,5 @@
 import pygame
+import constantes as c
 
 class TempMsg:
 
@@ -20,7 +21,7 @@ class TempMsg:
             screen.blit(self.image, self.pos)
             line_heigth = 0
             for line in lines:    
-                render_text = self.font.render(line, True, (245,48,18))
+                render_text = self.font.render(line, True, c.RED)
                 text_rect = render_text.get_rect(center=(image_rect.centerx, image_rect.midtop[1] + line_heigth + 65))
                 screen.blit(render_text, text_rect)
                 line_heigth += render_text.get_height()
