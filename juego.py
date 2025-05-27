@@ -75,55 +75,8 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
-            #A PARTIR DE ACA HAY QUE PASAR ESTE CODIGO GENERALIZADO A UNA FUNCION EN UN ARCHIVO APARTE PORQUE VAMOS A TENER QUE USARLO VARIAS VECES (UNA VEZ POR CADA SHOP ITEM)
-            if dragging_tower is None:
-                # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
-                if shop_canon.is_clicked(pos):
-                    if money.cant_total >= shop_canon.price:
-                        dragging_tower = Cannon(pos=(470, c.HEIGHT//2))
-                        dragging_tower.draw_scope(screen)
-                    else:
-                        msg = TempMsg(1000, "No tienes\nsuficiente dinero", "imgs/msg.png")
-                        active_msg.append(msg)
-                    
-            else:
-                # Si ya estas arrastrando una torre, al hacer clic se coloca en el mapa
-                pos = (pos[0] // c.CELD * c.CELD + c.CELD // 2, pos[1] // c.CELD * c.CELD + c.CELD // 2) # Redondea la posicion al centro de la celda
-                if not c.GRID[pos[1] // c.CELD][pos[0] // c.CELD] and pos[0] < c.WIDTH - inventory_width: # Verifica si la celda esta vacia
-                # Si la celda esta vacia, coloca la torre
-                    dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
-                    money.spend_money(shop_canon.price)
-                    towers.add(dragging_tower) # Agrega la torre al grupo de torres
-                    all_sprites.add(dragging_tower)
-                    dragging_tower = None
-                else:
-                    msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
-                    active_msg.append(msg)
-                #HASTA ACA!!!
-            #ESTO PASARIA A SER UNA LLAMADA A LA FUNCION QUE HAY QUE DEFINIR!
-            if dragging_tower is None:
-                # Si no estas arrastrando una torre, revisamos si hiciste clic en la tienda
-                if shop_sniper.is_clicked(pos):
-                    if money.cant_total >= shop_sniper.price:
-                        dragging_tower = Sniper(pos=(470, c.HEIGHT//2))
-                        dragging_tower.draw_scope(screen)
-                    else:
-                        msg = TempMsg(1000, "No tienes\nsuficiente dinero", "imgs/msg.png")
-                        active_msg.append(msg)
-                    
-            else:
-                # Si ya estas arrastrando una torre, al hacer clic se coloca en el mapa
-                pos = (pos[0] // c.CELD * c.CELD + c.CELD // 2, pos[1] // c.CELD * c.CELD + c.CELD // 2) # Redondea la posicion al centro de la celda
-                if not c.GRID[pos[1] // c.CELD][pos[0] // c.CELD] and pos[0] < c.WIDTH - inventory_width: # Verifica si la celda esta vacia
-                # Si la celda esta vacia, coloca la torre
-                    dragging_tower.set_tower(*pos) # Posiciona la torre en el lugar del clic
-                    money.spend_money(shop_sniper.price)
-                    towers.add(dragging_tower) # Agrega la torre al grupo de torres
-                    all_sprites.add(dragging_tower)
-                    dragging_tower = None
-                else:
-                    msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
-                    active_msg.append(msg)
+            dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg)
+            dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg)
 
     map.draw_background(screen)
     #map.draw_celds(screen, c.white, c.CELD)
@@ -166,9 +119,8 @@ while run:
     life.draw(screen)
 
     # Dibujo de la tienda
-    inventory_width = int(c.WIDTH * 0.2) # La tienda ocupa el 20% del ancho total
     inventory_height = c.HEIGHT
-    inventory_rect = pygame.Rect(c.WIDTH - inventory_width, 0, inventory_width, inventory_height)
+    inventory_rect = pygame.Rect(c.WIDTH - c.INVENTORY_WIDTH, 0, c.INVENTORY_WIDTH, inventory_height)
     pygame.draw.rect(screen, (191,158,83), inventory_rect) # Dibuja el fondo de la tienda
     shop_canon.draw(screen) # Dibuja la torre disponible en la tienda 
     shop_sniper.draw(screen)

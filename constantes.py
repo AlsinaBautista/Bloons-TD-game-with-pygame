@@ -4,6 +4,7 @@ RED = (245,48,18)
 WHITE = (255, 255, 255)
 WIDTH = 1000
 HEIGHT = 532
+INVENTORY_WIDTH = int(WIDTH * 0.2) # La tienda ocupa el 20% del ancho total
 CELD = 59
 ENEMY_PATH = path = [
     (0, 265),   # Inicio fuera de pantalla (izquierda)
