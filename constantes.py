@@ -7,6 +7,8 @@ WIDTH = 1000
 HEIGHT = 532
 INVENTORY_WIDTH = int(WIDTH * 0.2) # La tienda ocupa el 20% del ancho total
 CELD = 59
+GRID_WIDTH = (WIDTH - INVENTORY_WIDTH) // CELD
+GRID_HEIGHT = HEIGHT // CELD
 ENEMY_PATH = path = [
     (0, 265),   # Inicio fuera de pantalla (izquierda)
     (29, 265),     
@@ -33,3 +35,12 @@ ENEMY_IMG = pygame.image.load("imgs/bloon.png")
 ENEMY_SPEED = 100
 ENEMY_POS = (0, 265)
 
+OCCUPIED_CELLS = [
+    [(0, 0), 1], [(1, 0), 1], [(2, 0), 1], [(12, 0), 1], [(11, 0), 1],
+    [(10, 0), 1], [(9, 0), 1], [(12, 1), 1], [(0, 1), 1], [(1, 1), 1],
+    [(11, 1), 1], [(12, 2), 1], [(0, 2), 1], [(0, 8), 1], [(1, 8), 1],
+    [(2, 8), 1], [(0, 7), 1], [(1, 7), 1], [(0, 6), 1], [(12, 8), 1],
+    [(11, 8), 1], [(10, 8), 1], [(12, 7), 1], [(11, 7), 1], [(12, 6), 1],
+    [(10, 5), 1], [(10, 4), 1], [(9, 6), 2], [(9, 5), 2], [(9, 4), 2],
+    [(8, 6), 2], [(8, 5), 2], [(8, 4), 2], [(7, 6), 1], [(7, 5), 1]
+]
