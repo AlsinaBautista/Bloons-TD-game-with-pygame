@@ -40,7 +40,7 @@ sniper_img = pygame.image.load("imgs/shooter.png").convert_alpha()
 
 # Imagen de towers para shop
 canon_img_shop = pygame.image.load("imgs/tower_shop.png").convert_alpha()
-sniper_img_shop = pygame.image.load("imgs/shooter.png").convert_alpha()
+sniper_img_shop = pygame.image.load("imgs/shooter_shop.png").convert_alpha()
 
 # Crear una torre de prueba en el centro de la pantalla
 test_tower = Tower(pos=(470, c.HEIGHT//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=canon_img, angle=0)
