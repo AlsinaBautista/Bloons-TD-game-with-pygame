@@ -38,6 +38,10 @@ enemies.add(new_enemy)
 canon_img = pygame.image.load("imgs/tower.png").convert_alpha()
 sniper_img = pygame.image.load("imgs/shooter.png").convert_alpha()
 
+# Imagen de towers para shop
+canon_img_shop = pygame.image.load("imgs/tower_shop.png").convert_alpha()
+sniper_img_shop = pygame.image.load("imgs/shooter.png").convert_alpha()
+
 # Crear una torre de prueba en el centro de la pantalla
 test_tower = Tower(pos=(470, c.HEIGHT//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=canon_img, angle=0)
 
@@ -52,8 +56,8 @@ life_img = pygame.image.load("imgs/life.png")
 life = Life(20, life_img)
 
 # Tienda y drag (torre en mouse)
-shop_canon = Shop(canon_img, 810, 10, 300, money)
-shop_sniper = Shop(sniper_img, 890, 10, 500, money)
+shop_canon = Shop(canon_img_shop, 810, 10, 300, money)
+shop_sniper = Shop(sniper_img_shop, 890, 10, 500, money)
 dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
 towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
 
