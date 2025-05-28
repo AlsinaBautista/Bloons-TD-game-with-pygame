@@ -66,7 +66,7 @@ max_blue = 30
 active_msg = []
 
 game_speed = 1
-speed_button = Button(c.SPEED_BUTTON, (c.WIDTH - c.INVENTORY_WIDTH - 30, c.HEIGHT - 30), 8)
+speed_button = Button(c.SPEED_BUTTON, (c.WIDTH - c.INVENTORY_WIDTH - 50, c.HEIGHT - 50), 30)
 
 run = True
 while run:
