@@ -35,20 +35,13 @@ new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENE
 enemies.add(new_enemy)
 
 # Imagen de torre dummy (puede ser reemplazada luego)
-canon_img = pygame.image.load("imgs/tower.png").convert_alpha()
-sniper_img = pygame.image.load("imgs/shooter.png").convert_alpha()
 
 # Imagen de towers para shop
 canon_img_shop = pygame.image.load("imgs/tower_shop.png").convert_alpha()
 sniper_img_shop = pygame.image.load("imgs/shooter_shop.png").convert_alpha()
-
-# Crear una torre de prueba en el centro de la pantalla
-test_tower = Tower(pos=(470, c.HEIGHT//2), scope=200, damage=1, att_speed=500, target=None, price=50, image=canon_img, angle=0)
+fast_mokey_img_shop = pygame.image.load("imgs/fast_mokey_shop.png").convert_alpha()
 
 bullets = pygame.sprite.Group()
-bullet = test_tower.shoot(enemies)
-if bullet:
-    bullets.add(bullet)
 
 money_img = pygame.image.load("imgs/money.png")
 money = Money(750, money_img)
@@ -58,6 +51,7 @@ life = Life(20, life_img)
 # Tienda y drag (torre en mouse)
 shop_canon = Shop(canon_img_shop, 810, 10, 300, money)
 shop_sniper = Shop(sniper_img_shop, 890, 10, 500, money)
+shop_fast_monkey = Shop(fast_mokey_img_shop, 810, 110, 450, money)
 dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
 towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
 
@@ -79,6 +73,7 @@ while run:
             pos = event.pos
             dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg)
             dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg)
+            dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Fast, screen, towers, all_sprites, pos, active_msg)
 
     map.draw_background(screen)
     #map.draw_celds(screen, c.white, c.CELD)
@@ -103,17 +98,6 @@ while run:
         enemy.update(money,life)
         enemy.draw(screen)
 
-    # Torre de prueba
-    """test_tower.draw_scope(screen) 
-    screen.blit(test_tower.img, (test_tower.pos[0] - test_tower.img.get_width()//2,
-                                test_tower.pos[1] - test_tower.img.get_height()//2))
-    
-    if test_tower.bullet_active and not test_tower.bullet_active.alive():
-        test_tower.bullet_active = None
-
-    new_bullet = test_tower.shoot(enemies)
-    if new_bullet:
-        bullets.add(new_bullet)"""
     # Torres colocadas desde la tienda
     for tower in towers:
         bullet = tower.shoot(enemies)
@@ -133,6 +117,7 @@ while run:
     pygame.draw.rect(screen, (191,158,83), inventory_rect) # Dibuja el fondo de la tienda
     shop_canon.draw(screen) # Dibuja la torre disponible en la tienda 
     shop_sniper.draw(screen)
+    shop_fast_monkey.draw(screen)
 
     # Dibujo de las torres colocadas
     for tower in towers:

@@ -64,6 +64,17 @@ class Tower(pygame.sprite.Sprite):
         self.img = pygame.transform.rotate(self.original_img, self.angle + 90)
         self.rect = self.img.get_rect(center=self.pos)
 
+class Basic(Tower):
+    def __init__(self, pos):
+        scope = 100
+        damage = 100
+        price = 300
+        att_speed = 500
+        target = None
+        image = pygame.image.load("imgs/tower.png").convert_alpha()
+        angle = 0
+        super().__init__(pos, scope, damage, att_speed, target, price, image, angle)
+
 class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos):
         scope = 100
@@ -92,7 +103,18 @@ class Fast(Tower):  #mas cadencia
         scope = 200
         damage = 100
         price = 450
+        att_speed = 300
+        target = None
+        angle = 0
+        image = pygame.image.load("imgs/fast_monkey.png").convert_alpha()
+        super().__init__(pos, scope, damage, att_speed, target, price, image, angle)
+
+class Ship(Tower):  #mas cadencia
+    def __init__(self, pos):
+        scope = 200
+        damage = 100
+        price = 450
         att_speed = 1000
         target = None
-        image = pygame.image.load("imgs/tower.png").convert_alpha()
+        image = pygame.image.load("imgs/ship.png").convert_alpha()
         super().__init__(pos, scope, damage, att_speed, target, price, image)
