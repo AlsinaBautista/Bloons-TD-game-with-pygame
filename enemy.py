@@ -58,6 +58,7 @@ class Enemy(pygame.sprite.Sprite):
             self.image = pygame.image.load('imgs/pink_balloon.png')
 
         if self.health <= 0:
+            self.image = pygame.image.load("imgs/bloon_explotion.png")
             self.kill()
             money.add_money(25)
         if (self.pos[0] - self.path[-1][0] < 2) and (self.pos[1] - self.path[-1][1] < 2):
