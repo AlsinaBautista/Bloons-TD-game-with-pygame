@@ -1,15 +1,14 @@
 import pygame
 import constantes as c
 from map import Map
-from tower import Tower
 from bullet import Bullet
 import sys
 from money import Money
 from life import Life
 from shop import Shop 
 from temporal_msg import TempMsg
-from tower_updated import *
-from enemy_updated import *
+from tower import *
+from enemy import *
 from grid import *
 
 # Al principio del archivo
