@@ -5,13 +5,13 @@ import math
 from enemy import *
 #Primero creo la clase padre de las defensas, en este caso, Tower
 class Tower(pygame.sprite.Sprite):
-    def __init__(self, pos, scope, damage, att_speed, target, price, image, angle):
+    def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed):
         super().__init__()
         self.pos = pos
         self.scope = scope
         self.damage = damage
-        self.base_att_speed = att_speed
-        self.att_speed = att_speed
+        self.base_att_speed = base_att_speed
+        self.att_speed = base_att_speed / game_speed
         self.target = target
         self.price = price
         self.original_img = image
@@ -25,7 +25,7 @@ class Tower(pygame.sprite.Sprite):
     def set_tower(self, x, y):
         self.pos = (x, y)   #cambia la posicion a la que se le pasa
 
-    def draw_scope(self, screen):
+    def draw_scope(self):
         """Devuelve una superficie con el alcance (scope) dibujado como un círculo transparente."""
         diameter = self.scope * 2
         surface = pygame.Surface((diameter, diameter), pygame.SRCALPHA)  # Soporta transparencia
@@ -65,57 +65,65 @@ class Tower(pygame.sprite.Sprite):
         self.img = pygame.transform.rotate(self.original_img, self.angle + 90)
         self.rect = self.img.get_rect(center=self.pos)
 
+    def update_att_speed(self, game_speed):
+        self.att_speed = self.base_att_speed / game_speed
+
 class Basic(Tower):
-    def __init__(self, pos):
+    def __init__(self, pos, game_speed):
         scope = 100
         damage = 100
         price = 300
-        att_speed = 500
+        base_att_speed = 500
+        att_speed = base_att_speed / game_speed
         target = None
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         angle = 0
-        super().__init__(pos, scope, damage, att_speed, target, price, image, angle)
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed)
 
 class Cannon(Tower):    #defensa fuerte
-    def __init__(self, pos):
+    def __init__(self, pos, game_speed):
         scope = 100
         damage = 100
         price = 300
-        att_speed = 500
+        base_att_speed = 500
+        att_speed = base_att_speed / game_speed
         target = None
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         angle = 0
-        super().__init__(pos, scope, damage, att_speed, target, price, image, angle) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed) #aca puedo llamar a la clase padre con el scope y damage definido
 
 class Sniper(Tower):    #mas rango, dano, menos cadencia
-    def __init__(self, pos):
+    def __init__(self, pos, game_speed):
         scope = 1000
         damage = 500
         price = 500
-        att_speed = 1000
+        base_att_speed = 1000
+        att_speed = base_att_speed / game_speed
         target = None
         image = pygame.image.load("imgs/shooter.png").convert_alpha()
         angle = 30
-        super().__init__(pos, scope, damage, att_speed, target, price, image, angle) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed) #aca puedo llamar a la clase padre con el scope y damage definido
 
 
 class Fast(Tower):  #mas cadencia
-    def __init__(self, pos):
+    def __init__(self, pos, game_speed):
         scope = 200
         damage = 100
         price = 450
-        att_speed = 300
+        base_att_speed = 300
+        att_speed = base_att_speed / game_speed
         target = None
         angle = 0
         image = pygame.image.load("imgs/fast_monkey.png").convert_alpha()
-        super().__init__(pos, scope, damage, att_speed, target, price, image, angle)
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed)
 
 class Ship(Tower):  #mas cadencia
-    def __init__(self, pos):
+    def __init__(self, pos, game_speed):
         scope = 200
         damage = 100
         price = 450
-        att_speed = 1000
+        base_att_speed = 1000
+        att_speed = base_att_speed / game_speed
         target = None
         image = pygame.image.load("imgs/ship.png").convert_alpha()
-        super().__init__(pos, scope, damage, att_speed, target, price, image)
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, game_speed)

@@ -21,13 +21,13 @@ class Shop:
         # Si el jugador hizo clic sobre el cañon de la tienda, devuelve true
         return self.rect.collidepoint(pos) # pos es la posicion del mouse cuando se hace el clic
 
-    def shop_items(self, dragging_tower, tower_class, screen, towers, all_sprites, pos, active_msg):
+    def shop_items(self, dragging_tower, tower_class, screen, towers, all_sprites, pos, active_msg, game_speed):
         grid = start_grid()
         if dragging_tower is None:
             if self.is_clicked(pos):
                 if self.money.cant_total >= self.price:
-                    dragging_tower = tower_class(pos=(470, c.HEIGHT // 2))
-                    dragging_tower.draw_scope(screen)
+                    dragging_tower = tower_class(pos=(470, c.HEIGHT // 2), game_speed=game_speed)
+                    dragging_tower.draw_scope()
                 else:
                     msg = TempMsg(1000, "No tienes\nsuficiente dinero", "imgs/msg.png")
                     active_msg.append(msg)

@@ -96,9 +96,9 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
-            dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg)
-            dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg)
-            dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Fast, screen, towers, all_sprites, pos, active_msg)
+            dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg, game_speed)
+            dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg, game_speed)
+            dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Fast, screen, towers, all_sprites, pos, active_msg, game_speed)
 
     map.draw_background(screen)
     #map.draw_celds(screen, c.white, c.CELD)
@@ -155,7 +155,7 @@ while run:
     if dragging_tower is not None:
         mouse_pos = pygame.mouse.get_pos() # Posicion actual del mouse
         # Dibuja alcance
-        scope_surface = dragging_tower.draw_scope(screen)
+        scope_surface = dragging_tower.draw_scope()
         screen.blit(scope_surface, (mouse_pos[0] - dragging_tower.scope, mouse_pos[1] - dragging_tower.scope))
         dragging_tower.set_tower(*mouse_pos) # Actualiza la posicion de la torre arrastrada
         screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
