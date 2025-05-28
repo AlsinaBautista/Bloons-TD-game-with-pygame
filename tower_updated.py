@@ -25,7 +25,11 @@ class Tower(pygame.sprite.Sprite):
         self.pos = (x, y)   #cambia la posicion a la que se le pasa
 
     def draw_scope(self, screen):
-        pygame.draw.circle(screen, c.WHITE, self.pos ,self.scope, 1)
+        """Devuelve una superficie con el alcance (scope) dibujado como un círculo transparente."""
+        diameter = self.scope * 2
+        surface = pygame.Surface((diameter, diameter), pygame.SRCALPHA)  # Soporta transparencia
+        pygame.draw.circle(surface, (230, 230, 230, 100), (self.scope, self.scope), self.scope)
+        return surface
 
     def enemies_in_range(self, pos_enemy):
         xe, ye = pos_enemy

@@ -10,6 +10,7 @@ from shop import Shop
 from temporal_msg import TempMsg
 from tower_updated import *
 from enemy_updated import *
+from grid import *
 
 # Al principio del archivo
 def excepthook(type, value, traceback):
@@ -142,6 +143,9 @@ while run:
     # Dar el efecto de que el mouse lleva al item del cañon
     if dragging_tower is not None:
         mouse_pos = pygame.mouse.get_pos() # Posicion actual del mouse
+        # Dibuja alcance
+        scope_surface = dragging_tower.draw_scope(screen)
+        screen.blit(scope_surface, (mouse_pos[0] - dragging_tower.scope, mouse_pos[1] - dragging_tower.scope))
         dragging_tower.set_tower(*mouse_pos) # Actualiza la posicion de la torre arrastrada
         screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
 

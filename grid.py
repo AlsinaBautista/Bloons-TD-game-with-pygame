@@ -34,6 +34,9 @@ class Grid:
 
     def __str__(self):
         return '\n'.join([' '.join(map(str, row)) for row in self.grid])
+    
+    def __getitem__(self, index):
+        return self.grid[index]
 
 def start_grid():
     

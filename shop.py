@@ -3,7 +3,7 @@ from constantes import *
 from money import *
 from temporal_msg import TempMsg
 from tower_updated import *
-import map as m
+from grid import *
 
 class Shop:
     def __init__(self, img_tower, x, y, price, money):
@@ -22,6 +22,7 @@ class Shop:
         return self.rect.collidepoint(pos) # pos es la posicion del mouse cuando se hace el clic
 
     def shop_items(self, dragging_tower, tower_class, screen, towers, all_sprites, pos, active_msg):
+        grid = start_grid()
         if dragging_tower is None:
             if self.is_clicked(pos):
                 if self.money.cant_total >= self.price:
@@ -33,7 +34,7 @@ class Shop:
         else:
             if pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
                 pos_grid = (pos[0] // c.CELD * c.CELD + c.CELD // 2, pos[1] // c.CELD * c.CELD + c.CELD // 2)
-                if not m.grid[pos[1] // c.CELD][pos[0] // c.CELD] and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
+                if not grid[pos[1] // c.CELD][pos[0] // c.CELD] and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
                     dragging_tower.set_tower(*pos_grid)
                     self.money.spend_money(self.price)
                     towers.add(dragging_tower)
