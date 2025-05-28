@@ -1,5 +1,5 @@
 import pygame
-from enemy import Enemy
+from enemy import *
 import math
 
 class Bullet(pygame.sprite.Sprite):

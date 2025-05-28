@@ -2,7 +2,7 @@ import pygame
 from constantes import *
 from money import *
 from temporal_msg import TempMsg
-from tower_updated import *
+from tower import *
 from grid import *
 
 class Shop:
