@@ -39,7 +39,7 @@ enemies.add(new_enemy)
 # Imagen de towers para shop
 canon_img_shop = pygame.image.load("imgs/tower_shop.png").convert_alpha()
 sniper_img_shop = pygame.image.load("imgs/shooter_shop.png").convert_alpha()
-fast_mokey_img_shop = pygame.image.load("imgs/fast_mokey_shop.png").convert_alpha()
+fast_mokey_img_shop = pygame.image.load("imgs/fast_monkey_shop.png").convert_alpha()
 
 bullets = pygame.sprite.Group()
 
@@ -50,7 +50,7 @@ life = Life(20, life_img)
 
 # Tienda y drag (torre en mouse)
 shop_canon = Shop(canon_img_shop, 810, 10, 300, money)
-shop_sniper = Shop(sniper_img_shop, 890, 10, 500, money)
+shop_sniper = Shop(sniper_img_shop, 895, 10, 500, money)
 shop_fast_monkey = Shop(fast_mokey_img_shop, 810, 110, 450, money)
 dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
 towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
