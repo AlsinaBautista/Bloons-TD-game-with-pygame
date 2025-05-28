@@ -10,6 +10,7 @@ class Tower(pygame.sprite.Sprite):
         self.pos = pos
         self.scope = scope
         self.damage = damage
+        self.base_att_speed = att_speed
         self.att_speed = att_speed
         self.target = target
         self.price = price

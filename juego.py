@@ -10,6 +10,7 @@ from temporal_msg import TempMsg
 from tower import *
 from enemy import *
 from grid import *
+from x2_button import *
 
 # Al principio del archivo
 def excepthook(type, value, traceback):
@@ -63,10 +64,34 @@ max_red = 30
 max_blue = 30
 
 active_msg = []
+
+game_speed = 1
+speed_button = Button(c.SPEED_BUTTON, (c.WIDTH - c.INVENTORY_WIDTH - 30, c.HEIGHT - 30), 8)
+
 run = True
 while run:
     delta_time = clock.tick(60) / 1000
     for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if speed_button.is_clicked(event.pos):
+                game_speed = speed_button.change_speed()
+
+                # Aplicar nueva velocidad a enemigos
+                for enemy in enemies:
+                    enemy.update_speed(game_speed)
+
+                # A proyectiles existentes
+                for bullet in bullets:
+                    bullet.speed = bullet.base_speed * game_speed
+
+                if game_speed == 1:
+                    enemy_spawn_interval = 300
+                else:
+                    enemy_spawn_interval = 150
+
+                # A torres
+                for tower in towers:
+                    tower.att_speed = tower.base_att_speed / game_speed  # menor cooldown = más rápido
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -81,14 +106,14 @@ while run:
     current_time = pygame.time.get_ticks()
 
     if enemy_count < max_red and current_time - spawn_timer >= enemy_spawn_interval:
-        new_enemy = Red_Ballon()
+        new_enemy = Red_Ballon(game_speed)
         enemies.add(new_enemy)
         all_sprites.add(new_enemy)
         enemy_count += 1
         spawn_timer = current_time 
 
     if enemy_blue < max_blue and current_time - spawn_timer >= enemy_spawn_interval:
-        new_enemy = Blue_Ballon()
+        new_enemy = Blue_Ballon(game_speed)
         enemies.add(new_enemy)
         all_sprites.add(new_enemy)
         enemy_blue += 1
@@ -119,6 +144,8 @@ while run:
     shop_sniper.draw(screen)
     shop_fast_monkey.draw(screen)
 
+    speed_button.draw(screen)
+
     # Dibujo de las torres colocadas
     for tower in towers:
         screen.blit(tower.img, (tower.pos[0] - tower.img.get_width()//2, tower.pos[1] - tower.img.get_height()//2))
@@ -148,9 +175,8 @@ while run:
         else:
             active_msg.remove(m)
 
-        
-    #clock.tick(60)
 
+    #clock.tick(60)
 
     pygame.display.update()
 

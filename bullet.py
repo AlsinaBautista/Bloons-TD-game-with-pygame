@@ -8,6 +8,7 @@ class Bullet(pygame.sprite.Sprite):
         super().__init__()
         self.pos = pos
         self.target = target
+        self.base_speed = speed
         self.speed = speed
         self.damage = damage
         self.original_image = pygame.image.load(image_path).convert_alpha()

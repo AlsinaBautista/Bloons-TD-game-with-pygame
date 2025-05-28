@@ -47,3 +47,5 @@ OCCUPIED_CELLS = [
     [(0, 8), 1], [(1, 8), 1], [(2, 8), 1],[(11, 8), 1], [(12, 8), 1], [(13, 8), 1]
     
 ]
+
+SPEED_BUTTON = pygame.image.load("imgs/speed_button.png")
