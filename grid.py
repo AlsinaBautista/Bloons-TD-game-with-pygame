@@ -3,7 +3,7 @@ class Grid:
     def __init__(self, grid_width=c.GRID_WIDTH,grid_height=c.GRID_HEIGHT):
         self.height = grid_height   
         self.width = grid_width 
-        self.grid = [[0 for _ in range(self.width)] for _ in range(self.height)]
+        self.grid = [[0 for _ in range(self.width +1)] for _ in range(self.height)]
     
     def initialize_grid(self):
         for i in range(len(c.ENEMY_PATH) - 1):
@@ -24,7 +24,7 @@ class Grid:
             self.set_value(x, y, value)
 
     def set_value(self, x, y, value):
-        if 0 <= x < self.width and 0 <= y < self.height:
+        if 0 <= x < self.width + 1 and 0 <= y < self.height:
             self.grid[y][x] = value
 
     def get_value(self, x, y):
