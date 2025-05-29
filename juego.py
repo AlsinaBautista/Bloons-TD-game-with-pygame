@@ -40,6 +40,7 @@ enemies.add(new_enemy)
 # Imagen de towers para shop
 canon_img_shop = pygame.image.load("imgs/tower_shop.png").convert_alpha()
 sniper_img_shop = pygame.image.load("imgs/shooter_shop.png").convert_alpha()
+#ship_img_shop = pygame.image.load("imgs/ship_shop.png").convert_alpha()
 fast_mokey_img_shop = pygame.image.load("imgs/fast_monkey_shop.png").convert_alpha()
 
 bullets = pygame.sprite.Group()
