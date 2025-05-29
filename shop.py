@@ -44,9 +44,6 @@ class Shop:
                     else:
                         msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
                         active_msg.append(msg)
-                else:
-                    msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
-                    active_msg.append(msg)
             except IndexError:
                 msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
                 active_msg.append(msg)
