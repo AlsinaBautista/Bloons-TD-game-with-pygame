@@ -35,7 +35,7 @@ class Enemy(pygame.sprite.Sprite):
         self.set_pos(new_x, new_y)
         self.rect.center = (int(new_x), int(new_y))
         xt, yt = self.path[self.target_pos_index]
-        if abs(new_x - xt) < 2 and abs(new_y - yt) < 2:
+        if abs(new_x - xt) < 4 and abs(new_y - yt) < 4:
             if self.target_pos_index < len(self.path) - 1:
                 self.target_pos_index += 1
         #que se hagan rojos
