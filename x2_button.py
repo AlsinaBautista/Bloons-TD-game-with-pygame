@@ -8,6 +8,7 @@ class Button:
         self.radius = radius
         self.image = image
         self.rect = self.image.get_rect(center=pos)
+        self.boton_rect = pygame.Rect(pos[0] - radius, pos[1] - radius, radius * 2, radius * 2)
         self.speedup = False
 
     def draw(self, screen):
@@ -23,4 +24,22 @@ class Button:
             return 2
         else:
             return 1
+    
+    def hover(self, surface, mouse_pos):
+        boton_surface = pygame.Surface((self.boton_rect.width, self.boton_rect.height), pygame.SRCALPHA)
+
+        # Detectar si el mouse esta sobre el boton
+        if self.boton_rect.collidepoint(mouse_pos):
+            color = (0, 0, 0, 80)  # Color semitransparente en hover
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+        else:
+            color = (0, 0, 0, 0)
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+        # Dibujar rectangulo con esquinas redondeadas
+        pygame.draw.rect(boton_surface, color, boton_surface.get_rect(), border_radius=30)
+
+        # Dibujar el boton sobre la superficie principal
+        surface.blit(boton_surface, (self.boton_rect.x, self.boton_rect.y))
+    
     

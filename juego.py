@@ -153,7 +153,6 @@ while run:
     
     # Dar el efecto de que el mouse lleva al item del cañon
     if dragging_tower is not None:
-        mouse_pos = pygame.mouse.get_pos() # Posicion actual del mouse
         # Dibuja alcance
         scope_surface = dragging_tower.draw_scope()
         screen.blit(scope_surface, (mouse_pos[0] - dragging_tower.scope, mouse_pos[1] - dragging_tower.scope))
@@ -175,8 +174,9 @@ while run:
         else:
             active_msg.remove(m)
 
-
     #clock.tick(60)
+    mouse_pos = pygame.mouse.get_pos() # Posicion actual del mouse
+    speed_button.hover(screen, mouse_pos)
 
     pygame.display.update()
 
