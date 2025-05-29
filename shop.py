@@ -49,3 +49,9 @@ class Shop:
                 active_msg.append(msg)
 
         return dragging_tower
+
+    def draw_trash(screen, trash_img):
+        screen.blit(trash_img, (900, 450)) # Dibuja la imagen en el pixel (900, 450)
+        trash_rect = trash_img.get_rect(topleft=(900, 450)) # Crea un rectangulo del tamaño de la imagen y lo posiciona con la esquina superior izquierda en (900, 450)
+        return trash_rect
+
