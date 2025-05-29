@@ -71,13 +71,11 @@ speed_button = Button(c.SPEED_BUTTON, (c.WIDTH - c.INVENTORY_WIDTH - 50, c.HEIGH
 
 run = True
 while run:
-    base_delta_time = clock.tick(60) / 1000
-    delta_time = base_delta_time * game_speed
+    delta_time = clock.tick(60) / 1000
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
             if speed_button.is_clicked(event.pos):
                 game_speed = speed_button.change_speed()
-                delta_time = base_delta_time * game_speed
                 # Aplicar nueva velocidad a enemigos
                 for enemy in enemies:
                     enemy.update_speed(game_speed)
@@ -90,7 +88,6 @@ while run:
                     enemy_spawn_interval = 300
                 else:
                     enemy_spawn_interval = 150
-
                 # A torres
                 for tower in towers:
                     tower.att_speed = tower.base_att_speed / game_speed  # menor cooldown = más rápido
