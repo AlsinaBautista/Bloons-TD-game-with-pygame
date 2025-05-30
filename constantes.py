@@ -3,6 +3,8 @@ import pygame
 RED = (245,48,18)
 WHITE = (255, 255, 255)
 BROWN = (136,86,0)
+TRANS_GREEN = (23, 134, 21, 80)
+TRANS_RED = (245, 48, 18, 80)
 WIDTH = 992
 HEIGHT = 532
 INVENTORY_WIDTH = int(WIDTH * 0.2) # La tienda ocupa el 20% del ancho total

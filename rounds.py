@@ -5,8 +5,12 @@ enemy_spawn_interval = 300  # milisegundos
 enemy_count = 0
 max_enemies = 30
 class Round:
-    def __init__(self, cant_enemies):
+    
+    def __init__(self, list_enemies):
         self.round = 0
-        self.cant_enemies = cant_enemies
+        self.list_enemies = list_enemies
+        self.is_active = False
+        self.difficulty = 1
 
-    def ballon_types()
+    def new_round(self):
+        

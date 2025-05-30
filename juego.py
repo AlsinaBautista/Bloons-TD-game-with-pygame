@@ -59,6 +59,7 @@ towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas e
 
 # Imagen tacho de basura
 trash_img = pygame.image.load("imgs/trash.png").convert_alpha()
+trash_hover = pygame.image.load("imgs/trash_hover.png").convert_alpha()
 
 spawn_timer = pygame.time.get_ticks()
 enemy_spawn_interval = 300  # milisegundos
@@ -138,14 +139,6 @@ while run:
     money.draw(screen)
     life.draw(screen)
 
-    # Dibujo de la tienda
-    inventory_height = c.HEIGHT
-    inventory_rect = pygame.Rect(c.WIDTH - c.INVENTORY_WIDTH, 0, c.INVENTORY_WIDTH, inventory_height)
-    pygame.draw.rect(screen, (191,158,83), inventory_rect) # Dibuja el fondo de la tienda
-    shop_canon.draw(screen) # Dibuja la torre disponible en la tienda 
-    shop_sniper.draw(screen)
-    shop_fast_monkey.draw(screen)
-
     speed_button.draw(screen)
 
     # Dibujo de las torres colocadas
@@ -153,23 +146,29 @@ while run:
         screen.blit(tower.img, (tower.pos[0] - tower.img.get_width()//2, tower.pos[1] - tower.img.get_height()//2))
         #tower.draw_scope(screen)
     
+    # Dibujo de la tienda
+    inventory_height = c.HEIGHT
+    inventory_rect = pygame.Rect(c.WIDTH - c.INVENTORY_WIDTH, 0, c.INVENTORY_WIDTH, inventory_height)
+    pygame.draw.rect(screen, (191,158,83), inventory_rect) # Dibuja el fondo de la tienda
+    shop_canon.draw(screen) # Dibuja la torre disponible en la tienda 
+    shop_sniper.draw(screen)
+    shop_fast_monkey.draw(screen)
     # Dar el efecto de que el mouse lleva al item del cañon
     if dragging_tower is not None:
+        # Muestra el tacho de basura
+        trash_rect = Shop.draw_trash(screen, trash_img, trash_hover, mouse_pos)
         # Dibuja alcance
         scope_surface = dragging_tower.draw_scope()
         screen.blit(scope_surface, (mouse_pos[0] - dragging_tower.scope, mouse_pos[1] - dragging_tower.scope))
         dragging_tower.set_tower(*mouse_pos) # Actualiza la posicion de la torre arrastrada
         screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
-        map.draw_celds(screen, c.WHITE, c.CELD)
-
-        # Muestra el tacho de basura
-        trash_rect = Shop.draw_trash(screen, trash_img)
+        #map.draw_celds_border(screen, c.WHITE, c.CELD)
+        map.draw_celds(screen, start_grid())
 
         # Deja de seleccionar el item de la tienda cuando toca el tacho de basura
         if event.type == pygame.MOUSEBUTTONDOWN:
             if trash_rect.collidepoint(mouse_pos):
                 dragging_tower = None
-
 
     if life.cant_total <= 0:
         font = pygame.font.Font('fonts/OETZTYP_.TTF', 48)

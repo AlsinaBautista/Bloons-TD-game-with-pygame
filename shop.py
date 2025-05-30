@@ -50,8 +50,10 @@ class Shop:
 
         return dragging_tower
 
-    def draw_trash(screen, trash_img):
+    def draw_trash(screen, trash_img, trash_hover, mouse_pos):
         screen.blit(trash_img, (900, 450)) # Dibuja la imagen en el pixel (900, 450)
         trash_rect = trash_img.get_rect(topleft=(900, 450)) # Crea un rectangulo del tamaño de la imagen y lo posiciona con la esquina superior izquierda en (900, 450)
+        # Detectar si el mouse esta sobre el boton
+        if trash_rect.collidepoint(mouse_pos):
+            screen.blit(trash_hover, (900, 450))
         return trash_rect
-
