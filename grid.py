@@ -27,6 +27,15 @@ class Grid:
     def set_value(self, x, y, value):
         if 0 <= x < self.width + 1 and 0 <= y < self.height:
             self.grid[y][x] = value
+    
+    def get_celd(self, pos):
+        x, y = pos[0] // c.CELD, pos[1] // c.CELD
+        return x, y
+
+    def update_grid(self, tower):
+        a, b = tower.pos
+        x, y = self.get_celd((a, b))
+        self.set_value(x, y, 3)
 
     def get_value(self, x, y):
         if 0 <= x < self.width and 0 <= y < self.height:

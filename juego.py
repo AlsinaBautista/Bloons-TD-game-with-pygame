@@ -20,7 +20,7 @@ def excepthook(type, value, traceback):
 
 sys.excepthook = excepthook
 
-pygame.init()
+pygame.init() #inicializamos todos los modulos de pygame
 
 clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
@@ -34,8 +34,6 @@ map = Map("imgs/fondo.png")
 enemies = pygame.sprite.Group()
 new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENEMY_PATH, False)
 enemies.add(new_enemy)
-
-# Imagen de torre dummy (puede ser reemplazada luego)
 
 # Imagen de towers para shop
 canon_img_shop = pygame.image.load("imgs/tower_shop.png").convert_alpha()
@@ -73,10 +71,12 @@ active_msg = []
 game_speed = 1
 speed_button = Button(c.SPEED_BUTTON, (c.WIDTH - c.INVENTORY_WIDTH - 50, c.HEIGHT - 50), 30)
 
+grid = start_grid()
+
 run = True
 while run:
     delta_time = clock.tick(60) / 1000
-    for event in pygame.event.get():
+    for event in pygame.event.get(): #el .event.get devuelve todos los eventos (teclado, mouse, etc.)
         if event.type == pygame.MOUSEBUTTONDOWN:
             if speed_button.is_clicked(event.pos):
                 game_speed = speed_button.change_speed()
@@ -163,7 +163,7 @@ while run:
             screen.blit(scope_surface, (mouse_pos[0] - dragging_tower.scope, mouse_pos[1] - dragging_tower.scope))
         dragging_tower.set_tower(*mouse_pos) # Actualiza la posicion de la torre arrastrada
        # map.draw_celds_border(screen, c.WHITE, c.CELD)
-        map.draw_celds(screen, start_grid())
+        map.draw_celds(screen, grid)
         screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
 
         # Deja de seleccionar el item de la tienda cuando toca el tacho de basura

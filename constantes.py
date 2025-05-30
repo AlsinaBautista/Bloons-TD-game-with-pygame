@@ -11,7 +11,7 @@ CELD = 59
 INVENTORY_WIDTH = 225
 GRID_WIDTH = (WIDTH - INVENTORY_WIDTH) // CELD
 GRID_HEIGHT = HEIGHT // CELD
-ENEMY_PATH = path = [
+ENEMY_PATH = [
     (0, 265),   # Inicio fuera de pantalla (izquierda)
     (29, 265),     
     (265, 265),
