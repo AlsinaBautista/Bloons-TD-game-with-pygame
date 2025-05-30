@@ -21,7 +21,7 @@ class Map:
                 y = row_idx * c.CELD
                 
                 # No dibujar en la zona del inventario a la derecha
-                if x + c.CELD >= screen.get_width() - c.INVENTORY_WIDTH:             
+                if x >= screen.get_width() - c.INVENTORY_WIDTH:             
                     rect = pygame.Rect(0, 0, x - (screen.get_width() - c.INVENTORY_WIDTH), c.CELD)
                     celd_surface = pygame.Surface((c.CELD, c.CELD), pygame.SRCALPHA)
                     pygame.draw.rect(celd_surface, color, rect)
