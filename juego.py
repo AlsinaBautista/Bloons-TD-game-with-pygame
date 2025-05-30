@@ -158,12 +158,13 @@ while run:
         # Muestra el tacho de basura
         trash_rect = Shop.draw_trash(screen, trash_img, trash_hover, mouse_pos)
         # Dibuja alcance
-        scope_surface = dragging_tower.draw_scope()
-        screen.blit(scope_surface, (mouse_pos[0] - dragging_tower.scope, mouse_pos[1] - dragging_tower.scope))
+        if mouse_pos[0] <= c.WIDTH - c.INVENTORY_WIDTH:
+            scope_surface = dragging_tower.draw_scope()
+            screen.blit(scope_surface, (mouse_pos[0] - dragging_tower.scope, mouse_pos[1] - dragging_tower.scope))
         dragging_tower.set_tower(*mouse_pos) # Actualiza la posicion de la torre arrastrada
-        screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
-        #map.draw_celds_border(screen, c.WHITE, c.CELD)
+        map.draw_celds_border(screen, c.WHITE, c.CELD)
         map.draw_celds(screen, start_grid())
+        screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
 
         # Deja de seleccionar el item de la tienda cuando toca el tacho de basura
         if event.type == pygame.MOUSEBUTTONDOWN:

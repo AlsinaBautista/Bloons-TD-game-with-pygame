@@ -27,7 +27,8 @@ class Shop:
             if self.is_clicked(pos):
                 if self.money.cant_total >= self.price:
                     dragging_tower = tower_class(pos=(470, c.HEIGHT // 2), game_speed=game_speed)
-                    dragging_tower.draw_scope()
+                    if pos[0] <= screen.get_width() - c.INVENTORY_WIDTH:
+                        dragging_tower.draw_scope()
                 else:
                     msg = TempMsg(1000, "No tienes\nsuficiente dinero", "imgs/msg.png")
                     active_msg.append(msg)
