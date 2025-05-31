@@ -78,7 +78,7 @@ while run:
     delta_time = clock.tick(60) / 1000
     for event in pygame.event.get(): #el .event.get devuelve todos los eventos (teclado, mouse, etc.)
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if speed_button.is_clicked(event.pos):
+            if speed_button.is_clicked(event.pos) and not dragging_tower:
                 game_speed = speed_button.change_speed()
                 # Aplicar nueva velocidad a enemigos
                 for enemy in enemies:
