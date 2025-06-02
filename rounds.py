@@ -18,7 +18,7 @@ class Round:
     def new_round(self, current_time):
         self.pending_enemies = []
         round = self.list_rounds[self.round]
-        self.spawn_interval = round["interval"]
+        self.spawn_interval = round["interval"]/2
         for enemy in round["enemies"]:
             enemy_class = enemy["type"]
             cant = enemy["cant"]

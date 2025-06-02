@@ -15,7 +15,8 @@ class Shop:
     
     def draw(self, screen):
         screen.blit(self.img_tower, self.rect)
-        screen.blit(pygame.font.Font("fonts/OETZTYP_.TTF", 20).render(f"${self.price}", True, c.BROWN), (self.rect.x + 12, self.rect.y + self.rect.height - 28))
+        color = c.BROWN if self.money.cant_total >= self.price else (255, 0, 0) # Si el jugador tiene suficiente dinero
+        screen.blit(pygame.font.Font("fonts/OETZTYP_.TTF", 20).render(f"${self.price}", True, color), (self.rect.x + 12, self.rect.y + self.rect.height - 28))
 
     def is_clicked(self, pos):
         # Si el jugador hizo clic sobre el cañon de la tienda, devuelve true
