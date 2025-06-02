@@ -11,6 +11,8 @@ from tower import *
 from enemy import *
 from grid import *
 from x2_button import *
+from rounds import Round
+import list_rounds as lr
 
 # Al principio del archivo
 def excepthook(type, value, traceback):
@@ -60,11 +62,11 @@ trash_img = pygame.image.load("imgs/trash.png").convert_alpha()
 trash_hover = pygame.image.load("imgs/trash_hover.png").convert_alpha()
 
 spawn_timer = pygame.time.get_ticks()
-enemy_spawn_interval = 300  # milisegundos
+"""enemy_spawn_interval = 300  # milisegundos
 enemy_count = 0
 enemy_blue = 0
 max_red = 30
-max_blue = 30
+max_blue = 30"""
 
 active_msg = []
 
@@ -72,6 +74,9 @@ game_speed = 1
 speed_button = Button(c.SPEED_BUTTON, (c.WIDTH - c.INVENTORY_WIDTH - 50, c.HEIGHT - 50), 30)
 
 grid = start_grid()
+
+rounds_list = lr.rounds_list
+round_manager = Round(rounds_list)
 
 run = True
 while run:
@@ -108,7 +113,12 @@ while run:
 
     current_time = pygame.time.get_ticks()
 
-    if enemy_count < max_red and current_time - spawn_timer >= enemy_spawn_interval:
+    if not round_manager.is_active and round_manager.round < len(rounds_list):
+        round_manager.new_round(current_time)
+    
+    round_manager.update(current_time, game_speed, enemies, all_sprites)
+    
+    """if enemy_count < max_red and current_time - spawn_timer >= enemy_spawn_interval:
         new_enemy = Red_Ballon(game_speed)
         enemies.add(new_enemy)
         all_sprites.add(new_enemy)
@@ -120,7 +130,7 @@ while run:
         enemies.add(new_enemy)
         all_sprites.add(new_enemy)
         enemy_blue += 1
-        spawn_timer = current_time 
+        spawn_timer = current_time """
     
     for enemy in enemies:
         enemy.update(money,life)
