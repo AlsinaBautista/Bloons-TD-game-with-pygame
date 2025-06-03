@@ -5,7 +5,7 @@ import math
 from enemy import *
 #Primero creo la clase padre de las defensas, en este caso, Tower
 class Tower(pygame.sprite.Sprite):
-    def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed):
+    def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded):
         super().__init__()
         self.pos = pos
         self.scope = scope
@@ -15,6 +15,8 @@ class Tower(pygame.sprite.Sprite):
         self.target = target
         self.price = price
         self.original_img = image
+        self.water = water
+        self.shoot_blinded = shoot_blinded
         self.img = self.original_img    #hasta aca son los atributos propios de la torre
         self.enemies = False
         self.attack_timer = 0
@@ -50,10 +52,11 @@ class Tower(pygame.sprite.Sprite):
         for enemy in enemies:
             if enemy.alive() and self.enemies_in_range(enemy.pos) and current_time - self.attack_timer >= cooldown:
                 self.rotate(enemy.pos)
-                bullet = Bullet(pos=self.pos, target=enemy, speed=1000, damage=self.damage, image_path="imgs/bullet.png")
-                self.attack_timer = current_time
-                self.bullet_active = bullet
-                return bullet
+                if (enemy.blinded and self.shoot_blinded) or not enemy.blinded:
+                    bullet = Bullet(pos=self.pos, target=enemy, speed=1000, damage=self.damage, image_path="imgs/bullet.png")
+                    self.attack_timer = current_time
+                    self.bullet_active = bullet
+                    return bullet
         return None
     
     def rotate(self, enemy_pos):
@@ -88,9 +91,11 @@ class Cannon(Tower):    #defensa fuerte
         base_att_speed = 500
         att_speed = base_att_speed / game_speed
         target = None
+        shoot_blinded = True
+        water = False
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         angle = 0
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded) #aca puedo llamar a la clase padre con el scope y damage definido
 
 class Sniper(Tower):    #mas rango, dano, menos cadencia
     def __init__(self, pos, game_speed):
@@ -100,9 +105,11 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
         base_att_speed = 1000
         att_speed = base_att_speed / game_speed
         target = None
+        water = False
+        shoot_blinded = False
         image = pygame.image.load("imgs/shooter.png").convert_alpha()
         angle = 30
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded) #aca puedo llamar a la clase padre con el scope y damage definido
 
 
 class Fast(Tower):  #mas cadencia
@@ -113,9 +120,11 @@ class Fast(Tower):  #mas cadencia
         base_att_speed = 375
         att_speed = base_att_speed / game_speed
         target = None
+        water = False
+        shoot_blinded = False
         angle = 0
         image = pygame.image.load("imgs/fast_monkey.png").convert_alpha()
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed)
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded)
 
 class Ship(Tower):  #mas cadencia
     def __init__(self, pos, game_speed):
@@ -125,5 +134,8 @@ class Ship(Tower):  #mas cadencia
         base_att_speed = 1000
         att_speed = base_att_speed / game_speed
         target = None
+        water = True
+        shoot_blinded = False
+        angle = 0
         image = pygame.image.load("imgs/ship.png").convert_alpha()
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, game_speed)
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded)

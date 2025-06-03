@@ -14,7 +14,7 @@ class Map:
         for y in range(0, screen.get_height(), celd_size):
             pygame.draw.line(screen, color, (0, y), (screen.get_width() - c.INVENTORY_WIDTH, y))
     
-    def draw_celds(self, screen, grid):
+    def draw_celds(self, screen, grid, dragging_tower):
         for row_idx, row in enumerate(grid):
             for col_idx, value in enumerate(row):
                 x = col_idx * c.CELD
@@ -29,7 +29,10 @@ class Map:
                     continue
                 
                 # Elegir color según el valor
-                color = c.TRANS_RED if value != 0 else c.TRANS_GREEN
+                if not dragging_tower.water:
+                    color = c.TRANS if value != 0 else c.GREY
+                elif dragging_tower.water:
+                    color = c.TRANS if value != 2 else c.GREY
                 
                 rect = pygame.Rect(0, 0, c.CELD, c.CELD)
                 celd_surface = pygame.Surface((c.CELD, c.CELD), pygame.SRCALPHA)

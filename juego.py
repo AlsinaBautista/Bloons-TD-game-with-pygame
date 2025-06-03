@@ -15,12 +15,12 @@ from rounds import Round
 import list_rounds as lr
 
 # Al principio del archivo
-def excepthook(type, value, traceback):
-    print("ERROR NO CAPTURADO:", type, value)
-    pygame.quit()
-    sys.exit()
-
-sys.excepthook = excepthook
+#def excepthook(type, value, traceback):
+#    print("ERROR NO CAPTURADO:", type, value)
+#    pygame.quit()
+#    sys.exit()
+#
+#sys.excepthook = excepthook
 
 pygame.init() #inicializamos todos los modulos de pygame
 
@@ -40,7 +40,7 @@ enemies.add(new_enemy)
 # Imagen de towers para shop
 canon_img_shop = pygame.image.load("imgs/tower_shop.png").convert_alpha()
 sniper_img_shop = pygame.image.load("imgs/shooter_shop.png").convert_alpha()
-#ship_img_shop = pygame.image.load("imgs/ship_shop.png").convert_alpha()
+ship_img_shop = pygame.image.load("imgs/ship_shop.png").convert_alpha()
 fast_mokey_img_shop = pygame.image.load("imgs/fast_monkey_shop.png").convert_alpha()
 
 bullets = pygame.sprite.Group()
@@ -54,6 +54,7 @@ life = Life(20, life_img)
 shop_canon = Shop(canon_img_shop, 790, 10, 300, money)
 shop_sniper = Shop(sniper_img_shop, 895, 10, 500, money)
 shop_fast_monkey = Shop(fast_mokey_img_shop, 790, 130, 450, money)
+shop_ship = Shop(ship_img_shop, 895, 130, 450, money)
 dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
 towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
 
@@ -107,6 +108,7 @@ while run:
             dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
             dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
             dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Fast, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
+            dragging_tower = shop_ship.shop_items(dragging_tower, Ship, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
         
     map.draw_background(screen)
     #map.draw_celds(screen, c.white, c.CELD)
@@ -164,6 +166,7 @@ while run:
     shop_canon.draw(screen) # Dibuja la torre disponible en la tienda 
     shop_sniper.draw(screen)
     shop_fast_monkey.draw(screen)
+    shop_ship.draw(screen)
     # Dar el efecto de que el mouse lleva al item del cañon
     if dragging_tower is not None:
         # Muestra el tacho de basura
@@ -173,8 +176,8 @@ while run:
             scope_surface = dragging_tower.draw_scope()
             screen.blit(scope_surface, (mouse_pos[0] - dragging_tower.scope, mouse_pos[1] - dragging_tower.scope))
         dragging_tower.set_tower(*mouse_pos) # Actualiza la posicion de la torre arrastrada
-       # map.draw_celds_border(screen, c.WHITE, c.CELD)
-        map.draw_celds(screen, grid)
+        #map.draw_celds_border(screen, c.WHITE, c.CELD)
+        map.draw_celds(screen, grid, dragging_tower)
         screen.blit(dragging_tower.img, (mouse_pos[0] - dragging_tower.img.get_width()//2, mouse_pos[1] - dragging_tower.img.get_height()//2)) # Dibuja la imagen de la torre en la pantalla, de forma que su centro este exactamente donde esta el mouse
 
         # Deja de seleccionar el item de la tienda cuando toca el tacho de basura

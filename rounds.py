@@ -40,7 +40,7 @@ class Round:
                 new_enemy = Pink_Ballon(game_speed)
             elif enemy == "colored":
                 new_enemy = Colored_Ballon(game_speed)
-            else:
+            elif enemy == "blinded":
                 new_enemy = Blinded_Ballon(game_speed)
             enemies.add(new_enemy)
             all_sprites.add(new_enemy)

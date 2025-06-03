@@ -36,12 +36,26 @@ class Shop:
             try:
                 if pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
                     pos_grid = (pos[0] // c.CELD * c.CELD + c.CELD // 2, pos[1] // c.CELD * c.CELD + c.CELD // 2)
-                    if not grid[pos[1] // c.CELD][pos[0] // c.CELD] and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
-                        dragging_tower.set_tower(*pos_grid)
-                        self.money.spend_money(self.price)
-                        towers.add(dragging_tower)
-                        all_sprites.add(dragging_tower)
-                        dragging_tower = None
+                    if not dragging_tower.water:
+                        if grid[pos[1] // c.CELD][pos[0] // c.CELD] == 0 and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
+                            dragging_tower.set_tower(*pos_grid)
+                            self.money.spend_money(self.price)
+                            towers.add(dragging_tower)
+                            all_sprites.add(dragging_tower)
+                            dragging_tower = None
+                        else:
+                            msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
+                            active_msg.append(msg)
+                    elif dragging_tower.water:
+                        if grid[pos[1] // c.CELD][pos[0] // c.CELD] == 2 and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
+                            dragging_tower.set_tower(*pos_grid)
+                            self.money.spend_money(self.price)
+                            towers.add(dragging_tower)
+                            all_sprites.add(dragging_tower)
+                            dragging_tower = None
+                        else:
+                            msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
+                            active_msg.append(msg)
                     else:
                         msg = TempMsg(1000, "No puedes colocar\nuna torre en\nese lugar", "imgs/msg.png")
                         active_msg.append(msg)
