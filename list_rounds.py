@@ -14,50 +14,50 @@ rounds_list =    [
         "enemies": [
             {
                 "type": "Red",
-                "cant": 11
+                "cant": 15
             }
         ],
-        "interval": 589
+        "interval": 500
     },
     {
         "round": 3,
         "enemies": [
             {
                 "type": "Red",
-                "cant": 12
+                "cant": 25
             }
         ],
-        "interval": 579
+        "interval": 450
     },
     {
         "round": 4,
         "enemies": [
             {
                 "type": "Red",
-                "cant": 14
+                "cant": 30
             }
         ],
-        "interval": 569
+        "interval": 450
     },
     {
         "round": 5,
         "enemies": [
             {
                 "type": "Red",
-                "cant": 15
+                "cant": 30
             }
         ],
-        "interval": 559
+        "interval": 400
     },
     {
         "round": 6,
         "enemies": [
             {
-                "type": "Red",
-                "cant": 17
+                "type": "Blue",
+                "cant": 20
             }
         ],
-        "interval": 548
+        "interval": 500
     },
     {
         "round": 7,
@@ -68,44 +68,44 @@ rounds_list =    [
             },
             {
                 "type": "Blue",
-                "cant": 8
+                "cant": 20
             }
         ],
-        "interval": 538
+        "interval": 500
     },
     {
         "round": 8,
         "enemies": [
             {
                 "type": "Red",
-                "cant": 7
+                "cant": 10
             },
             {
                 "type": "Blue",
-                "cant": 13
+                "cant": 25
             }
         ],
-        "interval": 528
+        "interval": 500
     },
     {
         "round": 9,
         "enemies": [
             {
                 "type": "Blue",
-                "cant": 21
+                "cant": 20
             }
         ],
-        "interval": 518
+        "interval": 100
     },
     {
         "round": 10,
         "enemies": [
             {
-                "type": "Red",
-                "cant": 22
+                "type": "Green",
+                "cant": 25
             }
         ],
-        "interval": 508
+        "interval": 300
     },
     {
         "round": 11,

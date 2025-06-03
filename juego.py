@@ -104,9 +104,9 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
-            dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg, game_speed)
-            dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg, game_speed)
-            dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Fast, screen, towers, all_sprites, pos, active_msg, game_speed)
+            dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
+            dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
+            dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Fast, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
         
     map.draw_background(screen)
     #map.draw_celds(screen, c.white, c.CELD)
@@ -154,6 +154,7 @@ while run:
     # Dibujo de las torres colocadas
     for tower in towers:
         screen.blit(tower.img, (tower.pos[0] - tower.img.get_width()//2, tower.pos[1] - tower.img.get_height()//2))
+        grid.update_grid(tower)
         #tower.draw_scope(screen)
     
     # Dibujo de la tienda

@@ -83,7 +83,7 @@ class Basic(Tower):
 class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos, game_speed):
         scope = 100
-        damage = 100
+        damage = 300
         price = 300
         base_att_speed = 500
         att_speed = base_att_speed / game_speed
@@ -107,10 +107,10 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
 
 class Fast(Tower):  #mas cadencia
     def __init__(self, pos, game_speed):
-        scope = 200
+        scope = 75
         damage = 100
         price = 450
-        base_att_speed = 300
+        base_att_speed = 375
         att_speed = base_att_speed / game_speed
         target = None
         angle = 0
