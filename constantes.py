@@ -53,3 +53,6 @@ OCCUPIED_CELLS = [
 ]
 
 SPEED_BUTTON = pygame.image.load("imgs/speed_button.png")
+ROUND_BUT_IMG = pygame.image.load("imgs/next_round_button.png")
+MUTE_BUT_IMG = pygame.image.load("imgs/mute_but.png")
+UNMUTE_BUT_IMG = pygame.image.load("imgs/unmute_but.png")

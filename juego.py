@@ -82,7 +82,9 @@ grid = start_grid()
 
 rounds_list = lr.rounds_list
 round_manager = Round(rounds_list)
-round_but = New_Round(pygame.image.load("imgs/next_round_button.png"), (743, 65), 0)
+round_but = Gen_But(c.ROUND_BUT_IMG, (743, 65), 0)
+mute_but = Gen_But(c.MUTE_BUT_IMG, (30, 500), 0)
+unmute_but = Gen_But(c.UNMUTE_BUT_IMG, (80, 500), 0)
 run = True
 while run:
     delta_time = clock.tick(60) / 1000
@@ -109,6 +111,11 @@ while run:
             if not round_manager.is_active and round_manager.round < len(rounds_list):
                 if round_but.is_clicked(event.pos):
                     round_manager.new_round(current_time)
+
+            if mute_but.is_clicked(event.pos):
+                pygame.mixer.music.stop()
+            if unmute_but.is_clicked(event.pos):
+                pygame.mixer.music.play(-1)
 
         if event.type == pygame.QUIT:
             run = False
@@ -159,6 +166,8 @@ while run:
 
     speed_button.draw(screen)
     round_but.draw(screen)
+    mute_but.draw(screen)
+    unmute_but.draw(screen)
     # Dibujo de las torres colocadas
     for tower in towers:
         screen.blit(tower.img, (tower.pos[0] - tower.img.get_width()//2, tower.pos[1] - tower.img.get_height()//2))
@@ -191,7 +200,7 @@ while run:
             if trash_rect.collidepoint(mouse_pos):
                 dragging_tower = None
 
-    if life.cant_total <= 0:
+    if life.game_over():
         black_screen = pygame.Surface((c.WIDTH, c.HEIGHT), pygame.SRCALPHA)
         black_screen.fill((0, 0, 0, 180))
         screen.blit(black_screen, (0,0))

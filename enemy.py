@@ -52,7 +52,7 @@ class Enemy(pygame.sprite.Sprite):
 
         #que se hagan coloridos
         if 300 < self.health <= 400:
-            self.image = pygame.image.load('imgs/colored_balloon.png')
+            self.image = pygame.image.load('imgs/yellow_balloon.png')
         
         #que se hagan rosas
         if 400 < self.health <= 500:
@@ -168,7 +168,7 @@ class Green_Ballon(Enemy):
         image = pygame.image.load("imgs/green_balloon.png")
         super().__init__(pos, speed, health, image, path, blinded)
 
-class Colored_Ballon(Enemy):
+class Yellow_Ballon(Enemy):
     def __init__(self, game_speed):
         base_speed = 110
         speed = base_speed * game_speed
@@ -195,7 +195,7 @@ class Colored_Ballon(Enemy):
                 (501,  88),
                 (501,  0)
                             ]
-        image = pygame.image.load("imgs/colored_balloon.png")
+        image = pygame.image.load("imgs/yellow_balloon.png")
         super().__init__(pos, base_speed, health, image, path, blinded, game_speed)
 
 class Pink_Ballon(Enemy):

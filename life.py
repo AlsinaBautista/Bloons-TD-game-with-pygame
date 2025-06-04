@@ -16,3 +16,6 @@ class Life:
         font = pygame.font.Font("fonts/OETZTYP_.TTF", 24)
         text = font.render(str(self.cant_total), True, (255, 255, 255))
         screen.blit(text, (self.rect.right + 10, self.rect.centery - 10))
+
+    def game_over(self):
+        return self.cant_total <= 0

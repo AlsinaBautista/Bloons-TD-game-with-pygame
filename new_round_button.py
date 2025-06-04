@@ -1,6 +1,6 @@
 import pygame
 import constantes as c
-class New_Round:
+class Gen_But:
     def __init__(self, img, pos, radius):
         self.img = img
         self.pos = pos
