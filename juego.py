@@ -15,6 +15,7 @@ from x2_button import *
 from rounds import Round
 import list_rounds as lr
 from sounds import *
+from new_round_button import *
 
 # Al principio del archivo
 #def excepthook(type, value, traceback):
@@ -81,7 +82,7 @@ grid = start_grid()
 
 rounds_list = lr.rounds_list
 round_manager = Round(rounds_list)
-
+round_but = New_Round(pygame.image.load("imgs/next_round_button.png"), (743, 65), 0)
 run = True
 while run:
     delta_time = clock.tick(60) / 1000
@@ -104,6 +105,11 @@ while run:
                 # A torres
                 for tower in towers:
                     tower.att_speed = tower.base_att_speed / game_speed  # menor cooldown = más rápido
+                
+            if not round_manager.is_active and round_manager.round < len(rounds_list):
+                if round_but.is_clicked(event.pos):
+                    round_manager.new_round(current_time)
+
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -117,9 +123,6 @@ while run:
     #map.draw_celds(screen, c.white, c.CELD)
 
     current_time = pygame.time.get_ticks()
-
-    if not round_manager.is_active and round_manager.round < len(rounds_list):
-        round_manager.new_round(current_time)
     
     round_manager.update(current_time, game_speed, enemies, all_sprites)
     
@@ -143,7 +146,6 @@ while run:
 
     # Torres colocadas desde la tienda
     for tower in towers:
-        tower.sound.play()
         bullet = tower.shoot(enemies)
         if bullet:
             bullets.add(bullet)
@@ -156,7 +158,7 @@ while run:
     life.draw(screen)
 
     speed_button.draw(screen)
-
+    round_but.draw(screen)
     # Dibujo de las torres colocadas
     for tower in towers:
         screen.blit(tower.img, (tower.pos[0] - tower.img.get_width()//2, tower.pos[1] - tower.img.get_height()//2))

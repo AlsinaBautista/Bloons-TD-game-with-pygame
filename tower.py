@@ -58,6 +58,7 @@ class Tower(pygame.sprite.Sprite):
                     bullet = Bullet(pos=self.pos, target=enemy, speed=1000, damage=self.damage, image_path="imgs/bullet.png")
                     self.attack_timer = current_time
                     self.bullet_active = bullet
+                    self.sound.play()
                     return bullet
         return None
     
@@ -103,8 +104,7 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
         angle = 30
         super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound) #aca puedo llamar a la clase padre con el scope y damage definido
 
-
-class Basic(Tower):  #mas cadencia
+class Basic(Tower):  #normal
     def __init__(self, pos, game_speed):
         scope = 75
         damage = 100
@@ -119,7 +119,7 @@ class Basic(Tower):  #mas cadencia
         sound = s.monkey_sound
         super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded,sound)
 
-class Ship(Tower):  #mas cadencia
+class Ship(Tower):  #en el agua
     def __init__(self, pos, game_speed):
         scope = 200
         damage = 100

@@ -27,6 +27,7 @@ class Round:
             self.pending_enemies.extend([enemy_class.lower()] * cant)
             self.spawn_timer = current_time
         self.is_active = True
+        self.round += 1
 
     def update(self, current_time, game_speed, enemies, all_sprites):
          
@@ -50,7 +51,6 @@ class Round:
         
         if len(self.pending_enemies) == 0:
             self.is_active = False
-            self.round += 1
 
     def draw_text(self, screen):
         text = self.font.render(f"Ronda {self.round + 1}/50", True, (255, 255, 255))
