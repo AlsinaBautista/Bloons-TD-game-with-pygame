@@ -3,9 +3,10 @@ import constantes as c
 from bullet import Bullet
 import math
 from enemy import *
+from sounds import *
 #Primero creo la clase padre de las defensas, en este caso, Tower
 class Tower(pygame.sprite.Sprite):
-    def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded):
+    def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound):
         super().__init__()
         self.pos = pos
         self.scope = scope
@@ -16,6 +17,7 @@ class Tower(pygame.sprite.Sprite):
         self.price = price
         self.original_img = image
         self.water = water
+        self.sound = sound
         self.shoot_blinded = shoot_blinded
         self.img = self.original_img    #hasta aca son los atributos propios de la torre
         self.enemies = False
@@ -81,9 +83,10 @@ class Cannon(Tower):    #defensa fuerte
         target = None
         shoot_blinded = True
         water = False
+        sound = canon_sound
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         angle = 0
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound) #aca puedo llamar a la clase padre con el scope y damage definido
 
 class Sniper(Tower):    #mas rango, dano, menos cadencia
     def __init__(self, pos, game_speed):
@@ -94,10 +97,11 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
         att_speed = base_att_speed / game_speed
         target = None
         water = False
+        sound = sniper_sound
         shoot_blinded = False
         image = pygame.image.load("imgs/shooter.png").convert_alpha()
         angle = 30
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound) #aca puedo llamar a la clase padre con el scope y damage definido
 
 
 class Basic(Tower):  #mas cadencia

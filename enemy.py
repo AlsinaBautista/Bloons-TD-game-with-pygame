@@ -1,6 +1,6 @@
 import pygame
 from money import Money
-
+from sounds import *
 class Enemy(pygame.sprite.Sprite):
 
     def __init__(self, pos, base_speed, health, image, path, blinded, game_speed=1):
@@ -64,6 +64,7 @@ class Enemy(pygame.sprite.Sprite):
             money.add_money(2)
         if (self.pos[0] - self.path[-1][0] < 2) and (self.pos[1] - self.path[-1][1] < 2):
             self.kill()
+            balloon_sound.play()
             if life.cant_total > int(self.health/100):
                 life.lose_life(int(self.health/100)) # Asumiendo que la vida se pierde proporcionalmente a la salud del enemigo
             elif life.cant_total <= int(self.health/100):

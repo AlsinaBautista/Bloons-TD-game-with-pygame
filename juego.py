@@ -26,7 +26,7 @@ from sounds import *
 
 pygame.init() #inicializamos todos los modulos de pygame
 pygame.mixer.init()
-pygame.mixer.music.play(-1) #para loop
+pygame.mixer.music.play(-1) #para loop, la musica esta en sounds
 clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
 
@@ -143,7 +143,7 @@ while run:
 
     # Torres colocadas desde la tienda
     for tower in towers:
-        #shot_sound.play()
+        tower.sound.play()
         bullet = tower.shoot(enemies)
         if bullet:
             bullets.add(bullet)
