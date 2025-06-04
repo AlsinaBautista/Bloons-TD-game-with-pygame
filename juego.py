@@ -23,7 +23,9 @@ import list_rounds as lr
 #sys.excepthook = excepthook
 
 pygame.init() #inicializamos todos los modulos de pygame
-
+pygame.mixer.init()
+pygame.mixer.music.load('fonts/bloons_music.mp3')
+pygame.mixer.music.play(-1) #para loop
 clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
 
