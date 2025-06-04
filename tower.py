@@ -71,24 +71,12 @@ class Tower(pygame.sprite.Sprite):
     def update_att_speed(self, game_speed):
         self.att_speed = self.base_att_speed / game_speed
 
-class Basic(Tower):
-    def __init__(self, pos, game_speed):
-        scope = 100
-        damage = 100
-        price = 300
-        base_att_speed = 500
-        att_speed = base_att_speed / game_speed
-        target = None
-        image = pygame.image.load("imgs/tower.png").convert_alpha()
-        angle = 0
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed)
-
 class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos, game_speed):
         scope = 100
         damage = 300
         price = 300
-        base_att_speed = 500
+        base_att_speed = 1000
         att_speed = base_att_speed / game_speed
         target = None
         shoot_blinded = True
@@ -112,12 +100,12 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
         super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded) #aca puedo llamar a la clase padre con el scope y damage definido
 
 
-class Fast(Tower):  #mas cadencia
+class Basic(Tower):  #mas cadencia
     def __init__(self, pos, game_speed):
         scope = 75
         damage = 100
-        price = 450
-        base_att_speed = 375
+        price = 200
+        base_att_speed = 600
         att_speed = base_att_speed / game_speed
         target = None
         water = False

@@ -79,7 +79,7 @@ class Enemy(pygame.sprite.Sprite):
 
 class Red_Ballon(Enemy): 
     def __init__(self, game_speed):
-        base_speed = 100
+        base_speed = 50
         speed = base_speed * game_speed
         health = 100
         pos = (0, 265)
@@ -109,7 +109,7 @@ class Red_Ballon(Enemy):
 
 class Blue_Ballon(Enemy):
     def __init__(self, game_speed):
-        base_speed = 125
+        base_speed = 75
         speed = base_speed * game_speed
         health = 200
         pos = (0, 265)
@@ -139,7 +139,7 @@ class Blue_Ballon(Enemy):
 
 class Green_Ballon(Enemy):
     def __init__(self, game_speed):
-        base_speed = 150
+        base_speed = 90
         speed = base_speed * game_speed
         health = 300
         pos = (0, 265)
@@ -169,7 +169,7 @@ class Green_Ballon(Enemy):
 
 class Colored_Ballon(Enemy):
     def __init__(self, game_speed):
-        base_speed = 175
+        base_speed = 110
         speed = base_speed * game_speed
         health = 400
         pos = (0, 265)
@@ -199,7 +199,7 @@ class Colored_Ballon(Enemy):
 
 class Pink_Ballon(Enemy):
     def __init__(self, game_speed):
-        base_speed = 200
+        base_speed = 120
         speed = base_speed * game_speed
         health = 500
         pos = (0, 265)

@@ -109,7 +109,7 @@ while run:
             pos = event.pos
             dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
             dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
-            dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Fast, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
+            dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Basic, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
             dragging_tower = shop_ship.shop_items(dragging_tower, Ship, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
         
     map.draw_background(screen)
@@ -142,7 +142,7 @@ while run:
 
     # Torres colocadas desde la tienda
     for tower in towers:
-        shot_sound.play()
+        #shot_sound.play()
         bullet = tower.shoot(enemies)
         if bullet:
             bullets.add(bullet)
