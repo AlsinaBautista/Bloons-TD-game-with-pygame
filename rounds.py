@@ -38,7 +38,7 @@ class Round:
                 new_enemy = Green_Ballon(game_speed)
             elif enemy == "pink":
                 new_enemy = Pink_Ballon(game_speed)
-            elif enemy == "yellow":
+            elif enemy == "yellow": #En la lista de rondas no hay colored ballons, pero si amarillos, por eso lo asigno aca
                 new_enemy = Colored_Ballon(game_speed)
             elif enemy == "blinded":
                 new_enemy = Blinded_Ballon(game_speed)
