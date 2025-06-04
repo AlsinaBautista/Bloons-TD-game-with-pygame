@@ -39,11 +39,3 @@ class Bullet(pygame.sprite.Sprite):
         self.angle = math.degrees(angle_rad)
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect(center=self.pos)
-
-
-
-
-    
-    
-
-    
