@@ -1,4 +1,5 @@
 import pygame
+import pygame.scrap
 import constantes as c
 from map import Map
 from bullet import Bullet
@@ -189,6 +190,9 @@ while run:
                 dragging_tower = None
 
     if life.cant_total <= 0:
+        black_screen = pygame.Surface((c.WIDTH, c.HEIGHT), pygame.SRCALPHA)
+        black_screen.fill((0, 0, 0, 180))
+        screen.blit(black_screen, (0,0))
         pygame.mixer.music.stop()
         game_over.play()
         font = pygame.font.Font('fonts/OETZTYP_.TTF', 48)
