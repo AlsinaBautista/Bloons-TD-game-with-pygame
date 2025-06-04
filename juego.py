@@ -209,6 +209,8 @@ while run:
     mouse_pos = pygame.mouse.get_pos() # Posicion actual del mouse
     speed_button.hover(screen, mouse_pos)
 
+    round_manager.draw_text(screen)
+
     pygame.display.update()
 
 pygame.quit()

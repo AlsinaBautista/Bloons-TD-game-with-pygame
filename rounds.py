@@ -1,6 +1,7 @@
 import pygame
 import list_rounds as lr
 from enemy import *
+import constantes as c
 
 class Round:
     
@@ -14,6 +15,7 @@ class Round:
         self.spawn_timer = pygame.time.get_ticks()
         self.spawn_interval = 0
         self.pending_enemies = []
+        self.font = pygame.font.Font("fonts/OETZTYP_.TTF", 24)
 
     def new_round(self, current_time):
         self.pending_enemies = []
@@ -49,3 +51,8 @@ class Round:
         if len(self.pending_enemies) == 0:
             self.is_active = False
             self.round += 1
+
+    def draw_text(self, screen):
+        text = self.font.render(f"Ronda {self.round + 1}/50", True, (255, 255, 255))
+        text_rect = text.get_rect(center=(675, 30))
+        screen.blit(text, text_rect)

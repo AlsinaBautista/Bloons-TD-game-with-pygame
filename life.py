@@ -8,12 +8,8 @@ class Life:
         self.img = image
         self.rect = image.get_rect(center=(20, 50))
 
-    
-
     def lose_life(self, cant):
         self.cant_total -= cant
-    
-    
     
     def draw(self, screen):
         screen.blit(self.img, self.rect)
