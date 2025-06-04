@@ -3,7 +3,7 @@ rounds_list =    [
         "round": 1,
         "enemies": [
             {
-                "type": "yellow", 
+                "type": "blinded", 
                 "cant": 10
             }
         ],

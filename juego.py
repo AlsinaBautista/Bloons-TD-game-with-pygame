@@ -76,13 +76,13 @@ max_blue = 30"""
 active_msg = []
 
 game_speed = 1
-speed_button = Button(c.SPEED_BUTTON, (c.WIDTH - c.INVENTORY_WIDTH - 50, c.HEIGHT - 50), 30)
+speed_button = Button(c.SPEED_BUTTON_IMG, (725, 500), 0)
 
 grid = start_grid()
 
 rounds_list = lr.rounds_list
 round_manager = Round(rounds_list)
-round_but = Gen_But(c.ROUND_BUT_IMG, (743, 65), 0)
+round_but = Gen_But(c.ROUND_BUT_IMG, (725, 65), 0)
 mute_but = Gen_But(c.MUTE_BUT_IMG, (30, 500), 0)
 unmute_but = Gen_But(c.UNMUTE_BUT_IMG, (80, 500), 0)
 run = True
