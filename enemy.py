@@ -61,7 +61,7 @@ class Enemy(pygame.sprite.Sprite):
         if self.health <= 0:
             self.image = pygame.image.load("imgs/bloon_explotion.png")
             self.kill()
-            money.add_money(2)
+            money.add_money(5)
         if (self.pos[0] - self.path[-1][0] < 2) and (self.pos[1] - self.path[-1][1] < 2):
             self.kill()
             balloon_sound.play()

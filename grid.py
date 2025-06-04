@@ -64,5 +64,3 @@ def draw_grid(grid):
             else:
                     print('O', end=' ')
         print()
-grid=start_grid()
-draw_grid(grid)

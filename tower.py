@@ -3,7 +3,7 @@ import constantes as c
 from bullet import Bullet
 import math
 from enemy import *
-from sounds import *
+import sounds as s
 #Primero creo la clase padre de las defensas, en este caso, Tower
 class Tower(pygame.sprite.Sprite):
     def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound):
@@ -83,7 +83,7 @@ class Cannon(Tower):    #defensa fuerte
         target = None
         shoot_blinded = True
         water = False
-        sound = canon_sound
+        sound = s.canon_sound
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         angle = 0
         super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound) #aca puedo llamar a la clase padre con el scope y damage definido
@@ -97,7 +97,7 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
         att_speed = base_att_speed / game_speed
         target = None
         water = False
-        sound = sniper_sound
+        sound = s.sniper_sound
         shoot_blinded = False
         image = pygame.image.load("imgs/shooter.png").convert_alpha()
         angle = 30
@@ -116,7 +116,8 @@ class Basic(Tower):  #mas cadencia
         shoot_blinded = False
         angle = 0
         image = pygame.image.load("imgs/fast_monkey.png").convert_alpha()
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded)
+        sound = s.monkey_sound
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded,sound)
 
 class Ship(Tower):  #mas cadencia
     def __init__(self, pos, game_speed):
@@ -129,5 +130,6 @@ class Ship(Tower):  #mas cadencia
         water = True
         shoot_blinded = False
         angle = 0
+        sound = s.canon_sound
         image = pygame.image.load("imgs/ship.png").convert_alpha()
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded)
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded,sound)
