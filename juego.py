@@ -13,6 +13,7 @@ from grid import *
 from x2_button import *
 from rounds import Round
 import list_rounds as lr
+from sounds import *
 
 # Al principio del archivo
 #def excepthook(type, value, traceback):
@@ -24,7 +25,6 @@ import list_rounds as lr
 
 pygame.init() #inicializamos todos los modulos de pygame
 pygame.mixer.init()
-pygame.mixer.music.load('fonts/bloons_music.mp3')
 pygame.mixer.music.play(-1) #para loop
 clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
@@ -142,6 +142,7 @@ while run:
 
     # Torres colocadas desde la tienda
     for tower in towers:
+        shot_sound.play()
         bullet = tower.shoot(enemies)
         if bullet:
             bullets.add(bullet)
@@ -188,6 +189,8 @@ while run:
                 dragging_tower = None
 
     if life.cant_total <= 0:
+        pygame.mixer.music.stop()
+        game_over.play()
         font = pygame.font.Font('fonts/OETZTYP_.TTF', 48)
         text = font.render("GAME OVER", True, c.RED)
         text_rect = text.get_rect(center=(c.WIDTH // 2, c.HEIGHT // 2))
