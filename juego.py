@@ -108,7 +108,7 @@ while run:
                 for tower in towers:
                     tower.att_speed = tower.base_att_speed / game_speed  # menor cooldown = más rápido
                 
-            if not round_manager.is_active and round_manager.round < len(rounds_list):
+            if round_manager.is_round_over(enemies) and round_manager.round < len(rounds_list):
                 if round_but.is_clicked(event.pos):
                     round_manager.new_round(current_time)
 
