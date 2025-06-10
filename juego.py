@@ -82,7 +82,7 @@ grid = start_grid()
 
 rounds_list = lr.rounds_list
 round_manager = Round(rounds_list)
-round_but = Gen_But(c.ROUND_BUT_IMG, (725, 65), 0)
+round_but = Gen_But(c.ROUND_BUT_IMG, (725, 500), 0)
 mute_but = Gen_But(c.MUTE_BUT_IMG, (30, 500), 0)
 unmute_but = Gen_But(c.UNMUTE_BUT_IMG, (80, 500), 0)
 run = True
@@ -164,8 +164,10 @@ while run:
     money.draw(screen)
     life.draw(screen)
 
-    speed_button.draw(screen)
-    round_but.draw(screen)
+    if not round_manager.is_round_over(enemies):
+        speed_button.draw(screen)
+    else:
+        round_but.draw(screen)
     mute_but.draw(screen)
     unmute_but.draw(screen)
     # Dibujo de las torres colocadas
