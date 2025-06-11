@@ -88,9 +88,12 @@ unmute_but = Gen_But(c.UNMUTE_BUT_IMG, (80, 500), 0)
 run = True
 while run:
     delta_time = clock.tick(60) / 1000
+    mouse_pos = pygame.mouse.get_pos() # Posicion actual del mouse
+    mouse_celd_value = grid.get_value(grid.get_celd(mouse_pos)[0], grid.get_celd(mouse_pos)[1])
+
     for event in pygame.event.get(): #el .event.get devuelve todos los eventos (teclado, mouse, etc.)
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if speed_button.is_clicked(event.pos) and not dragging_tower:
+            if speed_button.is_clicked(event.pos) and not dragging_tower: #is_clicked es si el mouse esta sobre el boton, pero como esta en el if de MOUSEBUTTONDOWN funciona como un clickeo
                 game_speed = speed_button.change_speed()
                 # Aplicar nueva velocidad a enemigos
                 for enemy in enemies:
@@ -107,7 +110,7 @@ while run:
                 # A torres
                 for tower in towers:
                     tower.att_speed = tower.base_att_speed / game_speed  # menor cooldown = más rápido
-                
+            
             if round_manager.is_round_over(enemies) and round_manager.round < len(rounds_list):
                 if round_but.is_clicked(event.pos):
                     round_manager.new_round(current_time)
@@ -116,6 +119,14 @@ while run:
                 pygame.mixer.music.stop()
             if unmute_but.is_clicked(event.pos):
                 pygame.mixer.music.play(-1)
+
+            if mouse_celd_value == 3:
+                for tower in towers:
+                    if grid.get_celd(tower.pos) == grid.get_celd(mouse_pos):
+                        tower.selected = True
+                        print("Hiciste clic sobre una torre")
+                    else:
+                        tower.selected = False
 
         if event.type == pygame.QUIT:
             run = False
@@ -126,6 +137,7 @@ while run:
             dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Basic, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
             dragging_tower = shop_ship.shop_items(dragging_tower, Ship, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
         
+            
     map.draw_background(screen)
     #map.draw_celds(screen, c.white, c.CELD)
 
@@ -223,10 +235,13 @@ while run:
             active_msg.remove(m)
 
     #clock.tick(60)
-    mouse_pos = pygame.mouse.get_pos() # Posicion actual del mouse
     speed_button.hover(screen, mouse_pos)
 
     round_manager.draw_text(screen)
+    
+    for tower in towers:
+        if tower.selected:
+            tower.upgrade(screen)
 
     pygame.display.update()
 

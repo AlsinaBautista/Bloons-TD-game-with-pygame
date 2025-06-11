@@ -1,4 +1,5 @@
 import constantes as c
+from tower import * 
 class Grid:
     def __init__(self, grid_width=c.GRID_WIDTH,grid_height=c.GRID_HEIGHT):
         self.height = grid_height   
@@ -33,10 +34,23 @@ class Grid:
         return x, y
 
     def update_grid(self, tower):
-        a, b = tower.pos
-        x, y = self.get_celd((a, b))
-        self.set_value(x, y, 3)
-
+        if isinstance(tower, Cannon): #es como un type, pero para objetos, veo si es de clase Basic
+            a, b = tower.pos
+            x, y = self.get_celd((a, b))
+            self.set_value(x, y, 3)
+        elif isinstance(tower, Sniper):
+            a, b = tower.pos
+            x, y = self.get_celd((a, b))
+            self.set_value(x, y, 4)
+        elif isinstance(tower, Basic):
+            a, b = tower.pos
+            x, y = self.get_celd((a, b))
+            self.set_value(x, y, 5)
+        elif isinstance(tower, Ship):
+            a, b = tower.pos
+            x, y = self.get_celd((a, b))
+            self.set_value(x, y, 6) #estos numeros van a servir para las mejoras
+        
     def get_value(self, x, y):
         if 0 <= x < self.width and 0 <= y < self.height:
             return self.grid[y][x]

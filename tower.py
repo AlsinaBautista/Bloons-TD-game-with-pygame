@@ -4,6 +4,7 @@ from bullet import Bullet
 import math
 from enemy import *
 import sounds as s
+from upgrade_button import UpBut 
 #Primero creo la clase padre de las defensas, en este caso, Tower
 class Tower(pygame.sprite.Sprite):
     def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound):
@@ -23,6 +24,11 @@ class Tower(pygame.sprite.Sprite):
         self.enemies = False
         self.attack_timer = 0
         self.bullet_active = None
+        self.level = 0
+        self.upgrade_button = UpBut(50, 100, c.UPGRADE_BUT_IMG, pos)
+        self.max_leverl = 3
+        self.costs = [400, 600, 800]
+        self.selected = False
         self.rect = self.img.get_rect(center=pos)
         self.angle = angle  #los ultimos son parametros usados en colisiones/animaciones
     
@@ -74,6 +80,10 @@ class Tower(pygame.sprite.Sprite):
     def update_att_speed(self, game_speed):
         self.att_speed = self.base_att_speed / game_speed
 
+    def upgrade(self, screen): #mouse_celd llama a get_celd de la clase grilla, devuelve la celda donde esta el mouse
+        if self.selected:
+            self.upgrade_button.draw(screen, f'${self.costs[self.level]}')
+        
 class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos, game_speed):
         scope = 100
