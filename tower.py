@@ -12,6 +12,7 @@ class Tower(pygame.sprite.Sprite):
         self.pos = pos
         self.scope = scope
         self.damage = damage
+        self.game_speed = game_speed
         self.base_att_speed = base_att_speed
         self.att_speed = base_att_speed / game_speed
         self.target = target
@@ -21,15 +22,18 @@ class Tower(pygame.sprite.Sprite):
         self.sound = sound
         self.shoot_blinded = shoot_blinded
         self.img = self.original_img    #hasta aca son los atributos propios de la torre
+        self.rect = self.img.get_rect(center=pos)
         self.enemies = False
         self.attack_timer = 0
         self.bullet_active = None
         self.level = 0
-        self.upgrade_button = UpBut(50, 100, c.UPGRADE_BUT_IMG, pos)
+        button_x = self.rect.centerx
+        button_y = self.rect.bottom + 10
+        self.upgrade_button = UpBut(50, 100, c.UPGRADE_BUT_IMG, (button_x, button_y))
+        self.showing_button = False
         self.max_leverl = 3
         self.costs = [400, 600, 800]
         self.selected = False
-        self.rect = self.img.get_rect(center=pos)
         self.angle = angle  #los ultimos son parametros usados en colisiones/animaciones
     
     def set_tower(self, x, y):
@@ -80,10 +84,18 @@ class Tower(pygame.sprite.Sprite):
     def update_att_speed(self, game_speed):
         self.att_speed = self.base_att_speed / game_speed
 
-    def upgrade(self, screen): #mouse_celd llama a get_celd de la clase grilla, devuelve la celda donde esta el mouse
-        if self.selected:
-            self.upgrade_button.draw(screen, f'${self.costs[self.level]}')
-        
+    def upgrade(self, money): #mouse_celd llama a get_celd de la clase grilla, devuelve la celda donde esta el mouse
+        #if self.selected:
+            #self.upgrade_button.pos = (self.rect.centerx, self.rect.bottom + 10)
+            #self.upgrade_button.rect = self.upgrade_button.img.get_rect(center=self.upgrade_button.pos)
+            #self.upgrade_button.draw(screen, f'${self.costs[self.level]}')
+        if money.cant_total >= self.costs[self.level] and self.level < self.max_leverl:
+            money.cant_total -= self.costs[self.level]
+            self.level += 1
+            if self.level == 1:
+                self.base_att_speed = self.base_att_speed / 2
+                self.att_speed = self.base_att_speed * self.game_speed
+
 class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos, game_speed):
         scope = 100

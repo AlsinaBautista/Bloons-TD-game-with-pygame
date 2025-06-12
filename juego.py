@@ -124,9 +124,18 @@ while run:
                 for tower in towers:
                     if grid.get_celd(tower.pos) == grid.get_celd(mouse_pos):
                         tower.selected = True
-                        print("Hiciste clic sobre una torre")
+                        tower.showing_button = True
                     else:
                         tower.selected = False
+            for tower in towers:
+                if tower.selected and tower.upgrade_button.is_clicked(mouse_pos):
+                    tower.upgrade(money)
+
+            if mouse_celd_value != 3:
+                for tower in towers:
+                    if tower.selected and tower.showing_button:
+                        tower.selected = False
+                        tower.showing_button = False
 
         if event.type == pygame.QUIT:
             run = False
@@ -238,10 +247,13 @@ while run:
     speed_button.hover(screen, mouse_pos)
 
     round_manager.draw_text(screen)
-    
+ 
     for tower in towers:
         if tower.selected:
-            tower.upgrade(screen)
+            tower.upgrade_button.pos = (tower.rect.centerx, tower.rect.bottom + 10)
+            tower.upgrade_button.rect = tower.upgrade_button.img.get_rect(center=tower.upgrade_button.pos)
+            tower.upgrade_button.draw(screen, f'${tower.costs[tower.level]}')
+            tower.upgrade_button.hover(screen, mouse_pos)
 
     pygame.display.update()
 
