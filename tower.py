@@ -35,8 +35,12 @@ class Tower(pygame.sprite.Sprite):
         self.costs = [25, 50, 100]
         self.selected = False
         self.angle = angle  #los ultimos son parametros usados en colisiones/animaciones
+        self.rect = self.img.get_rect(center=self.pos)
+        self.update_upgrade_button_pos()
+
     
     def set_tower(self, x, y):
+        self.rect.center = (x, y)
         self.pos = (x, y)   #cambia la posicion a la que se le pasa
 
     def draw_scope(self):
@@ -95,11 +99,18 @@ class Tower(pygame.sprite.Sprite):
             if mouse_celd == 3:
                 if self.level == 1:
                     self.base_att_speed = self.base_att_speed / 2
-                    self.att_speed = self.base_att_speed * self.game_speed
+                    self.att_speed = self.base_att_speed / self.game_speed
                 if self.level == 2:
                     self.damage = self.damage * 1.2
                 if self.level == 3:
                     self.damage = self.damage * 2
+
+    def update_upgrade_button_pos(self):
+        button_x = self.rect.centerx
+        button_y = self.rect.bottom + 10
+        self.upgrade_button.pos = (button_x, button_y)
+        self.upgrade_button.rect = self.upgrade_button.img.get_rect(center=self.upgrade_button.pos)
+
 
     def update_img(self, tower):
         if tower.level == 1:

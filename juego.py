@@ -146,8 +146,7 @@ while run:
             dragging_tower = shop_sniper.shop_items(dragging_tower, Sniper, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
             dragging_tower = shop_fast_monkey.shop_items(dragging_tower, Basic, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
             dragging_tower = shop_ship.shop_items(dragging_tower, Ship, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
-        
-            
+
     map.draw_background(screen)
     #map.draw_celds(screen, c.WHITE, c.CELD)
 
@@ -251,11 +250,14 @@ while run:
  
     for tower in towers:
         if tower.selected:
-            tower.upgrade_button.pos = (tower.rect.centerx, tower.rect.bottom + 10)
-            tower.upgrade_button.rect = tower.upgrade_button.img.get_rect(center=tower.upgrade_button.pos)
-            tower.upgrade_button.draw(screen, f'${tower.costs[tower.level]}')
-            tower.upgrade_button.hover(screen, mouse_pos)
-
+            #scope_surface= tower.draw_scope()
+            #screen.blit(scope_surface, tower.rect)
+            tower.update_upgrade_button_pos()
+            if tower.level < 3:
+                tower.upgrade_button.draw(screen, f'${tower.costs[tower.level]}')
+                tower.upgrade_button.hover(screen, mouse_pos)
+        print(tower.att_speed)
+        print(tower.damage)
     pygame.display.update()
 
 pygame.quit()
