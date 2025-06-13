@@ -31,8 +31,8 @@ class Tower(pygame.sprite.Sprite):
         button_y = self.rect.bottom + 10
         self.upgrade_button = UpBut(50, 100, c.UPGRADE_BUT_IMG, (button_x, button_y))
         self.showing_button = False
-        self.max_leverl = 3
-        self.costs = [400, 600, 800]
+        self.max_level = 3
+        self.costs = [25, 50, 100]
         self.selected = False
         self.angle = angle  #los ultimos son parametros usados en colisiones/animaciones
     
@@ -84,17 +84,33 @@ class Tower(pygame.sprite.Sprite):
     def update_att_speed(self, game_speed):
         self.att_speed = self.base_att_speed / game_speed
 
-    def upgrade(self, money): #mouse_celd llama a get_celd de la clase grilla, devuelve la celda donde esta el mouse
+    def upgrade(self, money, mouse_celd): #mouse_celd llama a get_celd de la clase grilla, devuelve la celda donde esta el mouse
         #if self.selected:
             #self.upgrade_button.pos = (self.rect.centerx, self.rect.bottom + 10)
             #self.upgrade_button.rect = self.upgrade_button.img.get_rect(center=self.upgrade_button.pos)
             #self.upgrade_button.draw(screen, f'${self.costs[self.level]}')
-        if money.cant_total >= self.costs[self.level] and self.level < self.max_leverl:
+        if money.cant_total >= self.costs[self.level] and self.level < self.max_level:
             money.cant_total -= self.costs[self.level]
             self.level += 1
-            if self.level == 1:
-                self.base_att_speed = self.base_att_speed / 2
-                self.att_speed = self.base_att_speed * self.game_speed
+            if mouse_celd == 3:
+                if self.level == 1:
+                    self.base_att_speed = self.base_att_speed / 2
+                    self.att_speed = self.base_att_speed * self.game_speed
+                if self.level == 2:
+                    self.damage = self.damage * 1.2
+                if self.level == 3:
+                    self.damage = self.damage * 2
+
+    def update_img(self, tower):
+        if tower.level == 1:
+            self.original_img = c.LVL1_CANON
+            self.img = self.original_img
+        if tower.level == 2:
+            self.original_img = c.LVL2_CANON
+            self.img = self.original_img
+        if tower.level == 3:
+            self.original_img = c.LVL3_CANON
+            self.img = self.original_img
 
 class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos, game_speed):
@@ -122,9 +138,9 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
         water = False
         sound = s.sniper_sound
         shoot_blinded = False
-        image = pygame.image.load("imgs/shooter.png").convert_alpha()
+        self.image = pygame.image.load("imgs/shooter.png").convert_alpha()
         angle = 30
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, self.image, angle, game_speed, water, shoot_blinded, sound) #aca puedo llamar a la clase padre con el scope y damage definido
 
 class Basic(Tower):  #normal
     def __init__(self, pos, game_speed):

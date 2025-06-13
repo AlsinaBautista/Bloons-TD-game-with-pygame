@@ -38,8 +38,8 @@ pygame.display.set_caption("Bloons TD")
 
 map = Map("imgs/fondo.png")
 enemies = pygame.sprite.Group()
-new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENEMY_PATH, False)
-enemies.add(new_enemy)
+#new_enemy = Enemy(c.ENEMY_POS, c.ENEMY_SPEED, c.ENEMY_HEALTH, c.ENEMY_IMG, c.ENEMY_PATH, False)
+#enemies.add(new_enemy)
 
 # Imagen de towers para shop
 canon_img_shop = pygame.image.load("imgs/tower_shop.png").convert_alpha()
@@ -55,10 +55,10 @@ life_img = pygame.image.load("imgs/life.png")
 life = Life(20, life_img)
 
 # Tienda y drag (torre en mouse)
-shop_canon = Shop(canon_img_shop, 790, 10, 300, money)
-shop_sniper = Shop(sniper_img_shop, 895, 10, 500, money)
-shop_fast_monkey = Shop(fast_mokey_img_shop, 790, 130, 450, money)
-shop_ship = Shop(ship_img_shop, 895, 130, 450, money)
+shop_canon = Shop(canon_img_shop, 825, 70, 300, money)
+shop_sniper = Shop(sniper_img_shop, 910, 70, 500, money)
+shop_fast_monkey = Shop(fast_mokey_img_shop, 825, 175, 450, money)
+shop_ship = Shop(ship_img_shop, 910, 175, 450, money)
 dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
 towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
 
@@ -120,16 +120,17 @@ while run:
             if unmute_but.is_clicked(event.pos):
                 pygame.mixer.music.play(-1)
 
-            if mouse_celd_value == 3:
+            if mouse_celd_value in (3, 4, 5, 6):
                 for tower in towers:
-                    if grid.get_celd(tower.pos) == grid.get_celd(mouse_pos):
+                    if grid.get_celd(tower.pos) == grid.get_celd(mouse_pos) and tower.level < tower.max_level:
                         tower.selected = True
                         tower.showing_button = True
                     else:
                         tower.selected = False
             for tower in towers:
                 if tower.selected and tower.upgrade_button.is_clicked(mouse_pos):
-                    tower.upgrade(money)
+                    tower.upgrade(money, mouse_celd_value)
+                    tower.update_img(tower)
 
             if mouse_celd_value != 3:
                 for tower in towers:
@@ -148,7 +149,7 @@ while run:
         
             
     map.draw_background(screen)
-    #map.draw_celds(screen, c.white, c.CELD)
+    #map.draw_celds(screen, c.WHITE, c.CELD)
 
     current_time = pygame.time.get_ticks()
     
