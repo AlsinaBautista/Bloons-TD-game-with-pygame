@@ -254,7 +254,8 @@ while run:
             #screen.blit(scope_surface, tower.rect)
             tower.update_upgrade_button_pos()
             if tower.level < 3:
-                tower.upgrade_button.draw(screen, f'${tower.costs[tower.level]}')
+                color = (255, 255, 255) if money.cant_total > tower.costs[tower.level] else (255, 0, 0)
+                tower.upgrade_button.draw(screen, f'${tower.costs[tower.level]}', color)
                 tower.upgrade_button.hover(screen, mouse_pos)
         print(tower.att_speed)
         print(tower.damage)

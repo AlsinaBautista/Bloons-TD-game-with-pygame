@@ -11,12 +11,12 @@ class UpBut:
     def is_clicked(self, mouse_pos):
         return self.rect.collidepoint(mouse_pos)
     
-    def draw(self, screen, upgrade_text):
+    def draw(self, screen, upgrade_text, color):
         screen.blit(self.img, self.rect)
         font = pygame.font.Font("fonts/OETZTYP_.TTF", 14)
-        text1 = font.render(str(upgrade_text), True, (255, 255, 255))
+        text1 = font.render(str(upgrade_text), True, color)
         text_rect1 = text1.get_rect(center=(self.pos[0], self.rect.top + 35))
-        text2 = font.render(str("UPGRADE"), True, (255, 255, 255))
+        text2 = font.render(str("UPGRADE"), True, color)
         text_rect2 = text2.get_rect(center=(self.pos[0], self.rect.top + 20))
         screen.blit(text1, text_rect1)
         screen.blit(text2, text_rect2)
