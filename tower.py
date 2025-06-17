@@ -96,7 +96,7 @@ class Tower(pygame.sprite.Sprite):
         if money.cant_total >= self.costs[self.level] and self.level < self.max_level:
             money.cant_total -= self.costs[self.level]
             self.level += 1
-            if mouse_celd == 3:
+            if mouse_celd in (3, 4, 5, 6):
                 if self.level == 1:
                     self.base_att_speed = self.base_att_speed / 2
                     self.att_speed = self.base_att_speed / self.game_speed
@@ -113,15 +113,36 @@ class Tower(pygame.sprite.Sprite):
 
 
     def update_img(self, tower):
-        if tower.level == 1:
-            self.original_img = c.LVL1_CANON
-            self.img = self.original_img
-        if tower.level == 2:
-            self.original_img = c.LVL2_CANON
-            self.img = self.original_img
-        if tower.level == 3:
-            self.original_img = c.LVL3_CANON
-            self.img = self.original_img
+        if isinstance(tower, Cannon):
+            if tower.level == 1:
+                self.original_img = c.LVL1_CANON
+                self.img = self.original_img
+            if tower.level == 2:
+                self.original_img = c.LVL2_CANON
+                self.img = self.original_img
+            if tower.level == 3:
+                self.original_img = c.LVL3_CANON
+                self.img = self.original_img
+        elif isinstance(tower, Ship):
+            if tower.level == 1:               
+                self.original_img = c.LVL1_SHIP
+                self.img = self.original_img
+            if tower.level == 2:
+                self.original_img = c.LVL2_SHIP
+                self.img = self.original_img
+            if tower.level == 3:
+                self.original_img = c.LVL3_SHIP
+                self.img = self.original_img
+        elif isinstance(tower, Sniper):
+            if tower.level == 1:               
+                self.original_img = c.LVL1_SNIPER
+                self.img = self.original_img
+            if tower.level == 2:
+                self.original_img = c.LVL2_SNIPER
+                self.img = self.original_img
+            if tower.level == 3:
+                self.original_img = c.LVL3_SNIPER
+                self.img = self.original_img
 
 class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos, game_speed):
@@ -141,7 +162,7 @@ class Cannon(Tower):    #defensa fuerte
 class Sniper(Tower):    #mas rango, dano, menos cadencia
     def __init__(self, pos, game_speed):
         scope = 1000
-        damage = 500
+        damage = 100
         price = 500
         base_att_speed = 1000
         att_speed = base_att_speed / game_speed

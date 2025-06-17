@@ -120,7 +120,7 @@ while run:
             if unmute_but.is_clicked(event.pos):
                 pygame.mixer.music.play(-1)
 
-            if mouse_celd_value in (3, 4, 5, 6):
+            if mouse_celd_value in [3, 4, 5, 6]:
                 for tower in towers:
                     if grid.get_celd(tower.pos) == grid.get_celd(mouse_pos) and tower.level < tower.max_level:
                         tower.selected = True
@@ -132,7 +132,7 @@ while run:
                     tower.upgrade(money, mouse_celd_value)
                     tower.update_img(tower)
 
-            if mouse_celd_value != 3:
+            if mouse_celd_value not in (3, 4, 5, 6):
                 for tower in towers:
                     if tower.selected and tower.showing_button:
                         tower.selected = False
@@ -257,8 +257,9 @@ while run:
                 color = (255, 255, 255) if money.cant_total > tower.costs[tower.level] else (255, 0, 0)
                 tower.upgrade_button.draw(screen, f'${tower.costs[tower.level]}', color)
                 tower.upgrade_button.hover(screen, mouse_pos)
-        print(tower.att_speed)
-        print(tower.damage)
+        #print(tower.att_speed)
+        #print(tower.damage)
+        #print(grid)
     pygame.display.update()
 
 pygame.quit()
