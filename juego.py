@@ -54,11 +54,13 @@ money = Money(750, money_img)
 life_img = pygame.image.load("imgs/life.png")
 life = Life(20, life_img)
 
+bg_shop = pygame.image.load("imgs/bg_shop.png")
+
 # Tienda y drag (torre en mouse)
-shop_canon = Shop(canon_img_shop, 825, 70, 300, money)
-shop_sniper = Shop(sniper_img_shop, 910, 70, 500, money)
-shop_fast_monkey = Shop(fast_mokey_img_shop, 825, 175, 450, money)
-shop_ship = Shop(ship_img_shop, 910, 175, 450, money)
+shop_canon = Shop(canon_img_shop, 795, 30, 300, money)
+shop_sniper = Shop(sniper_img_shop, 885, 30, 500, money)
+shop_fast_monkey = Shop(fast_mokey_img_shop, 795, 150, 450, money)
+shop_ship = Shop(ship_img_shop, 885, 150, 450, money)
 dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
 towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
 
@@ -200,7 +202,9 @@ while run:
     # Dibujo de la tienda
     inventory_height = c.HEIGHT
     inventory_rect = pygame.Rect(c.WIDTH - c.INVENTORY_WIDTH, 0, c.INVENTORY_WIDTH, inventory_height)
-    pygame.draw.rect(screen, (191,158,83), inventory_rect) # Dibuja el fondo de la tienda
+    bg_shop_scaled = pygame.transform.scale(bg_shop, (inventory_rect.width, inventory_rect.height))
+    screen.blit(bg_shop_scaled, inventory_rect.topleft)
+
     shop_canon.draw(screen) # Dibuja la torre disponible en la tienda 
     shop_sniper.draw(screen)
     shop_fast_monkey.draw(screen)
