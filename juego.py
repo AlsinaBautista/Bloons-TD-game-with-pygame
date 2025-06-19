@@ -50,7 +50,7 @@ fast_mokey_img_shop = pygame.image.load("imgs/fast_monkey_shop.png").convert_alp
 bullets = pygame.sprite.Group()
 
 money_img = pygame.image.load("imgs/money.png")
-money = Money(750, money_img)
+money = Money(7500, money_img)
 life_img = pygame.image.load("imgs/life.png")
 life = Life(20, life_img)
 

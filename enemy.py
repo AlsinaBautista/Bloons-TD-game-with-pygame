@@ -232,7 +232,7 @@ class Blinded_Ballon(Enemy):
     def __init__(self, game_speed):
         base_speed = 50
         speed = base_speed * game_speed
-        health = 8
+        health = 800
         pos = (0, 265)
         blinded = True
         path = [
