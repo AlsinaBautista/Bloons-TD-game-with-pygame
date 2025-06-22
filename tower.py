@@ -144,6 +144,9 @@ class Tower(pygame.sprite.Sprite):
                 self.original_img = c.LVL3_SNIPER
                 self.img = self.original_img
         elif isinstance(tower, Basic):
+            if tower.level == 2:
+                self.original_img = c.LVL2_MONKEY
+                self.img = self.original_img
             if tower.level == 3:               
                 self.original_img = c.LVL3_MONKEY
                 self.img = self.original_img
