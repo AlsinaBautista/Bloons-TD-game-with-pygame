@@ -39,29 +39,34 @@ class Enemy(pygame.sprite.Sprite):
             if self.target_pos_index < len(self.path) - 1:
                 self.target_pos_index += 1
         #que se hagan rojos
-        if self.health <= 100 and not self.armored:
+        if self.health <= 100:
             self.image = pygame.image.load('imgs/bloon.png')
+            self.armored = False
         
         #que se hagan azules
         if 100 < self.health <= 200:
             self.image = pygame.image.load('imgs/blue_balloon.png')
+            self.armored = False
         
         #que se hagan verdes
         if 200 < self.health <= 300:
             self.image = pygame.image.load('imgs/green_balloon.png')
+            self.armored = False
 
         #que se hagan coloridos
         if 300 < self.health <= 400:
             self.image = pygame.image.load('imgs/yellow_balloon.png')
+            self.armored = False
         
         #que se hagan rosas
         if 400 < self.health <= 500:
             self.image = pygame.image.load('imgs/pink_balloon.png')
+            self.armored = False
 
         if self.health <= 0:
             self.image = pygame.image.load("imgs/bloon_explotion.png")
             self.kill()
-            #que cada globo de cantidad diferente de dinero
+            #que cada globo de cantidad diferente de plata
             if self.base_speed == 50:
                 money.add_money(5)
             elif self.base_speed == 75:
