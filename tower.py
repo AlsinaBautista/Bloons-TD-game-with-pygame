@@ -7,7 +7,7 @@ import sounds as s
 from upgrade_button import UpBut 
 #Primero creo la clase padre de las defensas, en este caso, Tower
 class Tower(pygame.sprite.Sprite):
-    def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound):
+    def __init__(self, pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_armored, sound):
         super().__init__()
         self.pos = pos
         self.scope = scope
@@ -20,7 +20,7 @@ class Tower(pygame.sprite.Sprite):
         self.original_img = image
         self.water = water
         self.sound = sound
-        self.shoot_blinded = shoot_blinded
+        self.shoot_armored = shoot_armored
         self.img = self.original_img    #hasta aca son los atributos propios de la torre
         self.rect = self.img.get_rect(center=pos)
         self.enemies = False
@@ -32,7 +32,7 @@ class Tower(pygame.sprite.Sprite):
         self.upgrade_button = UpBut(50, 100, c.UPGRADE_BUT_IMG, (button_x, button_y))
         self.showing_button = False
         self.max_level = 3
-        self.costs = [25, 50, 100]
+        self.costs = [100, 200, 400]
         self.selected = False
         self.angle = angle  #los ultimos son parametros usados en colisiones/animaciones
         self.rect = self.img.get_rect(center=self.pos)
@@ -68,7 +68,7 @@ class Tower(pygame.sprite.Sprite):
         for enemy in enemies:
             if enemy.alive() and self.enemies_in_range(enemy.pos) and current_time - self.attack_timer >= cooldown:
                 self.rotate(enemy.pos)
-                if (enemy.blinded and self.shoot_blinded) or not enemy.blinded:
+                if (enemy.armored and self.shoot_armored) or not enemy.armored:
                     bullet = Bullet(pos=self.pos, target=enemy, speed=1000, damage=self.damage, image_path="imgs/bullet.png")
                     self.attack_timer = current_time
                     self.bullet_active = bullet
@@ -153,60 +153,60 @@ class Tower(pygame.sprite.Sprite):
 
 class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos, game_speed):
-        scope = 100
+        scope = 120
         damage = 300
-        price = 300
+        price = 400
         base_att_speed = 1000
         att_speed = base_att_speed / game_speed
         target = None
-        shoot_blinded = True
+        shoot_armored = True
         water = False
         sound = s.canon_sound
         image = pygame.image.load("imgs/tower.png").convert_alpha()
         angle = 0
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded, sound) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_armored, sound) #aca puedo llamar a la clase padre con el scope y damage definido
 
 class Sniper(Tower):    #mas rango, dano, menos cadencia
     def __init__(self, pos, game_speed):
         scope = 1000
         damage = 100
-        price = 500
-        base_att_speed = 1000
+        price = 300
+        base_att_speed = 500
         att_speed = base_att_speed / game_speed
         target = None
         water = False
         sound = s.sniper_sound
-        shoot_blinded = False
+        shoot_armored = False
         self.image = pygame.image.load("imgs/shooter.png").convert_alpha()
         angle = 30
-        super().__init__(pos, scope, damage, base_att_speed, target, price, self.image, angle, game_speed, water, shoot_blinded, sound) #aca puedo llamar a la clase padre con el scope y damage definido
+        super().__init__(pos, scope, damage, base_att_speed, target, price, self.image, angle, game_speed, water, shoot_armored, sound) #aca puedo llamar a la clase padre con el scope y damage definido
 
 class Basic(Tower):  #normal
     def __init__(self, pos, game_speed):
-        scope = 75
+        scope = 90
         damage = 100
-        price = 200
-        base_att_speed = 600
+        price = 300
+        base_att_speed = 500
         att_speed = base_att_speed / game_speed
         target = None
         water = False
-        shoot_blinded = False
+        shoot_armored = False
         angle = 0
         image = pygame.image.load("imgs/fast_monkey.png").convert_alpha()
         sound = s.monkey_sound
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded,sound)
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_armored,sound)
 
 class Ship(Tower):  #en el agua
     def __init__(self, pos, game_speed):
-        scope = 200
-        damage = 100
-        price = 450
-        base_att_speed = 1000
+        scope = 220
+        damage = 150
+        price = 500
+        base_att_speed = 900
         att_speed = base_att_speed / game_speed
         target = None
         water = True
-        shoot_blinded = False
+        shoot_armored = False
         angle = 0
         sound = s.canon_sound
         image = pygame.image.load("imgs/ship.png").convert_alpha()
-        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_blinded,sound)
+        super().__init__(pos, scope, damage, base_att_speed, target, price, image, angle, game_speed, water, shoot_armored,sound)

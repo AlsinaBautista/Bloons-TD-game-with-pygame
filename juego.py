@@ -14,7 +14,7 @@ from grid import *
 from x2_button import *
 from rounds import Round
 import list_rounds as lr
-from sounds import *
+import sounds as s
 from new_round_button import *
 
 # Al principio del archivo
@@ -50,7 +50,7 @@ fast_mokey_img_shop = pygame.image.load("imgs/fast_monkey_shop.png").convert_alp
 bullets = pygame.sprite.Group()
 
 money_img = pygame.image.load("imgs/money.png")
-money = Money(7500, money_img)
+money = Money(1000, money_img)
 life_img = pygame.image.load("imgs/life.png")
 life = Life(20, life_img)
 
@@ -69,11 +69,6 @@ trash_img = pygame.image.load("imgs/trash.png").convert_alpha()
 trash_hover = pygame.image.load("imgs/trash_hover.png").convert_alpha()
 
 spawn_timer = pygame.time.get_ticks()
-"""enemy_spawn_interval = 300  # milisegundos
-enemy_count = 0
-enemy_blue = 0
-max_red = 30
-max_blue = 30"""
 
 active_msg = []
 
@@ -113,9 +108,15 @@ while run:
                 for tower in towers:
                     tower.att_speed = tower.base_att_speed / game_speed  # menor cooldown = más rápido
             
-            if round_manager.is_round_over(enemies) and round_manager.round < len(rounds_list):
-                if round_but.is_clicked(event.pos):
-                    round_manager.new_round(current_time)
+            if round_manager.is_round_over(enemies): #si termina la ronda
+                if round_manager.round == 50: #si es la ultima ronda se cierra con sondido
+                    s.victory_sound.play()
+                    pygame.time.delay(3000)
+                    pygame.quit()
+                    sys.exit()
+                elif round_manager.round < len(rounds_list): #pasa a la otra ronda
+                    if round_but.is_clicked(event.pos):
+                        round_manager.new_round(current_time)
 
             if mute_but.is_clicked(event.pos):
                 pygame.mixer.music.stop()
@@ -134,14 +135,14 @@ while run:
                     tower.upgrade(money, mouse_celd_value)
                     tower.update_img(tower)
 
-            if mouse_celd_value not in (3, 4, 5, 6):
+            if mouse_celd_value not in (3, 4, 5, 6): #las mejoras solo son para torres
                 for tower in towers:
                     if tower.selected and tower.showing_button:
                         tower.selected = False
                         tower.showing_button = False
 
         if event.type == pygame.QUIT:
-            run = False
+            run = False #cierra
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
             dragging_tower = shop_canon.shop_items(dragging_tower, Cannon, screen, towers, all_sprites, pos, active_msg, game_speed, grid)
@@ -155,20 +156,6 @@ while run:
     current_time = pygame.time.get_ticks()
     
     round_manager.update(current_time, game_speed, enemies, all_sprites)
-    
-    """if enemy_count < max_red and current_time - spawn_timer >= enemy_spawn_interval:
-        new_enemy = Red_Ballon(game_speed)
-        enemies.add(new_enemy)
-        all_sprites.add(new_enemy)
-        enemy_count += 1
-        spawn_timer = current_time 
-
-    if enemy_blue < max_blue and current_time - spawn_timer >= enemy_spawn_interval:
-        new_enemy = Blue_Ballon(game_speed)
-        enemies.add(new_enemy)
-        all_sprites.add(new_enemy)
-        enemy_blue += 1
-        spawn_timer = current_time """
     
     for enemy in enemies:
         enemy.update(money,life)

@@ -44,8 +44,8 @@ class Round:
                 new_enemy = Pink_Ballon(game_speed)
             elif enemy_type == "yellow":
                 new_enemy = Yellow_Ballon(game_speed)
-            elif enemy_type == "blinded":
-                new_enemy = Blinded_Ballon(game_speed)
+            elif enemy_type == "armored":
+                new_enemy = Armored_Ballon(game_speed)
 
             if new_enemy:
                 enemies.add(new_enemy)
