@@ -14,9 +14,22 @@ class Round:
         self.pending_enemies = []
         self.font = pygame.font.Font("fonts/OETZTYP_.TTF", 24)
         self.all_enemies_spawned = False 
+        self.reward = [50, 50, 75, 75,
+            100, 100, 120, 120, 140,           # nivel 1–5
+            140, 160, 160, 180, 180,           # nivel 6–10
+            200, 200, 220, 220, 240,           # nivel 11–15
+            260, 260, 280, 280, 300,           # 16–20
+            320, 320, 340, 360, 380,           # 21–25
+            400, 420, 440, 460, 480,           # 26–30
+            500, 520, 540, 560, 580,           # 31–35
+            600, 630, 660, 690, 720,           # 36–40
+            750, 780, 820, 870, 930, 1000      # 41–50
+            ]        
+        self.reward_given = True
 
-    def new_round(self, current_time):
+    def new_round(self, current_time, money):
         if self.round < len(self.list_rounds): 
+            self.reward_given = False
             self.pending_enemies = []
             round_data = self.list_rounds[self.round] 
             self.spawn_interval = round_data["interval"]/2
@@ -55,7 +68,7 @@ class Round:
         if not self.pending_enemies and not self.all_enemies_spawned:
             self.all_enemies_spawned = True 
 
-    def is_round_over(self, enemies_group):
+    def is_round_over(self, enemies_group, money):
         if self.all_enemies_spawned and not enemies_group.sprites():
             self.is_active = False
             return True

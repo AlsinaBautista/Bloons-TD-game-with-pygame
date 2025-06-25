@@ -32,7 +32,7 @@ class Tower(pygame.sprite.Sprite):
         self.upgrade_button = UpBut(50, 100, c.UPGRADE_BUT_IMG, (button_x, button_y))
         self.showing_button = False
         self.max_level = 3
-        self.costs = [100, 200, 400]
+        self.costs = [250, 600, 800]
         self.selected = False
         self.angle = angle  #los ultimos son parametros usados en colisiones/animaciones
         self.rect = self.img.get_rect(center=self.pos)
@@ -155,7 +155,7 @@ class Cannon(Tower):    #defensa fuerte
     def __init__(self, pos, game_speed):
         scope = 120
         damage = 300
-        price = 400
+        price = 450
         base_att_speed = 1000
         att_speed = base_att_speed / game_speed
         target = None
@@ -170,7 +170,7 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
     def __init__(self, pos, game_speed):
         scope = 1000
         damage = 100
-        price = 300
+        price = 500
         base_att_speed = 500
         att_speed = base_att_speed / game_speed
         target = None
@@ -185,7 +185,7 @@ class Basic(Tower):  #normal
     def __init__(self, pos, game_speed):
         scope = 90
         damage = 100
-        price = 300
+        price = 200
         base_att_speed = 500
         att_speed = base_att_speed / game_speed
         target = None
@@ -200,7 +200,7 @@ class Ship(Tower):  #en el agua
     def __init__(self, pos, game_speed):
         scope = 220
         damage = 150
-        price = 500
+        price = 450
         base_att_speed = 900
         att_speed = base_att_speed / game_speed
         target = None

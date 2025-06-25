@@ -57,9 +57,9 @@ life = Life(20, life_img)
 bg_shop = pygame.image.load("imgs/bg_shop.png")
 
 # Tienda y drag (torre en mouse)
-shop_canon = Shop(canon_img_shop, 795, 30, 300, money)
+shop_canon = Shop(canon_img_shop, 795, 30, 450, money)
 shop_sniper = Shop(sniper_img_shop, 885, 30, 500, money)
-shop_fast_monkey = Shop(fast_mokey_img_shop, 795, 150, 450, money)
+shop_fast_monkey = Shop(fast_mokey_img_shop, 795, 150, 200, money)
 shop_ship = Shop(ship_img_shop, 885, 150, 450, money)
 dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
 towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
@@ -108,15 +108,9 @@ while run:
                 for tower in towers:
                     tower.att_speed = tower.base_att_speed / game_speed  # menor cooldown = más rápido
             
-            if round_manager.is_round_over(enemies): #si termina la ronda
-                if round_manager.round == 50: #si es la ultima ronda se cierra con sondido
-                    s.victory_sound.play()
-                    pygame.time.delay(3000)
-                    pygame.quit()
-                    sys.exit()
-                elif round_manager.round < len(rounds_list): #pasa a la otra ronda
-                    if round_but.is_clicked(event.pos):
-                        round_manager.new_round(current_time)
+            if round_manager.is_round_over(enemies, money) and round_manager.round < len(rounds_list): #si termina la ronda y todavia quedan mas rondas pasa a la otra ronda
+                if round_but.is_clicked(event.pos):
+                    round_manager.new_round(current_time, money)
 
             if mute_but.is_clicked(event.pos):
                 pygame.mixer.music.stop()
@@ -174,7 +168,7 @@ while run:
     money.draw(screen)
     life.draw(screen)
 
-    if not round_manager.is_round_over(enemies):
+    if not round_manager.is_round_over(enemies, money):
         speed_button.draw(screen)
     else:
         round_but.draw(screen)
@@ -215,19 +209,33 @@ while run:
                 dragging_tower = None
 
     if life.game_over():
-        black_screen = pygame.Surface((c.WIDTH, c.HEIGHT), pygame.SRCALPHA)
-        black_screen.fill((0, 0, 0, 180))
-        screen.blit(black_screen, (0,0))
+        #black_screen = pygame.Surface((c.WIDTH, c.HEIGHT), pygame.SRCALPHA)
+        #black_screen.fill((0,0,0,180))
+        ##screen.blit(black_screen, (0,0))
         pygame.mixer.music.stop()
         game_over.play()
-        font = pygame.font.Font('fonts/OETZTYP_.TTF', 48)
-        text = font.render("GAME OVER", True, c.RED)
-        text_rect = text.get_rect(center=(c.WIDTH // 2, c.HEIGHT // 2))
-        screen.blit(text, text_rect)
+        #font = pygame.font.Font('fonts/OETZTYP_.TTF', 48)
+        defeat_img_rect = c.DEFEAT_IMG.get_rect(center=(c.WIDTH // 2, c.HEIGHT // 2))
+        screen.blit(c.DEFEAT_IMG, defeat_img_rect)
+        #text = font.render("GAME OVER", True, c.RED)
+        #text_rect = text.get_rect(center=(c.WIDTH // 2, c.HEIGHT // 2))
+        #screen.blit(text, text_rect)
         pygame.display.update()
-        pygame.time.delay(2000)
+        pygame.time.delay(5000)
         run = False
     
+    if round_manager.round == 50: #si es la ultima ronda se cierra con sondido
+        if round_manager.is_round_over(enemies, money):
+            black_screen = pygame.Surface((c.WIDTH, c.HEIGHT), pygame.SRCALPHA)
+            black_screen.fill((0, 0, 0, 180))
+            screen.blit(black_screen, (0,0))
+            victory_img_rect = c.VICTORY_IMG.get_rect(center=(c.WIDTH // 2, c.HEIGHT // 2))
+            screen.blit(c.VICTORY_IMG, victory_img_rect)
+            s.victory_sound.play()
+            pygame.display.update()
+            pygame.time.delay(5000)
+            pygame.quit()
+            sys.exit()
     for m in active_msg[:]:
         if m.visible:
             m.show_msg(screen)
@@ -238,6 +246,10 @@ while run:
     speed_button.hover(screen, mouse_pos)
 
     round_manager.draw_text(screen)
+
+    if not round_manager.is_active and not round_manager.pending_enemies and not round_manager.reward_given:
+        money.add_money(round_manager.reward[round_manager.round - 1])
+        round_manager.reward_given = True
  
     for tower in towers:
         if tower.selected:

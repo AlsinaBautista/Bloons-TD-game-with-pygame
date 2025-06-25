@@ -40,7 +40,7 @@ class Shop:
                     if not dragging_tower.water:
                         if grid[pos[1] // c.CELD][pos[0] // c.CELD] == 0 and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
                             dragging_tower.set_tower(*pos_grid)
-                            self.money.spend_money(self.price)
+                            self.money.spend_money(dragging_tower.price)
                             towers.add(dragging_tower)
                             all_sprites.add(dragging_tower)
                             dragging_tower = None
@@ -50,7 +50,7 @@ class Shop:
                     elif dragging_tower.water:
                         if grid[pos[1] // c.CELD][pos[0] // c.CELD] == 2 and pos[0] < c.WIDTH - c.INVENTORY_WIDTH:
                             dragging_tower.set_tower(*pos_grid)
-                            self.money.spend_money(self.price)
+                            self.money.spend_money(dragging_tower.price)
                             towers.add(dragging_tower)
                             all_sprites.add(dragging_tower)
                             dragging_tower = None

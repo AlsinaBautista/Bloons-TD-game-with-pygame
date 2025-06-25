@@ -68,17 +68,17 @@ class Enemy(pygame.sprite.Sprite):
             self.kill()
             #que cada globo de cantidad diferente de plata
             if self.base_speed == 50:
-                money.add_money(5)
+                money.add_money(3)
             elif self.base_speed == 75:
-                money.add_money(10)
+                money.add_money(4)
             elif self.base_speed == 90:
-                money.add_money(15)
+                money.add_money(5)
             elif self.base_speed == 110:
-                money.add_money(20)
+                money.add_money(6)
             elif self.base_speed == 120:
-                money.add_money(25)
+                money.add_money(7)
             elif self.base_speed == 60:
-                money.add_money(50)
+                money.add_money(8)
         if (self.pos[0] - self.path[-1][0] < 2) and (self.pos[1] - self.path[-1][1] < 2):
             self.kill()
             balloon_sound.play()

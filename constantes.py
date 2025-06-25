@@ -68,3 +68,6 @@ LVL2_SNIPER = pygame.image.load("imgs/sniper_lvl2.png")
 LVL3_SNIPER = pygame.image.load("imgs/sniper_lvl3.png")
 LVL2_MONKEY = pygame.image.load("imgs/fast_monkey_lvl2.png")
 LVL3_MONKEY = pygame.image.load("imgs/fast_monkey_lvl3.png")
+
+VICTORY_IMG = pygame.image.load("imgs/victory.png")
+DEFEAT_IMG = pygame.image.load("imgs/defeat.png")

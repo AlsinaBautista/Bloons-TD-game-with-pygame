@@ -1,3 +1,4 @@
+import juego
 import pygame
 import sys
 from menu import Menu
@@ -35,9 +36,8 @@ while True:
             sys.exit()
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             if menu.boton_rect.collidepoint(evento.pos):
-                print("¡Botón presionado!")
+                #print("Apreto")
                 pygame.quit()
-                import juego
                 sys.exit()
 
     pygame.display.flip()
