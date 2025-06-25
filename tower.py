@@ -32,6 +32,7 @@ class Tower(pygame.sprite.Sprite):
         self.upgrade_button = UpBut(50, 100, c.UPGRADE_BUT_IMG, (button_x, button_y))
         self.showing_button = False
         self.max_level = 3
+        #self.costs = [1, 2, 3] #Test
         self.costs = [250, 600, 800]
         self.selected = False
         self.angle = angle  #los ultimos son parametros usados en colisiones/animaciones
@@ -98,7 +99,7 @@ class Tower(pygame.sprite.Sprite):
             self.level += 1
             if mouse_celd in (3, 4, 5, 6):
                 if self.level == 1:
-                    self.base_att_speed = self.base_att_speed / 2
+                    self.base_att_speed = self.base_att_speed // 2
                     self.att_speed = self.base_att_speed / self.game_speed
                 if self.level == 2:
                     self.damage = self.damage * 1.2
@@ -144,6 +145,9 @@ class Tower(pygame.sprite.Sprite):
                 self.original_img = c.LVL3_SNIPER
                 self.img = self.original_img
         elif isinstance(tower, Basic):
+            if tower.level == 1:
+                self.original_img = c.LVL1_MONKEY
+                self.img = self.original_img
             if tower.level == 2:
                 self.original_img = c.LVL2_MONKEY
                 self.img = self.original_img
@@ -157,7 +161,7 @@ class Cannon(Tower):    #defensa fuerte
         damage = 300
         price = 450
         base_att_speed = 1000
-        att_speed = base_att_speed / game_speed
+        #att_speed = base_att_speed / game_speed
         target = None
         shoot_armored = True
         water = False
@@ -172,7 +176,7 @@ class Sniper(Tower):    #mas rango, dano, menos cadencia
         damage = 100
         price = 500
         base_att_speed = 500
-        att_speed = base_att_speed / game_speed
+        #att_speed = base_att_speed / game_speed
         target = None
         water = False
         sound = s.sniper_sound
@@ -187,7 +191,7 @@ class Basic(Tower):  #normal
         damage = 100
         price = 200
         base_att_speed = 500
-        att_speed = base_att_speed / game_speed
+        #att_speed = base_att_speed / game_speed
         target = None
         water = False
         shoot_armored = False
@@ -202,7 +206,7 @@ class Ship(Tower):  #en el agua
         damage = 150
         price = 450
         base_att_speed = 900
-        att_speed = base_att_speed / game_speed
+        #att_speed = base_att_speed / game_speed
         target = None
         water = True
         shoot_armored = False

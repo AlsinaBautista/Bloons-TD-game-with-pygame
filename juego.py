@@ -126,11 +126,13 @@ while run:
                         tower.selected = False
             for tower in towers:
                 if tower.selected and tower.upgrade_button.is_clicked(mouse_pos):
-                    tower.upgrade(money, mouse_celd_value)
+                    celd_x, celd_y = grid.get_celd(tower.pos)
+                    tower_celd_value = grid.get_value(celd_x, celd_y)
+                    tower.upgrade(money, tower_celd_value)
                     tower.update_img(tower)
 
-            if mouse_celd_value not in (3, 4, 5, 6): #las mejoras solo son para torres
-                for tower in towers:
+            for tower in towers:
+                if mouse_celd_value not in (3, 4, 5, 6) and not tower.upgrade_button.is_clicked(mouse_pos): #las mejoras solo son para torres
                     if tower.selected and tower.showing_button:
                         tower.selected = False
                         tower.showing_button = False
@@ -252,6 +254,8 @@ while run:
         round_manager.reward_given = True
  
     for tower in towers:
+        print(tower.att_speed)
+        print(tower.damage)
         if tower.selected:
             #scope_surface= tower.draw_scope()
             #screen.blit(scope_surface, tower.rect)
