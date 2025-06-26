@@ -52,7 +52,7 @@ bullets = pygame.sprite.Group()
 money_img = pygame.image.load("imgs/money.png")
 money = Money(700, money_img)
 life_img = pygame.image.load("imgs/life.png")
-life = Life(20, life_img)
+life = Life(50, life_img)
 
 bg_shop = pygame.image.load("imgs/bg_shop.png")
 
@@ -61,10 +61,10 @@ hand_cursor = pygame.cursors.Cursor((0,0), c.CURSOR_HAND_IMG)
 pygame.mouse.set_cursor(cursor)
 
 # Tienda y drag (torre en mouse)
-shop_canon = Shop(canon_img_shop, 795, 30, 450, money)
-shop_sniper = Shop(sniper_img_shop, 885, 30, 500, money)
-shop_fast_monkey = Shop(fast_mokey_img_shop, 795, 150, 200, money)
-shop_ship = Shop(ship_img_shop, 885, 150, 450, money)
+shop_canon = Shop(canon_img_shop, 885, 30, 450, money)
+shop_sniper = Shop(sniper_img_shop, 885, 150, 500, money)
+shop_fast_monkey = Shop(fast_mokey_img_shop, 795, 30, 200, money)
+shop_ship = Shop(ship_img_shop, 795, 150, 450, money)
 dragging_tower = None # Variable que indica si el jugador esta arrastrando una torre desde la tienda
 towers = pygame.sprite.Group() # Grupo que contiene todas las torres colocadas en el mapa
 

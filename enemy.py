@@ -67,17 +67,17 @@ class Enemy(pygame.sprite.Sprite):
             self.image = pygame.image.load("imgs/bloon_explotion.png")
             self.kill()
             #que cada globo de cantidad diferente de plata
-            if self.base_speed == 50:
+            if isinstance(self, Red_Ballon):
                 money.add_money(3)
-            elif self.base_speed == 75:
+            if isinstance(self, Blue_Ballon):
                 money.add_money(4)
-            elif self.base_speed == 90:
+            if isinstance(self, Green_Ballon):
                 money.add_money(5)
-            elif self.base_speed == 110:
+            if isinstance(self, Yellow_Ballon):
                 money.add_money(6)
-            elif self.base_speed == 120:
+            if isinstance(self, Pink_Ballon):
                 money.add_money(7)
-            elif self.base_speed == 60:
+            if isinstance(self, Armored_Ballon):
                 money.add_money(8)
         if (self.pos[0] - self.path[-1][0] < 2) and (self.pos[1] - self.path[-1][1] < 2):
             self.kill()
