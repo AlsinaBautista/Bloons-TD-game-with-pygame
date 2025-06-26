@@ -74,6 +74,6 @@ class Round:
             return True
 
     def draw_text(self, screen):
-        text = self.font.render(f"Ronda {self.round}/50", True, (255, 255, 255)) 
+        text = self.font.render(f"Round {self.round}/50", True, (255, 255, 255)) 
         text_rect = text.get_rect(center=(675, 30))
         screen.blit(text, text_rect)

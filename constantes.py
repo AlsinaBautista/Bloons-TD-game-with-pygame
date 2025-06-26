@@ -70,5 +70,8 @@ LVL1_MONKEY = pygame.image.load("imgs/fast_monkey_lvl1.png")
 LVL2_MONKEY = pygame.image.load("imgs/fast_monkey_lvl2.png")
 LVL3_MONKEY = pygame.image.load("imgs/fast_monkey_lvl3.png")
 
+CURSOR_IMG = pygame.image.load("imgs/cursor.png")
+CURSOR_HAND_IMG = pygame.image.load("imgs/hand.png")
+
 VICTORY_IMG = pygame.image.load("imgs/victory.png")
 DEFEAT_IMG = pygame.image.load("imgs/defeat.png")

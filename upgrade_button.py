@@ -21,16 +21,26 @@ class UpBut:
         screen.blit(text1, text_rect1)
         screen.blit(text2, text_rect2)
 
-    def hover(self, surface, mouse_pos):
+    def is_hover(self, mouse_pos, screen):
         boton_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
-        # Detectar si el mouse esta sobre el boton
         if self.rect.collidepoint(mouse_pos):
             color = (0, 0, 0, 80)  # Color semitransparente en hover
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
         else:
             color = (0, 0, 0, 0)
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-        # Dibujar rectangulo con esquinas redondeadas
         pygame.draw.rect(boton_surface, color, boton_surface.get_rect(), border_radius=10)
         # Dibujar el boton sobre la superficie principal
-        surface.blit(boton_surface, (self.rect.x, self.rect.y))
+        screen.blit(boton_surface, (self.rect.x, self.rect.y))
+        return self.rect.collidepoint(mouse_pos)
+        
+"""boton_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
+# Detectar si el mouse esta sobre el boton
+if self.rect.collidepoint(mouse_pos):
+    color = (0, 0, 0, 80)  # Color semitransparente en hover
+    pygame.mouse.set_cursor(hand)
+else:
+    color = (0, 0, 0, 0)
+    pygame.mouse.set_cursor(cursor)
+# Dibujar rectangulo con esquinas redondeadas
+pygame.draw.rect(boton_surface, color, boton_surface.get_rect(), border_radius=10)
+# Dibujar el boton sobre la superficie principal
+surface.blit(boton_surface, (self.rect.x, self.rect.y))"""

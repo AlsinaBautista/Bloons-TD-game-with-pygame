@@ -56,6 +56,10 @@ life = Life(20, life_img)
 
 bg_shop = pygame.image.load("imgs/bg_shop.png")
 
+cursor = pygame.cursors.Cursor((0,0), c.CURSOR_IMG)
+hand_cursor = pygame.cursors.Cursor((0,0), c.CURSOR_HAND_IMG)
+pygame.mouse.set_cursor(cursor)
+
 # Tienda y drag (torre en mouse)
 shop_canon = Shop(canon_img_shop, 795, 30, 450, money)
 shop_sniper = Shop(sniper_img_shop, 885, 30, 500, money)
@@ -211,9 +215,9 @@ while run:
                 dragging_tower = None
 
     if life.game_over():
-        #black_screen = pygame.Surface((c.WIDTH, c.HEIGHT), pygame.SRCALPHA)
-        #black_screen.fill((0,0,0,180))
-        ##screen.blit(black_screen, (0,0))
+        black_screen = pygame.Surface((c.WIDTH, c.HEIGHT), pygame.SRCALPHA)
+        black_screen.fill((0,0,0,180))
+        screen.blit(black_screen, (0,0))
         pygame.mixer.music.stop()
         game_over.play()
         #font = pygame.font.Font('fonts/OETZTYP_.TTF', 48)
@@ -245,7 +249,7 @@ while run:
             active_msg.remove(m)
 
     #clock.tick(60)
-    speed_button.hover(screen, mouse_pos)
+    speed_button.hover(screen, mouse_pos, cursor, hand_cursor)
 
     round_manager.draw_text(screen)
 
@@ -254,8 +258,6 @@ while run:
         round_manager.reward_given = True
  
     for tower in towers:
-        print(tower.att_speed)
-        print(tower.damage)
         if tower.selected:
             #scope_surface= tower.draw_scope()
             #screen.blit(scope_surface, tower.rect)
@@ -263,10 +265,44 @@ while run:
             if tower.level < 3:
                 color = (255, 255, 255) if money.cant_total > tower.costs[tower.level] else (255, 0, 0)
                 tower.upgrade_button.draw(screen, f'${tower.costs[tower.level]}', color)
-                tower.upgrade_button.hover(screen, mouse_pos)
+                #tower.upgrade_button.is_hover(screen, mouse_pos, cursor, hand_cursor)
         #print(tower.att_speed)
         #print(tower.damage)
         #print(grid)
+
+    #MANEJO DEL MOUSE
+    cursor_over_button = False
+
+    if dragging_tower:
+        pygame.mouse.set_cursor(cursor)
+        cursor_over_button = True
+    else:
+        for tower in towers:
+            if tower.selected and tower.level < tower.max_level:
+                if tower.upgrade_button.is_hover(mouse_pos, screen):
+                    pygame.mouse.set_cursor(hand_cursor)
+                    cursor_over_button = True
+                    break
+
+    if not cursor_over_button and speed_button.is_clicked(mouse_pos):
+        pygame.mouse.set_cursor(hand_cursor)
+        cursor_over_button = True
+
+    if not cursor_over_button and round_but.is_clicked(mouse_pos):
+        pygame.mouse.set_cursor(hand_cursor)
+        cursor_over_button = True
+
+    if not cursor_over_button and mute_but.is_clicked(mouse_pos):
+        pygame.mouse.set_cursor(hand_cursor)
+        cursor_over_button = True
+
+    if not cursor_over_button and unmute_but.is_clicked(mouse_pos):
+        pygame.mouse.set_cursor(hand_cursor)
+        cursor_over_button = True
+
+    if not cursor_over_button:
+        pygame.mouse.set_cursor(cursor)
+    
     pygame.display.update()
 
 pygame.quit()
