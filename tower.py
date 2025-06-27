@@ -94,17 +94,18 @@ class Tower(pygame.sprite.Sprite):
             #self.upgrade_button.pos = (self.rect.centerx, self.rect.bottom + 10)
             #self.upgrade_button.rect = self.upgrade_button.img.get_rect(center=self.upgrade_button.pos)
             #self.upgrade_button.draw(screen, f'${self.costs[self.level]}')
-        if money.cant_total >= self.costs[self.level] and self.level < self.max_level:
-            money.cant_total -= self.costs[self.level]
-            self.level += 1
-            if mouse_celd in (3, 4, 5, 6):
-                if self.level == 1:
-                    self.base_att_speed = self.base_att_speed // 2
-                    self.att_speed = self.base_att_speed / self.game_speed
-                if self.level == 2:
-                    self.damage = self.damage * 1.2
-                if self.level == 3:
-                    self.damage = self.damage * 2
+        if self.level < self.max_level:
+            if money.cant_total >= self.costs[self.level]:
+                money.cant_total -= self.costs[self.level]
+                self.level += 1
+                if mouse_celd in (3, 4, 5, 6):
+                    if self.level == 1:
+                        self.base_att_speed = self.base_att_speed // 2
+                        self.att_speed = self.base_att_speed / self.game_speed
+                    if self.level == 2:
+                        self.damage = self.damage * 1.2
+                    if self.level == 3:
+                        self.damage = self.damage * 2
 
     def update_upgrade_button_pos(self):
         button_x = self.rect.centerx
