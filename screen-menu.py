@@ -28,7 +28,7 @@ while True:
     else:
         pygame.mouse.set_cursor(arrow)
 
-    menu.dibujar_boton(screen, mouse_pos)
+    menu.draw_button(screen, mouse_pos)
 
 
     for evento in pygame.event.get():

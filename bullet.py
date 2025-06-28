@@ -16,6 +16,14 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.pos)
         
     def update(self, delta_time):
+        """
+        Update the bullet's position towards the target and check for collision.
+        Calculates the direction towards the target, moves the bullet
+        in that direction, and checks if it has reached the target to apply damage.
+        -------------------------------------------------------------------------
+        Arguments:
+            delta_time (float): the time since the last update in seconds.
+        """
         self.rotate(self.target.pos)
         x, y = self.pos
         xt, yt = self.target.pos
@@ -32,7 +40,12 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
             
     def rotate(self, enemy_pos):
-
+        '''
+        Rotate the bullet image to face the enemy position.
+        -------------------------------------------------------------------------
+        Arguments:
+            enemy_pos (tuple): The (x, y) position of the enemy to face.
+        '''
         x = enemy_pos[0] - self.pos[0]
         y = enemy_pos[1] - self.pos[1]
         angle_rad = math.atan2(-y, x)

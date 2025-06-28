@@ -14,6 +14,16 @@ class TempMsg:
 
 
     def show_msg(self, screen):
+        """
+        Display the temporary message on the screen.
+        Checks if the message is still within its duration and blits the image and text on the screen.
+        -------------------------------------------------------------------------
+        Arguments:
+            screen (pygame.Surface): The surface on which to draw the message.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         current_time = pygame.time.get_ticks()
         if current_time - self.start <= self.duration:
             lines = self.text.split("\n")

@@ -1,5 +1,7 @@
 import pygame
 pygame.mixer.init()
+# Archivos con sonido
+# Se inicializa el mixer de pygame para poder reproducir sonidos
 music = pygame.mixer.music.load('sounds/bloons_music.mp3')
 game_over = pygame.mixer.Sound("sounds/game_over.mp3")
 monkey_sound = pygame.mixer.Sound("sounds/monkey_shot.mp3")

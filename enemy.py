@@ -18,10 +18,29 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def set_pos(self, x, y):
+        """
+        Set the position of the enemy.
+        Updates the position of the enemy and its rectangle.
+        -------------------------------------------------------------------------
+        Arguments:
+            x (float): The new x-coordinate of the enemy.
+            y (float): The new y-coordinate of the enemy.
+        """
         n_pos = (x, y)
         self.pos = n_pos
     
     def update(self, money, life):
+        """
+        Update the enemy's position along its path.
+        Calculates the direction towards the next target position
+        in the path, moves the enemy in that direction, and checks if it has reached
+        the target position. If the enemy reaches the end of the path, it is removed
+        from the game and the appropriate actions are taken (like losing life or adding money).
+        -------------------------------------------------------------------------
+        Arguments:
+            money (Money): The Money instance to update the player's money.
+            life (Life): The Life instance to update the player's life.
+        """
         current_time = pygame.time.get_ticks()
         delta_time = (current_time - self.last_update_time) / 1000.0  # en segundos
         self.last_update_time = current_time
@@ -88,11 +107,24 @@ class Enemy(pygame.sprite.Sprite):
                 life.lose_life(life.cant_total)
 
     def draw(self, screen):
-
+        """ 
+        Draw the enemy on the screen.
+        Blits the enemy's image at its current position
+        -------------------------------------------------------------------------
+        Arguments:
+            screen (pygame.Surface): The surface on which to draw the enemy.
+        """
         rect = self.image.get_rect(center=(int(self.pos[0]), int(self.pos[1])))
         screen.blit(self.image, rect)
 
     def update_speed(self, game_speed):
+        """ 
+        Update the enemy's speed based on the game speed.
+        Recalculates the enemy's speed based on the base speed and the game speed multiplier.
+        -------------------------------------------------------------------------
+        Arguments:
+            game_speed (float): The multiplier for the game's speed.
+        """
         self.speed = self.base_speed * game_speed
 
 class Red_Ballon(Enemy): 

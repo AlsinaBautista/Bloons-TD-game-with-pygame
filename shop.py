@@ -14,15 +14,50 @@ class Shop:
         self.money = money # para acceder al dinero del jugador
     
     def draw(self, screen):
+        """
+        Draw the tower image and its price on the screen.
+        -------------------------------------------------------------------------
+        Arguments:
+            screen (pygame.Surface): The surface on which to draw the tower and its price.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         screen.blit(self.img_tower, self.rect)
         color = c.BROWN if self.money.cant_total >= self.price else (255, 0, 0) # Si el jugador tiene suficiente dinero
         screen.blit(pygame.font.Font("fonts/OETZTYP_.TTF", 20).render(f"${self.price}", True, color), (self.rect.x + 12, self.rect.y + self.rect.height - 28))
 
     def is_clicked(self, pos):
+        """
+        Check if the shop item is clicked based on the mouse position.
+        -------------------------------------------------------------------------
+        Arguments:
+            pos (tuple): The current position of the mouse.
+        -------------------------------------------------------------------------
+        Returns:
+            bool: True if the shop item is clicked, False otherwise.
+        """
         # Si el jugador hizo clic sobre el cañon de la tienda, devuelve true
         return self.rect.collidepoint(pos) # pos es la posicion del mouse cuando se hace el clic
 
     def shop_items(self, dragging_tower, tower_class, screen, towers, all_sprites, pos, active_msg, game_speed, grid):
+        """
+        Handle the shop items logic, including dragging and placing towers.
+        -------------------------------------------------------------------------
+        Arguments:
+            dragging_tower (Tower): The currently dragged tower, if any.
+            tower_class (class): The class of the tower to be created.
+            screen (pygame.Surface): The surface on which to draw the towers.
+            towers (pygame.sprite.Group): The group of all towers.
+            all_sprites (pygame.sprite.Group): The group of all sprites in the game.
+            pos (tuple): The current position of the mouse.
+            active_msg (list): The list of active messages to display.
+            game_speed (int): The current game speed.
+            grid (Grid): The grid object to check tower placement.
+        -------------------------------------------------------------------------
+        Returns:
+            dragging_tower (Tower or None): The currently dragged tower, or None if no tower is being dragged.
+        """
         if dragging_tower is None:
             if self.is_clicked(pos):
                 if self.money.cant_total >= self.price:
@@ -67,6 +102,18 @@ class Shop:
         return dragging_tower
 
     def draw_trash(screen, trash_img, trash_hover, mouse_pos):
+        """
+        Draw the trash can icon on the screen and check if the mouse is hovering over it.
+        -------------------------------------------------------------------------
+        Arguments:
+            screen (pygame.Surface): The surface on which to draw the trash can icon.
+            trash_img (pygame.Surface): The image of the trash can.
+            trash_hover (pygame.Surface): The image of the trash can when hovered.
+            mouse_pos (tuple): The current position of the mouse.
+        -------------------------------------------------------------------------
+        Returns:
+            trash_rect (pygame.Rect): The rectangle representing the trash can icon's position and size.
+        """
         screen.blit(trash_img, (900, 450)) # Dibuja la imagen en el pixel (900, 450)
         trash_rect = trash_img.get_rect(topleft=(900, 450)) # Crea un rectangulo del tamaño de la imagen y lo posiciona con la esquina superior izquierda en (900, 450)
         # Detectar si el mouse esta sobre el boton

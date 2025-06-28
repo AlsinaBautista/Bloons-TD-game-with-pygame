@@ -28,6 +28,18 @@ class Round:
         self.reward_given = True
 
     def new_round(self, current_time, money):
+        """
+        Start a new round of enemies.
+        Checks if the current round is less than the total number of rounds,
+        resets the reward status, and prepares the list of enemies to spawn.
+        -------------------------------------------------------------------------
+        Arguments:
+            current_time (int): The current time in milliseconds.
+            money (Money): The money object to update the total money.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         if self.round < len(self.list_rounds): 
             self.reward_given = False
             self.pending_enemies = []
@@ -43,7 +55,21 @@ class Round:
             self.round += 1
 
     def update(self, current_time, game_speed, enemies, all_sprites):
-
+        """
+        Update the round state and spawn enemies if the conditions are met.
+        This method checks if there are pending enemies to spawn based on the
+        current time and the spawn interval. If so, it spawns the next enemy
+        type from the pending enemies list and adds it to the enemies group.
+        -------------------------------------------------------------------------
+        Arguments:
+            current_time (int): The current time in milliseconds.
+            game_speed (float): The current game speed affecting enemy spawn rate.
+            enemies (pygame.sprite.Group): The group of enemies to which new enemies will be added.
+            all_sprites (pygame.sprite.Group): The group of all sprites for rendering.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         if self.pending_enemies and current_time - self.spawn_timer >= self.spawn_interval:
             enemy_type = self.pending_enemies.pop(0)
             new_enemy = None
@@ -69,11 +95,35 @@ class Round:
             self.all_enemies_spawned = True 
 
     def is_round_over(self, enemies_group, money):
+        """
+        Check if the round is over.
+        Checks if all enemies have been spawned and if there are no
+        enemies left in the group. If so, it updates the money and sets the round
+        as inactive.
+        -------------------------------------------------------------------------
+        Arguments:
+            enemies_group (pygame.sprite.Group): The group of enemies to check.
+            money (Money): The money object to update the total money.
+        -------------------------------------------------------------------------
+        Returns:
+            bool: True if the round is over, False otherwise.
+        """
         if self.all_enemies_spawned and not enemies_group.sprites():
             self.is_active = False
             return True
 
     def draw_text(self, screen):
+        """
+        Draw the current round number on the screen.
+        Renders the round number text and blits it onto the screen
+        at a specified position.
+        -------------------------------------------------------------------------
+        Arguments:
+            screen (pygame.Surface): The surface on which to draw the text.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         text = self.font.render(f"Round {self.round}/50", True, (255, 255, 255)) 
         text_rect = text.get_rect(center=(675, 30))
         screen.blit(text, text_rect)

@@ -41,17 +41,44 @@ class Tower(pygame.sprite.Sprite):
 
     
     def set_tower(self, x, y):
+        """
+        Change the position of the tower to the specified coordinates.
+        Updates the tower's position and its rectangle based on the given coordinates.
+        -------------------------------------------------------------------------
+        Arguments:
+            x (int): The x-coordinate where the tower should be placed.
+            y (int): The y-coordinate where the tower should be placed.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         self.rect.center = (x, y)
         self.pos = (x, y)   #cambia la posicion a la que se le pasa
 
     def draw_scope(self):
-        """Devuelve una superficie con el alcance (scope) dibujado como un círculo transparente."""
+        """
+        Draw the scope of the tower on a surface.
+        Creates a circular surface representing the tower's attack range.
+        -------------------------------------------------------------------------
+        Returns:
+            pygame.Surface: A surface with a circle drawn on it, representing the tower's scope.
+        """
         diameter = self.scope * 2
         surface = pygame.Surface((diameter, diameter), pygame.SRCALPHA)  # Soporta transparencia
         pygame.draw.circle(surface, (230, 230, 230, 100), (self.scope, self.scope), self.scope)
         return surface
 
     def enemies_in_range(self, pos_enemy):
+        """
+        Check if an enemy is within the tower's attack range.
+        Returns True if the enemy is within the tower's scope, otherwise returns False.
+        -------------------------------------------------------------------------
+        Arguments:
+            pos_enemy (tuple): The position of the enemy as a tuple (x, y).
+        -------------------------------------------------------------------------
+        Returns:
+            bool: True if the enemy is within range, False otherwise.
+        """
         xe, ye = pos_enemy
         xt, yt = self.pos
         dist = ((xe - xt) ** 2 + (ye - yt) ** 2) ** 0.5
@@ -60,6 +87,18 @@ class Tower(pygame.sprite.Sprite):
         return False
 
     def shoot(self, enemies):
+        """
+        Attempt to shoot at an enemy within range.
+        Checks if there are any enemies within the tower's attack range (method) and if the attack cooldown has passed.
+        If an enemy is found, it rotates (method) the tower towards the enemy and creates a bullet to
+        attack the enemy. If the bullet is already active, it returns None.
+        -------------------------------------------------------------------------
+        Arguments:
+            enemies (list): A list of enemy objects to check for targets.
+        -------------------------------------------------------------------------
+        Returns:
+            Bullet or None: A Bullet object if an enemy is targeted, otherwise None.
+        """
         if self.bullet_active and self.bullet_active.alive():
             return None
         
@@ -78,7 +117,17 @@ class Tower(pygame.sprite.Sprite):
         return None
     
     def rotate(self, enemy_pos):
-
+        """
+        Rotate the tower image to face the enemy position.
+        Calculates the angle between the tower's position and the enemy's position,
+        and rotates the tower image accordingly.
+        -------------------------------------------------------------------------
+        Arguments:
+            enemy_pos (tuple): The (x, y) position of the enemy to face.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         x = enemy_pos[0] - self.pos[0]
         y = enemy_pos[1] - self.pos[1]
         angle_rad = math.atan2(-y, x)
@@ -87,9 +136,29 @@ class Tower(pygame.sprite.Sprite):
         self.rect = self.img.get_rect(center=self.pos)
 
     def update_att_speed(self, game_speed):
+        """
+        Update the attack speed of the tower based on the game speed.
+        -------------------------------------------------------------------------
+        Arguments:
+            game_speed (float): The current game speed affecting the tower's attack speed.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         self.att_speed = self.base_att_speed / game_speed
 
     def upgrade(self, money, mouse_celd): #mouse_celd llama a get_celd de la clase grilla, devuelve la celda donde esta el mouse
+        """
+        Upgrade the tower if the player has enough money.
+        If the upgrade is possible, it increases the tower's level and updates its attributes accordingly.
+        -------------------------------------------------------------------------
+        Arguments:
+            money (Money): The money object to check and update the player's money.
+            mouse_celd (int): The cell index where the mouse is currently located.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         #if self.selected:
             #self.upgrade_button.pos = (self.rect.centerx, self.rect.bottom + 10)
             #self.upgrade_button.rect = self.upgrade_button.img.get_rect(center=self.upgrade_button.pos)
@@ -108,6 +177,13 @@ class Tower(pygame.sprite.Sprite):
                         self.damage = self.damage * 2
 
     def update_upgrade_button_pos(self):
+        """
+        Update the position of the upgrade button based on the tower's position.
+        Calculates the new position for the upgrade button and updates its rectangle accordingly.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         button_x = self.rect.centerx
         button_y = self.rect.bottom + 10
         self.upgrade_button.pos = (button_x, button_y)
@@ -115,6 +191,16 @@ class Tower(pygame.sprite.Sprite):
 
 
     def update_img(self, tower):
+        """
+        Update the tower's image based on its level.
+        Checks the type of tower and its level, and updates the image accordingly.
+        -------------------------------------------------------------------------
+        Arguments:
+            tower (Tower): The tower object whose image needs to be updated.
+        -------------------------------------------------------------------------
+        Returns:
+            None
+        """
         if isinstance(tower, Cannon):
             if tower.level == 1:
                 self.original_img = c.LVL1_CANON
