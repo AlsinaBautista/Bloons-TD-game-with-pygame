@@ -19,8 +19,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def set_pos(self, x, y):
         """
-        Set the position of the enemy.
-        Updates the position of the enemy and its rectangle.
+        Set the position of the enemy and its rectangle.
         -------------------------------------------------------------------------
         Arguments:
             x (float): The new x-coordinate of the enemy.
@@ -120,7 +119,6 @@ class Enemy(pygame.sprite.Sprite):
     def update_speed(self, game_speed):
         """ 
         Update the enemy's speed based on the game speed.
-        Recalculates the enemy's speed based on the base speed and the game speed multiplier.
         -------------------------------------------------------------------------
         Arguments:
             game_speed (float): The multiplier for the game's speed.

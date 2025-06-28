@@ -17,9 +17,7 @@ class Bullet(pygame.sprite.Sprite):
         
     def update(self, delta_time):
         """
-        Update the bullet's position towards the target and check for collision.
-        Calculates the direction towards the target, moves the bullet
-        in that direction, and checks if it has reached the target to apply damage.
+        Updates the bullet's position towards the target and check for collision.
         -------------------------------------------------------------------------
         Arguments:
             delta_time (float): the time since the last update in seconds.
